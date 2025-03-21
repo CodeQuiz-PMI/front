@@ -34,7 +34,7 @@ Editor de Código Integrado: Monaco Editor ou Ace.js
 🔗 Repositório GitHub: [Url github](https://github.com/CodeQuiz-PMI)
 
 📃 Business Model Canvas:
-![image](https://github.com/user-attachments/assets/dde09a04-ac4f-405a-a9c6-136ab64c2f16)
+![image](https://github.com/user-attachments/assets/813f8f7b-521a-444a-9b94-b21ed8891df3)
 
 🛬 Landing Page: [Landing Page Link](https://codequiz-pmi.github.io/front/)
 
