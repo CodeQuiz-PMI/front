@@ -1,13 +1,14 @@
-import { Home } from "./components/home/index"
-
+// import { HomePage } from "../src/pages/homePage";
+import { LevelPage } from "./pages/levelPage";
 
 function App() {
 
-  return (
-    <>
-      <Home />
-    </>
-  )
+    return (
+        <>
+            {/* <HomePage /> */}
+            <LevelPage/>
+        </>
+    );
 }
 
-export default App
+export default App;
