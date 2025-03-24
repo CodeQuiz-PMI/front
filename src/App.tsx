@@ -1,13 +1,12 @@
-import { Home } from "./components/home/index"
-
+import { HomePage } from "../src/pages/homePage";
 
 function App() {
 
-  return (
-    <>
-      <Home />
-    </>
-  )
+    return (
+        <>
+            <HomePage />
+        </>
+    );
 }
 
-export default App
+export default App;
