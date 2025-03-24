@@ -1,12 +1,10 @@
-// import { HomePage } from "../src/pages/homePage";
-import { LevelPage } from "./pages/levelPage";
+import { HomePage } from "../src/pages/homePage";
 
 function App() {
 
     return (
         <>
-            {/* <HomePage /> */}
-            <LevelPage/>
+            <HomePage />
         </>
     );
 }
