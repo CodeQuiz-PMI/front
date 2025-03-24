@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const HomeStyled = styled.main`
+  padding: 40px;
 
   .title {
     h1 {
