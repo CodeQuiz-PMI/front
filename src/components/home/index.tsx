@@ -18,7 +18,12 @@ export const Home = () => {
         </p>
       </div>
       <div className="menu">
-        <Button buttonVariation="type1" type="button">
+        {/* Botão para iniciar o jogo */}
+        <Button
+          buttonVariation="type1"
+          type="button"
+          onClick={() => (window.location.href = "/python1")}
+        >
           Jogar Agora
         </Button>
 
@@ -26,7 +31,11 @@ export const Home = () => {
           Continuar
         </Button>
 
-        <Button buttonVariation="type2" type="button">
+        <Button
+          buttonVariation="type2"
+          type="button"
+          onClick={() => (window.location.href = "/about")}
+        >
           Sobre o Jogo
         </Button>
 
