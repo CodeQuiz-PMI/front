@@ -1,12 +1,13 @@
-// import codeQuizLogo from '../assets/CodeQuiz.svg'
-
+import { useNavigate } from "react-router-dom";
 import { Button } from "../../components/button";
 import { HomeStyled } from "./style";
 
 export const HomePage = () => {
+
+    const navigate = useNavigate();
+
     return (
         <HomeStyled>
-            {/* <img src={codeQuizLogo} className="logo" alt="codeQuiz logo" /> */}
             <div className="title">
                 <h1>CodeQuiz</h1>
                 <h2>Aprenda Programação Jogando!</h2>
@@ -18,19 +19,19 @@ export const HomePage = () => {
                 </p>
             </div>
             <div className="menu">
-                <Button buttonVariation="type1" type="button">
+                <Button buttonVariation="type1" type="button" onClick={() => navigate("/Game")}>
 					Jogar Agora
                 </Button>
 
-                <Button buttonVariation="type3" type="button">
+                <Button buttonVariation="type3" type="button" onClick={() => navigate("/Game")}>
 					Continuar
                 </Button>
 
-                <Button buttonVariation="type2" type="button">
+                <Button buttonVariation="type2" type="button" onClick={() => navigate("/About")}>
 					Sobre o Jogo
                 </Button>
 
-                <Button buttonVariation="type2" type="button">
+                <Button buttonVariation="type2" type="button" onClick={() => navigate("/Configurations")}>
 					Configurações
                 </Button>
             </div>
