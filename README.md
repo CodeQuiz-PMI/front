@@ -49,7 +49,23 @@ Editor de Código Integrado: Monaco Editor ou Ace.js
 [Figma - Protótipo](https://www.figma.com/design/oZC3SM3X7tswGkVv8RKK1t/CodeQuiz?node-id=29-447&p=f&t=HIw3NCr4azwhTmZw-0)
 
 📝 url Modelagem Sistema:
+
+Diagrama de Classes:
+
 ![dLIxRjmm4Em5w1y8L-Vu0JX9fIAmWPGfRDYfWa1Wo3qTOOgKbokV3q4-9cL-8UtzMFYGxaX4I01NvCtkxSxE3dNjY2EDlQuh3MjYP1cgRaDCAWH1ofgwgYkXkNFiimDat-kAiJCb6wOCnRlXFJJidb2PBWBGSwKBPF1_trgK1IX6H33KQdW6VImtmowr_plmD88h8uHs3QFB04jSjuCrP3EK8NJA4U3gj67FLicwEcFQTie4u9kr](https://github.com/user-attachments/assets/a27fb202-c3a3-451e-8614-7ac3650483ba)
+
+Diagrama de Caso de Uso:
+
+![DiagramaUseCaseCodeQuiz](https://github.com/user-attachments/assets/d04bd235-6e38-4645-9b96-3976a74c09af)
+
+Diagrama de Atividade:
+
+![DiagramaAtividadeCodeQuiz](https://github.com/user-attachments/assets/326014f1-c690-4046-97ca-60c5e6e983a3)
+
+Diagrama de Sequência:
+
+![DiagramaSequenciaCodeQuiz](https://github.com/user-attachments/assets/8df00ce2-f972-4da2-8cb5-85af62c81e25)
+
 
 -------------------
 
