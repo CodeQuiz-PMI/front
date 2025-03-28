@@ -1,13 +1,10 @@
-import { Home } from "./components/home/index"
-
+import { RoutesMain } from "./routes";
 
 function App() {
 
-  return (
-    <>
-      <Home />
-    </>
-  )
+    return (
+        <RoutesMain/>
+    );
 }
 
-export default App
+export default App;

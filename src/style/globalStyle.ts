@@ -9,9 +9,21 @@ export const GlobalStyle = createGlobalStyle`
         font-weight: 400;
         font-style: normal;
                 
-        background-color: #121212;
         color: #88FF3F;
-    }
+		}
+		
+	body{
+		padding: 20px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		background-color: #121212;
+	}
+	main {
+		width: 1440px;
+		display: flex;
+		flex-direction: column;
+	}
 
     ul{
         list-style: none;
