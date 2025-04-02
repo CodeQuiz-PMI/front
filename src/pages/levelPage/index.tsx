@@ -49,6 +49,16 @@ export const LevelPage = () => {
                     <CardSection/>
 
                 </ul>
+                {/* <ul>
+                    {.map((section) => (
+                        <CardSection
+                            key={section.id}
+                            title={section.title}
+                            description={section.description}
+                            difficulty={section.difficulty}
+                        />
+                    ))}
+                </ul> */}
             </div>
 
             <div className="back"> 

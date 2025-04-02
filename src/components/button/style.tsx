@@ -66,6 +66,50 @@ export const StyledButton = styled.button<iStyledButtonProps>`
                         }
                     }
                 `;
+            case "type5":
+                return css `
+                    width: 145px;
+                    height: 56px;
+                    color: #88FF3F;
+                    font-size: 35px;
+                    border: 1px solid #88ff3f;
+                    border-radius: 10px;
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    justify-content: space-around;
+                    background-color: #121212;
+
+                    &:hover{
+                        cursor: pointer;
+                        background-color: rgba(137, 255, 63, 0.5);
+                        img {
+                            background-color: rgba(137, 255, 63, 0.0);
+                        }
+                    }
+                `;
+            case "type6":
+                return css `
+                    width: 200px;
+                    height: 56px;
+                    color: #88FF3F;
+                    font-size: 20px;
+                    border: 1px solid #88ff3f;
+                    border-radius: 10px;
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    justify-content: space-around;
+                    background-color: #121212;
+
+                    &:hover{
+                        cursor: pointer;
+                        background-color: rgba(137, 255, 63, 0.5);
+                        img {
+                            background-color: rgba(137, 255, 63, 0.0);
+                        }
+                    }
+                `;
         }   
     }
 }`;
