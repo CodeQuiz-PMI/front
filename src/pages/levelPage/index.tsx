@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router-dom";
+
 import iconConfig from "../../assets/Settings.svg";
 import iconTrophy from "../../assets/Trophy.svg";
 import iconGoldMedal from "../../assets/Gold Medal.svg";
@@ -7,12 +9,16 @@ import { CardSection } from "../../components/cardSection";
 import { StyleLevelPage } from "./style";
 
 export const LevelPage = () => {
+    const navigate = useNavigate();
     return (
         <StyleLevelPage>
             <div className="header">
                 <div className="title">
                     <h1>Escolha uma Fase</h1>
-                    <p>Complete os desafios para testar e aprimorar seus conhecimentos em programação!</p>
+                    <p>
+            Complete os desafios para testar e aprimorar seus conhecimentos em
+            programação!
+                    </p>
                 </div>
                 <div className="config">
                     <img src={iconConfig} alt="icon setting" />
@@ -21,15 +27,15 @@ export const LevelPage = () => {
 
             <div className="buttons">
                 <Button buttonVariation="type2" type="button">
-                    Modo de Jogo
+          Modo de Jogo
                 </Button>
                 <div>
                     <Button buttonVariation="type4" type="button">
-                        Ranking
+            Ranking
                         <img src={iconGoldMedal} alt="" />
                     </Button>
                     <Button buttonVariation="type4" type="button">
-                        Conquistas
+            Conquistas
                         <img src={iconTrophy} alt="" />
                     </Button>
                 </div>
@@ -41,19 +47,28 @@ export const LevelPage = () => {
                     <p>0/6</p>
                 </div>
                 <ul>
-                    <CardSection/>
-                    <CardSection/>
-                    <CardSection/>
-                    <CardSection/>
-                    <CardSection/>
-                    <CardSection/>
-
+                    <CardSection />
+                    <CardSection />
+                    <CardSection />
+                    <CardSection />
+                    <CardSection />
+                    <CardSection />
                 </ul>
+                {/* <ul>
+                    {.map((section) => (
+                        <CardSection
+                            key={section.id}
+                            title={section.title}
+                            description={section.description}
+                            difficulty={section.difficulty}
+                        />
+                    ))}
+                </ul> */}
             </div>
 
-            <div className="back"> 
-                <Button buttonVariation="type4" type="button">
-                    Voltar
+            <div className="back">
+                <Button buttonVariation="type4" type="button" onClick={() => navigate("/")}>
+          Voltar
                 </Button>
             </div>
         </StyleLevelPage>
