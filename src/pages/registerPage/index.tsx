@@ -3,9 +3,9 @@ import { StyledLoginPage } from "./styled";
 
 import googleIgm from "../../assets/googleImg.svg";
 import gitImg from "../../assets/gitImg.svg";
-import { useNavigate, Link } from "react-router-dom"; // <- Aqui está o Link
+import { useNavigate } from "react-router-dom";
 
-export const LoginPage = () => {
+export const RegisterPage = () => {
     const navigate = useNavigate();
     return (
         <StyledLoginPage>
@@ -16,34 +16,26 @@ export const LoginPage = () => {
 
             <div className="container">
                 <form className="loginForm">
-                    <label htmlFor="email">Email ou Nome</label>
+                    <label htmlFor="name">Nome</label>
+                    <input type="text" id="name" placeholder="Digite seu nome" />
+
+                    <label htmlFor="email">Email</label>
                     <input type="email" id="email" placeholder="Digite seu email" />
 
                     <label htmlFor="password">Senha</label>
                     <input type="password" id="password" placeholder="Digite sua senha" />
 
-                    <div className="links">
-                        <a href="#" className="link">
-                            Esqueceu sua senha?
-                        </a>
-                        <Link to="/register" className="link">
-                            Criar conta
-                        </Link>
+                    <div className="socialIcons">
+                        <img src={gitImg} alt="Login com GitHub" />
+                        <img src={googleIgm} alt="Login com Google" />
                     </div>
 
-                    <div className="socialIcons">
-                        <img src={gitImg} alt="" />
-                        <img src={googleIgm} alt="" />
-                    </div>
                     <Button buttonVariation="type2" type="submit" onClick={() => navigate("/Game")}>
                         Jogar
                     </Button>
                 </form>
 
                 <div className="bottomRight">
-                    <Button buttonVariation="type2" type="button" onClick={() => navigate("/Game")}>
-                        Modo Visitante
-                    </Button>
                     <Button buttonVariation="type2" type="button" onClick={() => navigate("/")}>
                         Voltar
                     </Button>
