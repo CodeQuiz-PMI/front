@@ -4,6 +4,7 @@ import { HomePage } from "../pages/homePage";
 import { AboutPage } from "../pages/aboutPage";
 import { LevelPage } from "../pages/levelPage";
 import { Configuration } from "../pages/configuration";
+import { LoginPage } from "../pages/loginPage";
 
 export const RoutesMain = () => {
 
@@ -13,6 +14,7 @@ export const RoutesMain = () => {
             <Route path="/About" element={<AboutPage/>}/>
             <Route path="/configurations" element={<Configuration/>}/>
             <Route path="/Game" element={<LevelPage/>}/>
+            <Route path="/Login" element={<LoginPage/>}/>
         </Routes>
     );
 };

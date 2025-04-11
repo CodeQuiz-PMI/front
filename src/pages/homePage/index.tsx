@@ -19,7 +19,7 @@ export const HomePage = () => {
                 </p>
             </div>
             <div className="menu">
-                <Button buttonVariation="type1" type="button" onClick={() => navigate("/Game")}>
+                <Button buttonVariation="type1" type="button" onClick={() => navigate("/Login")}>
 					Jogar Agora
                 </Button>
 

@@ -7,7 +7,7 @@ export const StyledConfigurationPage = styled.main`
 
 
     .config-container {
-        border: 0px solid #00ff00;
+        border: 0px solid #88FF3F;
         background-color: #111;
 
         h1{
@@ -113,14 +113,30 @@ export const StyledConfigurationPage = styled.main`
         height: 56px;
         padding: 5px;
         background:#121212;
-        color: #00ff00;
-        border: 2px solid #00ff00;
+        color: #88FF3F;
+        border: 2px solid #88FF3F;
         font-size: 25px;
         border-radius: 5px;
     }
+    
+    input {
+        width: 100%;    
+        height: 55px;
+        padding: 10px;
+        font-size: 20px;
+        background-color: transparent;
+        border: 1px solid #88FF3F;
+        border-radius: 10px;
+        color: #88FF3F;
+    }
+
+    input::placeholder{
+        color: #88FF3F;
+    }
+
 
     .dropdown:focus{
-        color: #00ff00;
+        color: #88FF3F;
     }
 
     .button-group {

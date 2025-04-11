@@ -75,9 +75,7 @@ export const Configuration = () => {
                 <h2>Conta e Progresso:</h2>
                 <h2>Perfil do Usuário</h2>
                 <div className="button-group">
-                    <Button buttonVariation="type5" type="button">
-                        Usuário
-                    </Button>
+                    <input type="text" placeholder="Usuário"/>
                     <Button buttonVariation="type5" type="button">
                         Editar
                     </Button>
