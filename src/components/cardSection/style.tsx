@@ -20,10 +20,14 @@ export const StyleCardSection = styled.li`
     }
 
     p {
-        font-family: "Space Mono";
+        font-family: "Space Mono", monospace;
         font-size: 18px;
         text-align: center;
         width: 95%;
+    }
+
+    span {
+        font-size: 20px;
     }
 
     div {
