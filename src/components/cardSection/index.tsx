@@ -3,19 +3,46 @@ import star from "../../assets/Pixel Star.svg";
 import { Button } from "../button";
 import { StyleCardSection } from "./style";
 
-export const CardSection = () => {
+interface Section {
+    _id: string;
+    title: string;
+    description: string;
+    createdAt: Date;
+    level: {
+      createdAt: string;
+      description: string;
+      difficulty: string;
+      title: string;
+      __v: number;
+      _id: string;
+    };
+}
+
+interface CardSectionProps {
+    title: string;
+    description: string;
+    sectionId: string;
+    section: Section;
+}
+
+export const CardSection: React.FC<CardSectionProps> = ({ title, description, sectionId, section }) => {
     const navigate = useNavigate();
+
+    const handlePlay = () => {
+        navigate(`/Section/${sectionId}`, { state: { section } });
+    };
+
     return (
         <StyleCardSection>
-            <h3>Introdução ao Python</h3>
-            <p>Conhecendo a linguagem e sua sintaxe básica.</p>
+            <h3>{title}</h3>
+            <p>{description}</p>
             <div>
                 <img src={star} alt="pixel star" />
                 <span>Fácil</span>
             </div>
 
-            <Button buttonVariation="type2" type="button" onClick={() => navigate("/Question")}>
-                Jogar
+            <Button buttonVariation="buttonCardSection" type="button" onClick={handlePlay}>
+                Iniciar
             </Button>
         </StyleCardSection>
     );
