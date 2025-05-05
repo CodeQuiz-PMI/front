@@ -3,12 +3,15 @@ import { createRoot } from 'react-dom/client';
 import App from './App.tsx';
 import { GlobalStyle } from './style/globalStyle.ts';
 import { HashRouter } from "react-router-dom";
+import { AppProvider } from "./context/AppContext.tsx";
 
 createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
         <GlobalStyle />
-        <HashRouter>
-            <App />
-        </HashRouter>
+        <AppProvider>
+            <HashRouter>
+                <App />
+            </HashRouter>
+        </AppProvider>
     </React.StrictMode>
 );

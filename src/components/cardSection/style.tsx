@@ -5,7 +5,7 @@ export const StyleCardSection = styled.li`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 10px;
+    gap: 5px;
 
     width: 410px;
     height: 265px;

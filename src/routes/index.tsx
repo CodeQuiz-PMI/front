@@ -7,6 +7,7 @@ import { LoginPage } from "../pages/loginPage";
 import { RegisterPage } from "../pages/registerPage";
 import { QuestionPage } from "../pages/questionPage";
 import { LevelPage } from "../pages/levelPage";
+import { SectionPage } from "../pages/sectionPage";
 
 
 
@@ -19,7 +20,8 @@ export const RoutesMain = () => {
             <Route path="/Login" element={<LoginPage/>}/>
             <Route path="/Register" element={<RegisterPage/>} />
             <Route path="/Game" element={<LevelPage/>}/>
-            <Route path="/Question" element={<QuestionPage/>}/>
+            <Route path="/Section/:sectionId" element={<SectionPage />} />
+            <Route path="/Question/:questionId" element={<QuestionPage/>}/>
         </Routes>
     );
 };

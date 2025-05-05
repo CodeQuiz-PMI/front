@@ -3,8 +3,17 @@ import { Button } from "../../components/button";
 import { HomeStyled } from "./style";
 
 export const HomePage = () => {
-
     const navigate = useNavigate();
+
+    const handleLogin = () => {
+        const token = localStorage.getItem("token");
+    
+        if (token) {
+            navigate("/Game");
+        } else {
+            navigate("/Login");
+        }
+    };
 
     return (
         <HomeStyled>
@@ -19,7 +28,7 @@ export const HomePage = () => {
                 </p>
             </div>
             <div className="menu">
-                <Button buttonVariation="type1" type="button" onClick={() => navigate("/Login")}>
+                <Button buttonVariation="type1" type="button" onClick={handleLogin}>
 					Jogar Agora
                 </Button>
 
