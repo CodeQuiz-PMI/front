@@ -3,6 +3,7 @@ import settings from "../../assets/Settings.svg";
 import { QuestionPageStyled } from "./styled";
 import { useEffect, useState } from "react";
 import { Button } from "../../components/button";
+import { api } from "../../services/api";
 
 interface Section {
   _id: string;
@@ -98,27 +99,32 @@ export const QuestionPage = () => {
 
     const handleDissertativeSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        
-        const pistonResult = await runCodeOnPiston(terminalInput);
       
-        if (!pistonResult || !pistonResult.run) {
+        try {
+            const response = await api.post("questions/code", {
+                language: "python",
+                version: "3.10.0",
+                code: terminalInput,
+            });
+      
+            const result = response.data;
+      
+            const outputReceived = result?.run?.output;
+            const correct = question.correctResponse;
+      
+            console.log(result);
+            console.log(correct);
+
+            if (!outputReceived) {
+                setModalMessage("⚠️ Seu código não gerou saída ou ocorreu um erro. Tente novamente.");
+            } else if (outputReceived === correct) {
+                setModalMessage("✅ Resposta correta!");
+            } else {
+                setModalMessage(`❌ Resposta incorreta.`);
+            }
+        } catch (error) {
+            console.error("Erro ao executar código:", error);
             setModalMessage("⚠️ Erro ao executar seu código. Tente novamente.");
-            setShowModal(true);
-            return;
-        }
-      
-        const outputReceived = pistonResult.run.output.trim();
-      
-        if (!outputReceived) {
-            setModalMessage("⚠️ Seu código não gerou saída.");
-            setShowModal(true);
-            return;
-        }
-      
-        if (outputReceived === question.correctResponse.trim()) {
-            setModalMessage("✅ Resposta correta!");
-        } else {
-            setModalMessage("❌ Resposta incorreta.\n\nSeu resultado:\n" + outputReceived);
         }
       
         setShowModal(true);
@@ -144,6 +150,7 @@ export const QuestionPage = () => {
 
         return withInlineCode;
     };
+    
       
     return (
         <QuestionPageStyled>
@@ -169,7 +176,7 @@ export const QuestionPage = () => {
                 <div className="question">
                     {question.type === "múltipla-escolha" ? (
                         <form onSubmit={handleMultipleChoiceSubmit}>
-                            <h2>{question.answer}</h2>
+                            <h2 dangerouslySetInnerHTML={{ __html: formatTextWithCode(question.answer) }} />
                             <div className="options">
                                 {shuffledResponses.map((responseObj, idx) => (
                                     <label key={idx} className={selected === responseObj.value ? "selected" : ""}>
@@ -192,11 +199,13 @@ export const QuestionPage = () => {
                         </form>
                     ) : (
                         <form onSubmit={handleDissertativeSubmit}>
-                            <h2>{question.answer}</h2>
+                            <h2 dangerouslySetInnerHTML={{ __html: formatTextWithCode(question.answer) }} />
                             <textarea
                                 value={terminalInput}
                                 onChange={(e) => setTerminalInput(e.target.value)}
                                 rows={8}
+                                spellCheck={false}
+                                autoComplete="off"
                             />
                             <div style={{ display: "flex", justifyContent: "center", marginTop: "20px" }}>
                                 <Button type="submit" buttonVariation="type6">

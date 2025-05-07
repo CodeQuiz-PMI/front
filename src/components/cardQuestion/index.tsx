@@ -1,6 +1,5 @@
 // import trophyIcon from "../../assets/Trophy.svg";
 import { useNavigate } from "react-router-dom";
-import trophyCloseIcon from "../../assets/TrophyClose.svg";
 import { StyledCardQuestion } from "./styled";
 
 interface Section {
@@ -48,11 +47,6 @@ export const CardQuestion: React.FC<CardQuestionProps> = ({question}) => {
 
     return(
         <StyledCardQuestion>
-            <div className="trophies">
-                <img src={trophyCloseIcon} alt="Troféu" />
-                <img src={trophyCloseIcon} alt="Troféu" />
-                <img src={trophyCloseIcon} alt="Troféu" />
-            </div>
             <div className="number" onClick={handlePlay}>{question.order}</div>
             <p>{question.title}</p>
         </StyledCardQuestion>
