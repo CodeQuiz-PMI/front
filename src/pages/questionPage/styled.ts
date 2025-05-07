@@ -37,7 +37,7 @@ export const QuestionPageStyled = styled.main`
       li,
       code,
       pre,
-      strong {
+      strong, h3 {
         font-family: "Space Mono", monospace;
         text-align: justify;
         font-size: 18px;
@@ -79,6 +79,35 @@ export const QuestionPageStyled = styled.main`
       }
 
       form {
+        h2,
+        p,
+        strong,
+        code, li {
+          font-family: "Space Mono", monospace;
+          font-size: 18px;
+        }
+
+		ul {
+        list-style: disc;
+        padding-left: 30px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+      }
+
+        code {
+          padding: 2px 4px;
+          border-radius: 4px;
+          font-size: 16px;
+        }
+
+        pre {
+          background-color: rgba(0, 128, 0, 0.1);
+          padding: 10px;
+          border-radius: 8px;
+          overflow-x: auto;
+          margin: 10px 0 10px 0;
+        }
+
         label {
           font-family: "Space Mono", monospace;
           display: block;
@@ -107,7 +136,7 @@ export const QuestionPageStyled = styled.main`
 
         textarea {
           width: 100%;
-		  background-color:rgba(18, 18, 18, 0.71);
+          background-color: rgba(18, 18, 18, 0.71);
           margin-top: 10px;
           padding: 10px;
           font-family: "Space Mono", monospace;
@@ -115,8 +144,8 @@ export const QuestionPageStyled = styled.main`
           border: 2px solid green;
           border-radius: 8px;
           resize: vertical;
-		  color: #88FF3F;
-		  resize: none;
+          color: #88ff3f;
+          resize: none;
         }
       }
     }
@@ -139,14 +168,14 @@ export const QuestionPageStyled = styled.main`
       padding: 30px;
       border-radius: 8px;
       text-align: center;
-	  display: flex;
-	  flex-direction: column;
-	  align-items: center;
-	  gap:15px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
 
-	  h2{
+      h2 {
         font-family: "Space Mono", monospace;
-	  }
+      }
     }
   }
 `;
