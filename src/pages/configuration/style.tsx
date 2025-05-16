@@ -11,12 +11,12 @@ export const StyledConfigurationPage = styled.main`
         background-color: #111;
 
         h1{
-            font-size: 100px;
+            font-size: 60px;
         }
 
         p {
             font-family: "Space Mono";
-            font-size: 35px;
+            font-size: 20px;
             margin-bottom: 20px;
         }
     }
@@ -28,12 +28,17 @@ export const StyledConfigurationPage = styled.main`
         gap: 10px;
         
         h2 {
-            font-size: 30px;
+            font-size: 25px;
+            font-family: "Space Mono";
         }
         p{
             font-family: "Space Mono";
             font-size: 20px;
         }
+        span {
+            color:rgba(0, 255, 0, 0.7);
+            font-family: "Space Mono";
+        }   
     }
 
     .slider-container {
@@ -46,8 +51,8 @@ export const StyledConfigurationPage = styled.main`
         -webkit-appearance: none;
         appearance: none;
         width: 50%;
-        height: 8px; /* Altura da barra */
-        background: #aaa; /* Cor do fundo */
+        height: 8px;
+        background: #aaa;
         border-radius: 4px;
         outline: none;
         cursor: pointer;
@@ -105,7 +110,9 @@ export const StyledConfigurationPage = styled.main`
     }
 
     label {
-        font-size: 30px;
+        font-size: 20px;
+            font-family: "Space Mono";
+
     }
 
     .dropdown {
@@ -115,8 +122,10 @@ export const StyledConfigurationPage = styled.main`
         background:#121212;
         color: #88FF3F;
         border: 2px solid #88FF3F;
-        font-size: 25px;
+        font-size: 20px;
         border-radius: 5px;
+            font-family: "Space Mono";
+
     }
     
     input {
@@ -128,24 +137,26 @@ export const StyledConfigurationPage = styled.main`
         border: 1px solid #88FF3F;
         border-radius: 10px;
         color: #88FF3F;
+            font-family: "Space Mono";
+
     }
 
     input::placeholder{
         color: #88FF3F;
+            font-family: "Space Mono";
+
     }
 
 
     .dropdown:focus{
         color: #88FF3F;
+            font-family: "Space Mono";
+
     }
 
     .button-group {
         display: flex;
         gap: 15px;
-    }
-
-    span{
-        color:rgba(0, 255, 0, 0.7)
     }
 
     .buttonBack{

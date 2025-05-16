@@ -1,8 +1,8 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { api } from "../services/api";
 
-interface User {
-  _id: string;
+export interface User {
+  id: string;
   name: string;
   email: string;
   password: string;
@@ -14,7 +14,7 @@ interface User {
   createdAt: Date;
 }
 
-interface Level {
+export interface Level {
   _id: string;
   title: string;
   description: string;
@@ -22,36 +22,48 @@ interface Level {
   createdAt: Date;
 }
 
-interface Section {
-    _id: string;
-    title: string;
+export interface Section {
+  _id: string;
+  title: string;
+  description: string;
+  createdAt: Date;
+  level: {
+    createdAt: string;
     description: string;
-    createdAt: Date;
-    level: {
-        createdAt: string;
-        description: string;
-        difficulty: string;
-        title: string;
-        __v: number;
-        _id: string;
-    };
+    difficulty: string;
+    title: string;
+    __v: number;
+    _id: string;
+  };
 }
 
-interface Question {
-    _id: string;
-    title: string;
-    text: string;
-    answer: string;
-    response_1: string;
-    response_2: string;
-    response_3: string;
-    response_4: string;
-    correctResponse: string;
-    type: string;
-    order: number;
-    points: number;
-    createdAt: Date;
-    section: Section;
+export interface Question {
+  _id: string;
+  title: string;
+  text: string;
+  answer: string;
+  response_1: string;
+  response_2: string;
+  response_3: string;
+  response_4: string;
+  correctResponse: string;
+  type: string;
+  order: number;
+  points: number;
+  createdAt: Date;
+  section: Section;
+}
+
+export interface AnswerLog {
+  _id: string;
+  user: string | User;
+  question: string | Question;
+  section: string | Section;
+  level: string | Level;
+  userAnswer: string;
+  isCorrect: boolean;
+  pointsEarned: number;
+  createdAt: Date;
 }
 
 interface AppContextType {
@@ -61,12 +73,20 @@ interface AppContextType {
   getLevels: () => Promise<Level[]>;
   getSections: () => Promise<Section[]>;
   getQuestions: () => Promise<Question[]>;
+  submitAnswerLog: (data: {
+    userId: string;
+    questionId: string;
+    userAnswer: string;
+  }) => Promise<{ correct: boolean; pointsEarned: number }>;
+  getAnswerLogs: () => Promise<AnswerLog[]>;
   user: User | null;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
-export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
+    children,
+}) => {
     const [user, setUser] = useState<User | null>(null);
 
     const login = async (email: string, password: string) => {
@@ -83,7 +103,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         localStorage.setItem("token", res.data.token);
         api.defaults.headers.common["Authorization"] = `Bearer ${res.data.token}`;
     };
-      
+
     const getUsers = async () => {
         const res = await api.get("/users");
         return res.data;
@@ -101,18 +121,31 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
     const getQuestions = async () => {
         const res = await api.get("/questions");
+        return res.data;
+    };
 
+    const submitAnswerLog = async (data: {
+    userId: string;
+    questionId: string;
+    userAnswer: string;
+    }) => {
+        const res = await api.post("/answerlog", data);
+        return res.data;
+    };
+
+    const getAnswerLogs = async () => {
+        const res = await api.get("/answerlog");
         return res.data;
     };
 
     useEffect(() => {
         const token = localStorage.getItem("token");
         const storedUser = localStorage.getItem("user");
-      
+
         if (token) {
             api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
         }
-      
+
         if (storedUser) {
             setUser(JSON.parse(storedUser));
         }
@@ -127,6 +160,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
                 getLevels,
                 getSections,
                 getQuestions,
+                submitAnswerLog,
+                getAnswerLogs,
                 user,
             }}
         >
@@ -135,7 +170,6 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     );
 };
 
-// eslint-disable-next-line react-refresh/only-export-components
 export const useApp = () => {
     const context = useContext(AppContext);
     if (!context) throw new Error("useApp must be used within AppProvider");

@@ -4,38 +4,7 @@ import { QuestionPageStyled } from "./styled";
 import { useEffect, useState } from "react";
 import { Button } from "../../components/button";
 import { api } from "../../services/api";
-
-interface Section {
-  _id: string;
-  title: string;
-  description: string;
-  createdAt: Date;
-  level: {
-    createdAt: string;
-    description: string;
-    difficulty: string;
-    title: string;
-    __v: number;
-    _id: string;
-  };
-}
-
-interface Question {
-  _id: string;
-  title: string;
-  text: string;
-  answer: string;
-  response_1: string;
-  response_2: string;
-  response_3: string;
-  response_4: string;
-  correctResponse: string;
-  type: string;
-  order: number;
-  points: number;
-  createdAt: Date;
-  section: Section;
-}
+import { AnswerLog, Question, useApp } from "../../context/AppContext";
 
 type ResponseOption = {
     label: string;
@@ -47,12 +16,13 @@ export const QuestionPage = () => {
     const navigate = useNavigate();
     const { question } = location.state as { question: Question };
 
+    const { user } = useApp();
+
     const [showModal, setShowModal] = useState(false);
     const [modalMessage, setModalMessage] = useState("");
 
     const [selected, setSelected] = useState("");
     const [terminalInput, setTerminalInput] = useState("");
-    const [output, setOutput] = useState("");
     const [shuffledResponses, setShuffledResponses] = useState<ResponseOption[]>([]);
 
     useEffect(() => {
@@ -87,16 +57,15 @@ export const QuestionPage = () => {
             .sort(() => Math.random() - 0.5);
     };
 
-    const handleMultipleChoiceSubmit = (e: React.FormEvent) => {
+    const handleMultipleChoiceSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (selected === question.correctResponse) {
-            setModalMessage("✅ Resposta correta!");
-        } else {
-            setModalMessage("❌ Resposta incorreta.");
-        }
+        const isCorrect = selected === question.correctResponse;
+        const msg = isCorrect ? "✅ Resposta correta!" : "❌ Resposta incorreta.";
+        setModalMessage(msg);
+        await submitAnswerLog(selected, isCorrect);
         setShowModal(true);
     };
-
+     
     const handleDissertativeSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
       
@@ -151,19 +120,65 @@ export const QuestionPage = () => {
         return withInlineCode;
     };
     
+    const formatTextWithCode2 = (text: string) => {
+        if (!text) return "";
+      
+        const unescaped = text
+            .replace(/\\\\n/g, "\n")        // trata \\n → \n
+            .replace(/\\n/g, "\n")          // trata \n → nova linha
+            .replace(/\\\\t/g, "\t")        // trata \\t → \t
+            .replace(/\\t/g, "\t")          // trata \t → tab
+            .replace(/\\"/g, '"');          // trata \" → "
+      
+        const withBlockCode = unescaped.replace(/```([\s\S]*?)```/g, (_match, code) => {
+            return `<pre><code>${code.trim()}</code></pre>`;
+        });
+      
+        const withInlineCode = withBlockCode.replace(/`([^`]+)`/g, (_match, code) => {
+            return `<code>${code}</code>`;
+        });
+      
+        return withInlineCode
+            .replace(/\n/g, "<br/>")
+            .replace(/\t/g, "&nbsp;&nbsp;&nbsp;&nbsp;");
+    };
+
+    const submitAnswerLog = async (userAnswer: string, isCorrect: boolean) => {
+        try {
+            const res = await api.get(`/answerlogs/user/${user?.id}`);
+            const alreadyAnswered = res.data.some(
+                (log: AnswerLog) => log.question === question._id
+            );
+    
+            if (alreadyAnswered) {
+                return;
+            }
+    
+            await api.post("/answerlogs", {
+                userId: user?.id,
+                questionId: question._id,
+                userAnswer,
+                isCorrect,
+            });
+    
+        } catch (error) {
+            console.error("Erro ao salvar log da resposta:", error);
+        }
+    };
+    
       
     return (
         <QuestionPageStyled>
             <div className="header">
                 <h1>{question.title}</h1>
-                <div>
-                    <img src={settings} alt="Configurações" />
+                <div className="config">
+                    <img src={settings} alt="Configurações" onClick={() => navigate("/configurations")}/>
                 </div>
             </div>
 
             <div className="container">
                 {question.type === "dissertativa" ? (
-                    <div className="text" style={{width: "75%"}}>
+                    <div className="text">
                         <p dangerouslySetInnerHTML={{ __html: formatTextWithCode(question.text) }} />
                     </div>
                 ) : 
@@ -186,7 +201,7 @@ export const QuestionPage = () => {
                                             value={responseObj.value}
                                             onChange={(e) => setSelected(e.target.value)}
                                         />
-                                        {responseObj.label}
+                                        <span dangerouslySetInnerHTML={{ __html: formatTextWithCode2(responseObj.label) }} />
                                     </label>
                                 ))}
                             </div>
@@ -214,9 +229,6 @@ export const QuestionPage = () => {
                             </div>
                         </form>
                     )}
-
-                    {output && <p className="output">{output}</p>}
-
                     
                     <div style={{ display: "flex", justifyContent: "center", marginTop: "20px" }}>
                         <Button

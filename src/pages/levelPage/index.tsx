@@ -2,46 +2,28 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import iconConfig from "../../assets/Settings.svg";
-import iconTrophy from "../../assets/Trophy.svg";
 import iconGoldMedal from "../../assets/Gold Medal.svg";
-// import iconArrowRight from "../../assets/ArrowRight.svg";
-// import iconArrowLeft from "../../assets/ArrowLeft.svg";
+import iconArrowRight from "../../assets/ArrowRight.svg";
+import iconArrowLeft from "../../assets/ArrowLeft.svg";
 
 import { Button } from "../../components/button";
 import { CardSection } from "../../components/cardSection";
 import { StyleLevelPage } from "./style";
-import { useApp } from "../../context/AppContext";
-
-interface Section {
-  _id: string;
-  title: string;
-  description: string;
-  createdAt: Date;
-  level: {
-    createdAt: string;
-    description: string;
-    difficulty: string;
-    title: string;
-    __v: number;
-    _id: string;
-  };
-}
-
-interface Level {
-  _id: string;
-  title: string;
-  description: string;
-  difficulty: string;
-  createdAt: Date;
-}
+import { Level, Section, useApp, User } from "../../context/AppContext";
+import { api } from "../../services/api";
 
 export const LevelPage = () => {
     const navigate = useNavigate();
-    const { getLevels, getSections, user } = useApp();
+    const { getLevels, getSections } = useApp();
 
     const [levels, setLevels] = useState<Level[]>([]);
     const [sections, setSections] = useState<Section[]>([]);
-    const [currentLevel, setCurrentLevel] = useState<Level | null>(null);
+    const [currentLevelIndex, setCurrentLevelIndex] = useState(0);
+
+    const [showRanking, setShowRanking] = useState(false);
+    const [rankingData, setRankingData] = useState<User[]>([]);
+    const [modalMessage, setModalMessage] = useState("");
+    const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -50,24 +32,59 @@ export const LevelPage = () => {
                 const secs = await getSections();
                 setLevels(lvls);
                 setSections(secs);
-
-                const userLevelTitle = user?.currentLevel;
-                const defaultLevel = lvls.find((lvl) => lvl.title === userLevelTitle);
-
-                if (defaultLevel) {
-                    setCurrentLevel(defaultLevel);
-                }
             } catch (error) {
                 console.error("Erro ao carregar dados:", error);
             }
         };
         fetchData();
-    }, [getLevels, getSections, user?.currentLevel]);
+    }, [getLevels, getSections]);
+
+    const currentLevel = levels[currentLevelIndex] || null;
 
     const currentSections = currentLevel
         ? sections.filter((section) => section.level._id === currentLevel._id)
         : [];
 
+    const goToNextLevel = () => {
+        if (currentLevelIndex < levels.length - 1) {
+            setCurrentLevelIndex((prev) => prev + 1);
+        }
+    };
+        
+    const goToPreviousLevel = () => {
+        if (currentLevelIndex > 0) {
+            setCurrentLevelIndex((prev) => prev - 1);
+        }
+    };
+
+    const fetchRanking = async () => {
+        try {
+            const res = await api.get("/users");
+          
+            const sorted = res.data
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                .sort((a: any, b: any) => b.totalPoints - a.totalPoints)
+                .slice(0, 10);
+          
+            setRankingData(sorted);
+            setShowRanking(true);
+        } catch (error) {
+            console.error("Erro ao carregar ranking:", error);
+        }
+    };
+
+    const exit = () => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        navigate("/");
+    };
+
+    const modalMode = () => {
+        setModalMessage("Este modo estará disponível em breve!");
+        setShowModal(true);
+    };
+    
+          
     return (
         <StyleLevelPage>
             <div className="header">
@@ -81,22 +98,40 @@ export const LevelPage = () => {
             </div>
 
             <div className="buttons">
-                <Button buttonVariation="type2" type="button">Modo de Jogo</Button>
+                <Button buttonVariation="type2" type="button" onClick={modalMode}>
+                    Modo de Jogo
+                </Button>
+
                 <div>
-                    <Button buttonVariation="type4" type="button">
+                    <Button buttonVariation="type4" type="button" onClick={fetchRanking}>
                         Ranking <img src={iconGoldMedal} alt="" />
-                    </Button>
-                    <Button buttonVariation="type4" type="button">
-                        Conquistas <img src={iconTrophy} alt="" />
                     </Button>
                 </div>
             </div>
 
             <div className="listCards">
-                <div className="text">
-                    <h1>{currentLevel?.title || "Carregando fase..."}</h1>
-                    <p>0/6</p>
+                <div className="text" style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+                    {currentLevelIndex > 0 && (
+                        <button
+                            onClick={goToPreviousLevel}
+                            style={{ background: "none", border: "none", cursor: "pointer" }}
+                        >
+                            <img src={iconArrowLeft} alt="Anterior" />
+                        </button>
+                    )}
+
+                    <h1 style={{ margin: "0 auto" }}>{currentLevel?.title || "Carregando fase..."}</h1>
+
+                    {currentLevelIndex < levels.length - 1 && (
+                        <button
+                            onClick={goToNextLevel}
+                            style={{ background: "none", border: "none", cursor: "pointer" }}
+                        >
+                            <img src={iconArrowRight} alt="Próximo" />
+                        </button>
+                    )}
                 </div>
+
 
                 <ul>
                     {currentSections.map((section) => (
@@ -106,6 +141,7 @@ export const LevelPage = () => {
                             title={section.title}
                             description={section.description}
                             section={section}
+                            difficulty={currentLevel.difficulty}
                         />
                     ))}
                 </ul>
@@ -113,10 +149,40 @@ export const LevelPage = () => {
             </div>
 
             <div className="back">
-                <Button buttonVariation="type4" type="button" onClick={() => navigate("/")}>
-          Sair
+                <Button buttonVariation="type4" type="button" onClick={exit}>
+                    Sair
                 </Button>
             </div>
+
+            {showModal && (
+                <div className="modal">
+                    <div className="modal-content">
+                        <h2>{modalMessage}</h2>
+                        <Button buttonVariation="type6" type="button" onClick={() => setShowModal(false)}>
+                Fechar
+                        </Button>
+                    </div>
+                </div>
+            )}
+
+            {showRanking && (
+                <div className="modal">
+                    <div className="modal-content">
+                        <h2>Ranking de Jogadores</h2>
+                        <ul style={{ textAlign: "left" }}>
+                            {rankingData.map((player, index) => (
+                                <li key={player.id}>
+                                    <strong>{index + 1}º</strong> - {player.name} ({player.totalPoints} pts)
+                                </li>
+                            ))}
+                        </ul>
+                        <Button buttonVariation="type6" type="button" onClick={() => setShowRanking(false)}>
+                            Fechar
+                        </Button>
+                    </div>
+                </div>
+            )}
+
         </StyleLevelPage>
     );
 };

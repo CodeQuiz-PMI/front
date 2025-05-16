@@ -9,11 +9,15 @@ export const StyleAboutPage = styled.main`
     gap: 30px;
 
     h1 {
-      font-size: 80px;
+      font-size: 40px;
       color: rgba(136, 255, 63, 1);
+      font-family: "Space Mono";
+
       
       span{
         text-shadow: 0px 0px 30px rgba(136, 255, 63, 1);
+      font-size: 60px;
+
       }
     }
 

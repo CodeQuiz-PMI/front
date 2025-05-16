@@ -27,12 +27,14 @@ export const StyledSectionPage = styled.main`
       width: 100%;
 
       h1 {
-        font-size: 50px;
+        font-size: 40px;
+        font-family: "Space Mono", monospace;
       }
 
       p {
         font-size: 25px;
         text-align: center;
+        font-family: "Space Mono", monospace;
       }
     }
   }

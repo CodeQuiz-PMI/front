@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import star from "../../assets/Pixel Star.svg";
 import { Button } from "../button";
 import { StyleCardSection } from "./style";
 
@@ -23,9 +22,10 @@ interface CardSectionProps {
     description: string;
     sectionId: string;
     section: Section;
+    difficulty: string;
 }
 
-export const CardSection: React.FC<CardSectionProps> = ({ title, description, sectionId, section }) => {
+export const CardSection: React.FC<CardSectionProps> = ({ title, description, sectionId, section, difficulty }) => {
     const navigate = useNavigate();
 
     const handlePlay = () => {
@@ -37,8 +37,7 @@ export const CardSection: React.FC<CardSectionProps> = ({ title, description, se
             <h3>{title}</h3>
             <p>{description}</p>
             <div>
-                <img src={star} alt="pixel star" />
-                <span>Fácil</span>
+                <span>{difficulty}</span>
             </div>
 
             <Button buttonVariation="buttonCardSection" type="button" onClick={handlePlay}>

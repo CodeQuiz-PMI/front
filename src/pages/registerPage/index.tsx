@@ -28,7 +28,7 @@ export const RegisterPage = () => {
     return (
         <StyledLoginPage>
             <div className="title">
-                <h1>Bem-vindo ao CodeQuiz!</h1>
+                <h1>Bem-vindo ao <span>CodeQuiz!</span></h1>
                 <h2>Entre para salvar seu progresso e desafiar seus conhecimentos!</h2>
             </div>
 
@@ -74,7 +74,7 @@ export const RegisterPage = () => {
                 </form>
 
                 <div className="bottomRight">
-                    <Button buttonVariation="type2" type="button" onClick={() => navigate("/Login")}>
+                    <Button buttonVariation="type4" type="button" onClick={() => navigate("/Login")}>
                         Voltar
                     </Button>
                 </div>

@@ -39,15 +39,9 @@ interface CardQuestionProps {
 }
 
 export const CardQuestion: React.FC<CardQuestionProps> = ({question}) => {
-    const navigate = useNavigate();
-
-    const handlePlay = () => {
-        navigate(`/Question/${question._id}`, { state: { question } });
-    };
-
     return(
         <StyledCardQuestion>
-            <div className="number" onClick={handlePlay}>{question.order}</div>
+            <div className="number">{question.order}</div>
             <p>{question.title}</p>
         </StyledCardQuestion>
     );

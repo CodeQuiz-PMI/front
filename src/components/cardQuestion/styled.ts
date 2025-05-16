@@ -19,12 +19,16 @@ export const StyledCardQuestion = styled.div`
     border: 2px solid;
     border-radius: 10px;
 	cursor: pointer;
+        font-family: "Space Mono", monospace;
+
   }
 
   p {
-    font-size: 30px;
+    font-size: 20px;
     text-align: center;
     margin-top: 15px;
     height: 70px;
+        font-family: "Space Mono", monospace;
+
   }
 `;
