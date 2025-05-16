@@ -9,7 +9,7 @@ export const AboutPage = () => {
     return (
         <StyleAboutPage>
             <div className="title">
-                <h1>O que é o <span>CodeQuiz</span></h1>
+                <h1>O que é o <span>CodeQuiz</span>:</h1>
             </div>
             <p>
                 O codeQuiz é um jogo interativo de perguntas e desafios de código, projetado para ensinar lógica de programação de forma divertida e acessível.

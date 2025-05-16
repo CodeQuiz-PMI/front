@@ -6,6 +6,7 @@ export const StyleCardSection = styled.li`
     justify-content: center;
     align-items: center;
     gap: 5px;
+    padding:10px;
 
     width: 410px;
     height: 265px;
@@ -17,6 +18,7 @@ export const StyleCardSection = styled.li`
         font-size: 25px;
         width: 95%;
         text-align: center;
+        font-family: "Space Mono", monospace;
     }
 
     p {
@@ -28,6 +30,7 @@ export const StyleCardSection = styled.li`
 
     span {
         font-size: 20px;
+        font-family: "Space Mono", monospace;
     }
 
     div {
@@ -35,5 +38,6 @@ export const StyleCardSection = styled.li`
         justify-content: center;
         align-items: center;
         gap: 10px;
+        flex-direction: column;
     }
 `;

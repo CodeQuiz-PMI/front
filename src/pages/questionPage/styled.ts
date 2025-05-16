@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const QuestionPageStyled = styled.main`
   align-items: center;
-  font-family: "Jersey 10", sans-serif;
+  font-family: "Space Mono";
 
   .header {
     display: flex;
@@ -12,36 +12,34 @@ export const QuestionPageStyled = styled.main`
 
     h1 {
       text-align: center;
-      font-family: "Jersey 10", sans-serif;
+        font-family: "Space Mono", monospace;
     }
 
     div {
       display: flex;
       justify-content: flex-end;
-      width: 45%;
+      width: 35%;
     }
   }
 
   .container {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     margin-bottom: 20px;
     margin-top: 50px;
 
     .text {
-      width: 50%;
-      padding-right: 10px;
-
-      p,
+       p,
       ul,
       li,
       code,
       pre,
-      strong, h3 {
+      strong, h3, {
         font-family: "Space Mono", monospace;
         text-align: justify;
         font-size: 18px;
       }
+
 
       ul {
         list-style: disc;
@@ -70,19 +68,19 @@ export const QuestionPageStyled = styled.main`
     }
 
     .question {
-      width: 50%;
-      padding-left: 10px;
-      border-left: 2px solid green;
+      border-top: 2px solid green;
+	  margin-top: 10px;
 
       h2 {
         font-family: "Space Mono", monospace;
+		margin-bottom: 10px;
       }
 
       form {
         h2,
         p,
         strong,
-        code, li {
+        code, li, label span {
           font-family: "Space Mono", monospace;
           font-size: 18px;
         }
@@ -178,4 +176,18 @@ export const QuestionPageStyled = styled.main`
       }
     }
   }
+
+  .config {
+            display: flex;
+            align-items: center;
+
+            &:hover {
+                cursor: pointer;
+                img {
+                    border: 0px solid transparent;
+                    border-radius: 50%;
+                    background-color: rgba(137, 255, 63, 0.5);
+                }
+            }
+        }
 `;

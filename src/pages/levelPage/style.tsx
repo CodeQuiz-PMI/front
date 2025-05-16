@@ -1,74 +1,82 @@
 import styled from "styled-components";
 
 export const StyleLevelPage = styled.main`
+  .header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
 
-    .header{
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 20px;
+    .config {
+      display: flex;
+      align-items: center;
 
-        .config {
-            display: flex;
-            align-items: center;
-
-            &:hover {
-                cursor: pointer;
-                img {
-                    border: 0px solid transparent;
-                    border-radius: 50%;
-                    background-color: rgba(137, 255, 63, 0.5);
-                }
-            }
+      &:hover {
+        cursor: pointer;
+        img {
+          border: 0px solid transparent;
+          border-radius: 50%;
+          background-color: rgba(137, 255, 63, 0.5);
         }
-
-        .title {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-
-            h1{
-                font-size: 50px;
-            }
-
-            p{
-                font-size: 25px;
-            }
-        }
+      }
     }
 
-    .buttons{
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-end;
-        margin-bottom: 5px;
+    .title {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
 
-        div{
-            display: flex;
-            gap: 10px;
-        }
+      h1 {
+        font-size: 30px;
+        font-family: "Space Mono";
+      }
+
+      p {
+        font-size: 20px;
+        font-family: "Space Mono";
+        text-align: center;
+      }
+    }
+  }
+
+  .buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 5px;
+
+    div {
+      display: flex;
+      gap: 10px;
+    }
+  }
+
+  .listCards {
+    .text {
+      display: flex;
+      justify-content: space-between;
+      font-size: 30px;
+      h1 {
+        font-family: "Space Mono";
+      }
+      p {
+        font-family: "Space Mono";
+      }
     }
 
-    .listCards{
-        .text{
-            display: flex;
-            justify-content: space-between;
-            font-size: 50px;
-        }
-
-        ul{
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px 100px;
-            justify-content: space-evenly;
-        }
+    ul {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px 100px;
+      justify-content: space-around;
     }
+  }
 
-    .back{
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-top: 15px;
-    }
+  .back {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 15px;
+  }
 
 `;

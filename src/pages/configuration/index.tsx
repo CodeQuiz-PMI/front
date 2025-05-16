@@ -13,19 +13,6 @@ export const Configuration = () => {
                 <p className="subtitle">Personalize sua experiência no CodeQuiz da maneira que preferir!</p>
             </div>
             <div className="section">
-                <h2>Opções de Personalização</h2>
-                <p>Tema do Jogo:</p>
-                <div className="button-group">
-                    <Button buttonVariation="type5" type="button">
-                        Claro
-                    </Button>
-                    <Button buttonVariation="type5" type="button">
-                        Escuro
-                    </Button>
-                </div>
-            </div>
-
-            <div className="section">
                 <h2>Configuração de Som:</h2>
                 <div className="button-group">
                     <Button buttonVariation="type5" type="button">

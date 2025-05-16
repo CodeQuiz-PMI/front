@@ -4,48 +4,21 @@ import { useEffect, useState } from "react";
 import gearIcon from "../../assets/Settings.svg";
 import { StyledSectionPage } from "./styled";
 import { CardQuestion } from "../../components/cardQuestion";
-import { useApp } from "../../context/AppContext";
+import { AnswerLog, Question, Section, useApp } from "../../context/AppContext";
 import { Button } from "../../components/button";
-
-interface Section {
-    _id: string;
-    title: string;
-    description: string;
-    createdAt: Date;
-    level: {
-      createdAt: string;
-      description: string;
-      difficulty: string;
-      title: string;
-      __v: number;
-      _id: string;
-    };
-  }
-
-  interface Question {
-    _id: string;
-    title: string;
-    text: string;
-    answer: string;
-    response_1: string;
-    response_2: string;
-    response_3: string;
-    response_4: string;
-    correctResponse: string;
-    type: string;
-    order: number;
-    points: number;
-    createdAt: Date;
-    section: Section;
-  }
+import { api } from "../../services/api";
 
 export const SectionPage = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const { getQuestions } = useApp();
+    const { getQuestions, user } = useApp();
     const { section } = location.state as { section: Section };
 
     const [questions, setQuestions] = useState<Question[]>([]);
+    const [answeredIds, setAnsweredIds] = useState<string[]>([]);
+    const [showModal, setShowModal] = useState(false);
+    const [modalMessage, setModalMessage] = useState("");
+    const [clickedQuestion, setClickedQuestion] = useState<Question | null>(null);
 
     useEffect(() => {
         const fetchQuestions = async () => {
@@ -60,10 +33,32 @@ export const SectionPage = () => {
                 console.error("Erro ao carregar questões:", error);
             }
         };
-    
+
+        const fetchAnswered = async () => {
+            try {
+                const res = await api.get(`/answerlogs/user/${user?.id}`);
+                const answered = res.data.map((log: AnswerLog) => log.question);
+                setAnsweredIds(answered);
+            } catch (error) {
+                console.error("Erro ao buscar respostas do usuário:", error);
+            }
+        };
+
         fetchQuestions();
-    }, [section._id, getQuestions]);
-    
+        if (user?.id) fetchAnswered();
+    }, [section._id, getQuestions, user?.id]);
+
+    const handleQuestionClick = (question: Question) => {
+        if (answeredIds.includes(question._id)) {
+            setClickedQuestion(question);
+            setModalMessage("Você já respondeu essa pergunta. Nenhum ponto será somado.");
+            setShowModal(true);
+        } else {
+            navigate(`/question/${question._id}`, { state: { question } });
+        }      
+    };
+
+
     return(
         <StyledSectionPage>
             <header className="header">
@@ -72,19 +67,47 @@ export const SectionPage = () => {
                     <p>{section.description}</p>
                 </div>
                 <div className="config">
-                    <img src={gearIcon} alt="Configurações" />
+                    <img src={gearIcon} alt="Configurações" onClick={() => navigate("/configurations")} />
                 </div>
             </header>
-  
+
             <div className="progress">
                 {questions.map((question) => (
-                    <CardQuestion key={question._id} question={question} />
+                    <div key={question._id} onClick={() => handleQuestionClick(question)}>
+                        <CardQuestion question={question} />
+                    </div>
                 ))}
             </div>
-  
+
             <div className="footer">
                 <Button buttonVariation="type2" type="button" onClick={() => navigate("/Game")}>Voltar</Button>
             </div>
+
+            {showModal && (
+                <div className="modal">
+                    <div className="modal-content">
+                        <h2>{modalMessage}</h2>
+                        <div style={{ display: "flex", justifyContent: "space-between", gap: "1rem", marginTop: "1rem" }}>
+                            <Button buttonVariation="type4" type="button" onClick={() => setShowModal(false)}>
+                                Fechar
+                            </Button>
+                            <Button
+                                buttonVariation="type6"
+                                type="button"
+                                onClick={() => {
+                                    if (clickedQuestion) {
+                                        setShowModal(false);
+                                        navigate(`/question/${clickedQuestion._id}`, { state: { question: clickedQuestion } });
+                                    }
+                                }}
+                            >
+                                Continuar
+                            </Button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
         </StyledSectionPage>
     );
 };
