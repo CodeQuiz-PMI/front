@@ -19,7 +19,8 @@ export const RegisterPage = () => {
         e.preventDefault();
         try {
             await register(name, email, password);
-            navigate("/Game");
+            navigate("/Login");
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         } catch (err) {
             setError("Falha no cadastro. Tente novamente.");
         }

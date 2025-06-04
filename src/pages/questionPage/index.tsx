@@ -124,11 +124,11 @@ export const QuestionPage = () => {
         if (!text) return "";
       
         const unescaped = text
-            .replace(/\\\\n/g, "\n")        // trata \\n → \n
-            .replace(/\\n/g, "\n")          // trata \n → nova linha
-            .replace(/\\\\t/g, "\t")        // trata \\t → \t
-            .replace(/\\t/g, "\t")          // trata \t → tab
-            .replace(/\\"/g, '"');          // trata \" → "
+            .replace(/\\\\n/g, "\n")
+            .replace(/\\n/g, "\n")
+            .replace(/\\\\t/g, "\t")
+            .replace(/\\t/g, "\t")
+            .replace(/\\"/g, '"');
       
         const withBlockCode = unescaped.replace(/```([\s\S]*?)```/g, (_match, code) => {
             return `<pre><code>${code.trim()}</code></pre>`;
