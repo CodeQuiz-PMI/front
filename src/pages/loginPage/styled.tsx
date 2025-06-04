@@ -72,7 +72,7 @@ export const StyledLoginPage = styled.main`
       align-items: center;
       justify-content: center;
       gap: 15px;
-      img{
+      img {
         width: 60px;
       }
     }
