@@ -50,7 +50,7 @@ export const LevelPage = () => {
             setCurrentLevelIndex((prev) => prev + 1);
         }
     };
-        
+
     const goToPreviousLevel = () => {
         if (currentLevelIndex > 0) {
             setCurrentLevelIndex((prev) => prev - 1);
@@ -60,12 +60,12 @@ export const LevelPage = () => {
     const fetchRanking = async () => {
         try {
             const res = await api.get("/users");
-          
+
             const sorted = res.data
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 .sort((a: any, b: any) => b.totalPoints - a.totalPoints)
                 .slice(0, 10);
-          
+
             setRankingData(sorted);
             setShowRanking(true);
         } catch (error) {
@@ -83,8 +83,8 @@ export const LevelPage = () => {
         setModalMessage("Este modo estará disponível em breve!");
         setShowModal(true);
     };
-    
-          
+
+
     return (
         <StyleLevelPage>
             <div className="header">
@@ -93,7 +93,7 @@ export const LevelPage = () => {
                     <p>Complete os desafios para testar e aprimorar seus conhecimentos em programação!</p>
                 </div>
                 <div className="config">
-                    <img src={iconConfig} alt="icon setting" onClick={() => navigate("/configurations")}/>
+                    <img src={iconConfig} alt="icon setting" onClick={() => navigate("/configurations")} />
                 </div>
             </div>
 
@@ -111,25 +111,29 @@ export const LevelPage = () => {
 
             <div className="listCards">
                 <div className="text" style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-                    {currentLevelIndex > 0 && (
-                        <button
-                            onClick={goToPreviousLevel}
-                            style={{ background: "none", border: "none", cursor: "pointer" }}
-                        >
-                            <img src={iconArrowLeft} alt="Anterior" />
-                        </button>
-                    )}
+                    <div style={{ width: "98px", height: "98px" }}>
+                        {currentLevelIndex > 0 && (
+                            <button
+                                onClick={goToPreviousLevel}
+                                style={{ background: "none", border: "none", cursor: "pointer" }}
+                            >
+                                <img src={iconArrowLeft} alt="Anterior" />
+                            </button>
+                        )}
+                    </div>
 
                     <h1 style={{ margin: "0 auto" }}>{currentLevel?.title || "Carregando fase..."}</h1>
 
-                    {currentLevelIndex < levels.length - 1 && (
-                        <button
-                            onClick={goToNextLevel}
-                            style={{ background: "none", border: "none", cursor: "pointer" }}
-                        >
-                            <img src={iconArrowRight} alt="Próximo" />
-                        </button>
-                    )}
+                    <div style={{ width: "98px", height: "98px" }}>
+                        {currentLevelIndex < levels.length - 1 && (
+                            <button
+                                onClick={goToNextLevel}
+                                style={{ background: "none", border: "none", cursor: "pointer" }}
+                            >
+                                <img src={iconArrowRight} alt="Próximo" />
+                            </button>
+                        )}
+                    </div>
                 </div>
 
 
@@ -145,7 +149,7 @@ export const LevelPage = () => {
                         />
                     ))}
                 </ul>
-        
+
             </div>
 
             <div className="back">
@@ -154,35 +158,39 @@ export const LevelPage = () => {
                 </Button>
             </div>
 
-            {showModal && (
-                <div className="modal">
-                    <div className="modal-content">
-                        <h2>{modalMessage}</h2>
-                        <Button buttonVariation="type6" type="button" onClick={() => setShowModal(false)}>
-                Fechar
-                        </Button>
+            {
+                showModal && (
+                    <div className="modal">
+                        <div className="modal-content">
+                            <h2>{modalMessage}</h2>
+                            <Button buttonVariation="type6" type="button" onClick={() => setShowModal(false)}>
+                                Fechar
+                            </Button>
+                        </div>
                     </div>
-                </div>
-            )}
+                )
+            }
 
-            {showRanking && (
-                <div className="modal">
-                    <div className="modal-content">
-                        <h2>Ranking de Jogadores</h2>
-                        <ul style={{ textAlign: "left" }}>
-                            {rankingData.map((player, index) => (
-                                <li key={player.id}>
-                                    <strong>{index + 1}º</strong> - {player.name} ({player.totalPoints} pts)
-                                </li>
-                            ))}
-                        </ul>
-                        <Button buttonVariation="type6" type="button" onClick={() => setShowRanking(false)}>
-                            Fechar
-                        </Button>
+            {
+                showRanking && (
+                    <div className="modal">
+                        <div className="modal-content">
+                            <h2>Ranking de Jogadores</h2>
+                            <ul style={{ textAlign: "left" }}>
+                                {rankingData.map((player, index) => (
+                                    <li key={player.id}>
+                                        <strong>{index + 1}º</strong> - {player.name} ({player.totalPoints} pts)
+                                    </li>
+                                ))}
+                            </ul>
+                            <Button buttonVariation="type6" type="button" onClick={() => setShowRanking(false)}>
+                                Fechar
+                            </Button>
+                        </div>
                     </div>
-                </div>
-            )}
+                )
+            }
 
-        </StyleLevelPage>
+        </StyleLevelPage >
     );
 };

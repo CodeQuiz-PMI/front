@@ -24,7 +24,7 @@ export const StyleAboutPage = styled.main`
     p {
         margin-top: 20px;
         font-family: "Space Mono", monospace;
-        font-size: 30px;
+        font-size: 20px;
     }
 
     .text{
@@ -33,7 +33,7 @@ export const StyleAboutPage = styled.main`
         list-style: circle;
         li{
             font-family: "Space Mono", monospace;
-            font-size: 30px;
+            font-size: 20px;
         }
     }
 
