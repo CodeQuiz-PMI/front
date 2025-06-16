@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Button } from "../../components/button";
 import { StyledLoginPage } from "./styled";
-import googleImg from "../../assets/googleImg.svg";
-import gitImg from "../../assets/gitImg.svg";
+// import googleImg from "../../assets/googleImg.svg";
+// import gitImg from "../../assets/gitImg.svg";
 import { useNavigate, Link } from "react-router-dom";
 import { useApp } from "../../context/AppContext";
 
@@ -52,25 +52,25 @@ export const LoginPage = () => {
                         onChange={(e) => setPassword(e.target.value)}
                     />
 
-                    {error && <p style={{ color: "red", marginTop: "0.5rem" }}>{error}</p>}
+                    {error && <p style={{ color: "red", marginTop: "0.5rem", fontFamily: "Space Mono" }}>{error}</p>}
 
                     <div className="links">
-                        <a href="#" className="link">Esqueceu sua senha?</a>
+                        {/* <a href="#" className="link">Esqueceu sua senha?</a> */}
                         <Link to="/register" className="link">Criar conta</Link>
                     </div>
 
-                    <div className="socialIcons">
+                    {/* <div className="socialIcons">
                         <img src={gitImg} alt="GitHub login" />
                         <img src={googleImg} alt="Google login" />
-                    </div>
+                    </div> */}
 
                     <Button buttonVariation="type2" type="submit">Jogar</Button>
                 </form>
 
                 <div className="bottomRight">
-                    <Button buttonVariation="type2" type="button" onClick={() => navigate("/Game")}>
+                    {/* <Button buttonVariation="type2" type="button" onClick={() => navigate("/Game")}>
                         Modo Visitante
-                    </Button>
+                    </Button> */}
                     <Button buttonVariation="type4" type="button" onClick={() => navigate("/")}>
                         Voltar
                     </Button>

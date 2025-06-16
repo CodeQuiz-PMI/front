@@ -146,25 +146,33 @@ export const QuestionPage = () => {
     const submitAnswerLog = async (userAnswer: string, isCorrect: boolean) => {
         try {
             const res = await api.get(`/answerlogs/user/${user?.id}`);
-            const alreadyAnswered = res.data.some(
+    
+            const existingLog = res.data.find(
                 (log: AnswerLog) => log.question === question._id
             );
-    
-            if (alreadyAnswered) {
+
+            if (existingLog?.isCorrect) {
                 return;
             }
-    
-            await api.post("/answerlogs", {
-                userId: user?.id,
-                questionId: question._id,
-                userAnswer,
-                isCorrect,
-            });
-    
+
+            if (existingLog && !existingLog.isCorrect) {
+                await api.put(`/answerlogs/${existingLog._id}`, {
+                    userAnswer,
+                });
+            } else {
+                await api.post("/answerlogs", {
+                    userId: user?.id,
+                    questionId: question._id,
+                    userAnswer,
+                    isCorrect,
+                });
+            }
+
         } catch (error) {
             console.error("Erro ao salvar log da resposta:", error);
         }
     };
+
     
       
     return (

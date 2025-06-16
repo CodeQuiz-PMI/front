@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -60,13 +61,13 @@ export const LevelPage = () => {
     const fetchRanking = async () => {
         try {
             const res = await api.get("/users");
-
-            const sorted = res.data
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          
+            const filteredAndSorted = res.data
+                .filter((user: any) => user.totalPoints && user.totalPoints > 0)
                 .sort((a: any, b: any) => b.totalPoints - a.totalPoints)
                 .slice(0, 10);
 
-            setRankingData(sorted);
+            setRankingData(filteredAndSorted);
             setShowRanking(true);
         } catch (error) {
             console.error("Erro ao carregar ranking:", error);
@@ -111,7 +112,7 @@ export const LevelPage = () => {
 
             <div className="listCards">
                 <div className="text" style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-                    <div style={{ width: "98px", height: "98px" }}>
+                    <div style={{width:"98px"}}>
                         {currentLevelIndex > 0 && (
                             <button
                                 onClick={goToPreviousLevel}
@@ -123,8 +124,8 @@ export const LevelPage = () => {
                     </div>
 
                     <h1 style={{ margin: "0 auto" }}>{currentLevel?.title || "Carregando fase..."}</h1>
-
-                    <div style={{ width: "98px", height: "98px" }}>
+                    
+                    <div style={{width:"98px"}}>
                         {currentLevelIndex < levels.length - 1 && (
                             <button
                                 onClick={goToNextLevel}
@@ -168,29 +169,40 @@ export const LevelPage = () => {
                             </Button>
                         </div>
                     </div>
-                )
-            }
+            )}
 
-            {
-                showRanking && (
-                    <div className="modal">
-                        <div className="modal-content">
-                            <h2>Ranking de Jogadores</h2>
-                            <ul style={{ textAlign: "left" }}>
-                                {rankingData.map((player, index) => (
-                                    <li key={player.id}>
-                                        <strong>{index + 1}º</strong> - {player.name} ({player.totalPoints} pts)
-                                    </li>
-                                ))}
+            {showRanking && (
+                <div className="modal">
+                    <div className="modal-content">
+                        <h2>Ranking de Jogadores</h2>
+                        {rankingData.length > 0 ? (
+                            <ul style={{ textAlign: "left", width: "auto" }}>
+                                {rankingData.map((player, index) => {
+                                    const topIcon = index === 0 ? "🥇" : index === 1 ? "🥈" : index === 2 ? "🥉" : `${index + 1}º`;
+                                    return (
+                                        <li key={player.id} style={{display: "flex", flexDirection: "row"}}>
+                                            <strong style={{ display: "flex", width: "2em", textAlign: "center", flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
+                                                {topIcon}
+                                            </strong>{" "}
+                                            - {player.name} ({player.totalPoints} pts)
+                                        </li>
+                                    );
+                                })}
                             </ul>
-                            <Button buttonVariation="type6" type="button" onClick={() => setShowRanking(false)}>
+                        ) : (
+                            <p style={{ fontFamily: "Space Mono" }}>
+                                Nenhum jogador com pontuação no ranking ainda.
+                            </p>
+                        )}
+
+                        <div style={{ display: "flex", justifyContent: "space-between", marginTop: "1rem"}}>
+                            <Button buttonVariation="buttonMini" type="button" onClick={() => setShowRanking(false)}>
                                 Fechar
                             </Button>
                         </div>
                     </div>
                 )
             }
-
-        </StyleLevelPage >
+        </StyleLevelPage>
     );
 };

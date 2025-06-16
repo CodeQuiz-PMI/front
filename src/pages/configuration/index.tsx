@@ -15,6 +15,8 @@ export const Configuration = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+    const [isResetModalOpen, setIsResetModalOpen] = useState(false);
 
     useEffect(() => {
         const userFromStorage = localStorage.getItem("user");
@@ -191,12 +193,13 @@ export const Configuration = () => {
                         Editar
                     </Button>
                 </div>
-                <Button buttonVariation="type6" type="button" onClick={handleResetProgress}>
+                <Button buttonVariation="type6" type="button" onClick={() => setIsResetModalOpen(true)}>
                     Reiniciar progresso?
                 </Button>
-                <Button buttonVariation="type6" type="button" onClick={() => setIsModalDeleteOpen(true)}>
+                <Button buttonVariation="type6" type="button" onClick={() => setIsDeleteModalOpen(true)}>
                     Deletar conta
                 </Button>
+
             </div>
 
             <div className="buttonBack">
@@ -250,26 +253,57 @@ export const Configuration = () => {
                     </div>
                 </div>
             )}
-
-            {isModalDeleteOpen && (
+            {isDeleteModalOpen && (
                 <div className="modal">
                     <div className="modal-content">
-                        <h2>Deletar conta</h2>
-                        <p>Tem certeza?</p>
-                        <Button
-                            buttonVariation="type5"
-                            type="submit"
-                            onClick={handleDeleteAccount}
-                        >
-                            Sim
-                        </Button>
-                        <Button
-                            buttonVariation="type6"
-                            type="button"
-                            onClick={() => setIsModalDeleteOpen(false)}
-                        >
-                            Não
-                        </Button>
+                        <h2>Tem certeza que deseja deletar sua conta?</h2>
+                        <p style={{fontFamily:"Space Mono"}}>Essa ação é irreversível e apagará todos os seus dados.</p>
+                        <div className="button-group">
+                            <Button 
+                                buttonVariation="type6" 
+                                type="button" 
+                                onClick={() => {
+                                    handleDeleteAccount();
+                                    setIsDeleteModalOpen(false);
+                                }}
+                            >
+                                Sim, deletar
+                            </Button>
+                            <Button 
+                                buttonVariation="type5" 
+                                type="button" 
+                                onClick={() => setIsDeleteModalOpen(false)}
+                            >
+                                Não
+                            </Button>
+                        </div>
+                    </div>
+                </div>
+            )}
+            {isResetModalOpen && (
+                <div className="modal">
+                    <div className="modal-content">
+                        <h2>Tem certeza que deseja reiniciar seu progresso?</h2>
+                        <p>Essa ação removerá <strong>todas as questões já respondidas</strong> e seu histórico de pontuação.</p>
+                        <div className="button-group">
+                            <Button 
+                                buttonVariation="type6" 
+                                type="button" 
+                                onClick={() => {
+                                    handleResetProgress();
+                                    setIsResetModalOpen(false);
+                                }}
+                            >
+                                Sim, quero reiniciar
+                            </Button>
+                            <Button 
+                                buttonVariation="type5" 
+                                type="button" 
+                                onClick={() => setIsResetModalOpen(false)}
+                            >
+                                Não
+                            </Button>
+                        </div>
                     </div>
                 </div>
             )}

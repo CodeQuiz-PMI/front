@@ -139,6 +139,29 @@ export const StyledButton = styled.button<iStyledButtonProps>`
             }
           }
         `;
+            case "buttonMini":
+                return css`
+          width: 140px;
+          height: 45px;
+          color: #88ff3f;
+          font-size: 20px;
+          border: 1px solid #88ff3f;
+          border-radius: 10px;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: space-around;
+          background-color: #121212;
+          font-family: "Space Mono";
+
+          &:hover {
+            cursor: pointer;
+            background-color: rgba(137, 255, 63, 0.5);
+            img {
+              background-color: rgba(137, 255, 63, 0);
+            }
+          }
+        `;
         }
     }}
 `;
