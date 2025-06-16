@@ -9,6 +9,7 @@ export const Configuration = () => {
 
     const [username, setUsername] = useState("");
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
 
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
@@ -117,6 +118,7 @@ export const Configuration = () => {
             localStorage.removeItem("user");
             localStorage.removeItem("token");
 
+            setIsModalDeleteOpen(false)
             navigate("/");
             console.log("Conta excluída com sucesso.");
         } catch (error) {
@@ -182,8 +184,8 @@ export const Configuration = () => {
                 <h2>Conta e Progresso:</h2>
                 <h2>Perfil do Usuário</h2>
                 <div className="button-group">
-                    <input 
-                        type="text" 
+                    <input
+                        type="text"
                         value={username}
                         readOnly
                     />
@@ -210,40 +212,40 @@ export const Configuration = () => {
                 <div className="modal">
                     <div className="modal-content">
                         <h2>Editar Perfil</h2>
-                        <input 
-                            type="text" 
-                            placeholder="Nome" 
-                            value={name} 
-                            onChange={(e) => setName(e.target.value)} 
+                        <input
+                            type="text"
+                            placeholder="Nome"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
                         />
-                        <input 
-                            type="text" 
-                            placeholder="Email" 
-                            value={email} 
-                            onChange={(e) => setEmail(e.target.value)} 
+                        <input
+                            type="text"
+                            placeholder="Email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
                         />
-                        <input 
-                            type="password" 
-                            placeholder="Nova senha" 
-                            value={password} 
-                            onChange={(e) => setPassword(e.target.value)} 
+                        <input
+                            type="password"
+                            placeholder="Nova senha"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
                         />
-                        <input 
-                            type="password" 
-                            placeholder="Confirmar senha" 
-                            value={confirmPassword} 
-                            onChange={(e) => setConfirmPassword(e.target.value)} 
+                        <input
+                            type="password"
+                            placeholder="Confirmar senha"
+                            value={confirmPassword}
+                            onChange={(e) => setConfirmPassword(e.target.value)}
                         />
-                        <Button 
-                            buttonVariation="type5" 
-                            type="submit" 
+                        <Button
+                            buttonVariation="type5"
+                            type="submit"
                             onClick={handleSaveChanges}
                         >
                             Salvar
                         </Button>
-                        <Button 
-                            buttonVariation="type6" 
-                            type="button" 
+                        <Button
+                            buttonVariation="type6"
+                            type="button"
                             onClick={() => setIsModalOpen(false)}
                         >
                             Cancelar
@@ -251,7 +253,6 @@ export const Configuration = () => {
                     </div>
                 </div>
             )}
-
             {isDeleteModalOpen && (
                 <div className="modal">
                     <div className="modal-content">
@@ -306,7 +307,6 @@ export const Configuration = () => {
                     </div>
                 </div>
             )}
-
         </StyledConfigurationPage>
     );
 };

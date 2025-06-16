@@ -51,7 +51,7 @@ export const LevelPage = () => {
             setCurrentLevelIndex((prev) => prev + 1);
         }
     };
-        
+
     const goToPreviousLevel = () => {
         if (currentLevelIndex > 0) {
             setCurrentLevelIndex((prev) => prev - 1);
@@ -84,8 +84,8 @@ export const LevelPage = () => {
         setModalMessage("Este modo estará disponível em breve!");
         setShowModal(true);
     };
-    
-          
+
+
     return (
         <StyleLevelPage>
             <div className="header">
@@ -94,7 +94,7 @@ export const LevelPage = () => {
                     <p>Complete os desafios para testar e aprimorar seus conhecimentos em programação!</p>
                 </div>
                 <div className="config">
-                    <img src={iconConfig} alt="icon setting" onClick={() => navigate("/configurations")}/>
+                    <img src={iconConfig} alt="icon setting" onClick={() => navigate("/configurations")} />
                 </div>
             </div>
 
@@ -150,7 +150,7 @@ export const LevelPage = () => {
                         />
                     ))}
                 </ul>
-        
+
             </div>
 
             <div className="back">
@@ -159,15 +159,16 @@ export const LevelPage = () => {
                 </Button>
             </div>
 
-            {showModal && (
-                <div className="modal">
-                    <div className="modal-content">
-                        <h2>{modalMessage}</h2>
-                        <Button buttonVariation="type6" type="button" onClick={() => setShowModal(false)}>
-                Fechar
-                        </Button>
+            {
+                showModal && (
+                    <div className="modal">
+                        <div className="modal-content">
+                            <h2>{modalMessage}</h2>
+                            <Button buttonVariation="type6" type="button" onClick={() => setShowModal(false)}>
+                                Fechar
+                            </Button>
+                        </div>
                     </div>
-                </div>
             )}
 
             {showRanking && (
@@ -200,10 +201,8 @@ export const LevelPage = () => {
                             </Button>
                         </div>
                     </div>
-                </div>
-            )}
-
-
+                )
+            }
         </StyleLevelPage>
     );
 };
