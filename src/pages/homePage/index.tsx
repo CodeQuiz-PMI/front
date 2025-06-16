@@ -44,7 +44,7 @@ export const HomePage = () => {
                 </Button>
 
                 <Button
-                    buttonVariation="type3"
+                    buttonVariation="type2"
                     type="button"
                     onClick={handleContinue}
                     disabled={!hasToken}
