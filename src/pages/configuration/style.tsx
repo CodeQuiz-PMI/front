@@ -4,7 +4,15 @@ export const StyledConfigurationPage = styled.main`
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    font-family: "Space Mono";
 
+    strong, p{
+        font-family: "Space Mono";
+    }
+
+    strong {
+        color: white;
+    }
 
     .config-container {
         border: 0px solid #88FF3F;

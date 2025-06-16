@@ -62,12 +62,12 @@ export const RegisterPage = () => {
                         onChange={(e) => setPassword(e.target.value)}
                     />
 
-                    {error && <p style={{ color: "red", marginTop: "0.5rem" }}>{error}</p>}
+                    {error && <p style={{ color: "red", marginTop: "0.5rem", fontFamily: "Space Mono" }}>{error}</p>}
 
-                    <div className="socialIcons">
+                    {/* <div className="socialIcons">
                         <img src={gitImg} alt="Login com GitHub" />
                         <img src={googleImg} alt="Login com Google" />
-                    </div>
+                    </div> */}
 
                     <Button buttonVariation="type2" type="submit">
                         Jogar

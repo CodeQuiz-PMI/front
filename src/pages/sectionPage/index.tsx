@@ -37,7 +37,9 @@ export const SectionPage = () => {
         const fetchAnswered = async () => {
             try {
                 const res = await api.get(`/answerlogs/user/${user?.id}`);
-                const answered = res.data.map((log: AnswerLog) => log.question);
+                const answered = res.data
+                    .filter((log: AnswerLog) => log.isCorrect === true)
+                    .map((log: AnswerLog) => log.question);
                 setAnsweredIds(answered);
             } catch (error) {
                 console.error("Erro ao buscar respostas do usuário:", error);
@@ -49,14 +51,17 @@ export const SectionPage = () => {
     }, [section._id, getQuestions, user?.id]);
 
     const handleQuestionClick = (question: Question) => {
-        if (answeredIds.includes(question._id)) {
+        const alreadyAnsweredCorrectly = answeredIds.includes(question._id);
+
+        if (alreadyAnsweredCorrectly) {
             setClickedQuestion(question);
-            setModalMessage("Você já respondeu essa pergunta. Nenhum ponto será somado.");
+            setModalMessage("Você já respondeu essa pergunta corretamente. Nenhum ponto será somado.");
             setShowModal(true);
         } else {
             navigate(`/question/${question._id}`, { state: { question } });
-        }      
+        }
     };
+
 
 
     return(

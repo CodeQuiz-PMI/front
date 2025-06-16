@@ -1,6 +1,6 @@
 import styled from "styled-components";
 export const StyledLoginPage = styled.main`
-  gap: 90px;
+  gap: 10px;
   .title {
     h1 {
       font-size: 40px;
