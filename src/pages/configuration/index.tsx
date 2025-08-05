@@ -4,34 +4,42 @@ import { Button } from "../../components/button";
 import { StyledConfigurationPage } from "./style";
 import { api } from "../../services/api";
 
+// Tipagem opcional do usuário (evita repetição do JSON.parse)
+interface UserData {
+  id: string;
+  name: string;
+  email: string;
+}
+
 export const Configuration = () => {
     const navigate = useNavigate();
 
     const [username, setUsername] = useState("");
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+    const [isResetModalOpen, setIsResetModalOpen] = useState(false);
 
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
-    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-    const [isResetModalOpen, setIsResetModalOpen] = useState(false);
 
+    // Carregar nome do usuário
     useEffect(() => {
         const userFromStorage = localStorage.getItem("user");
         if (userFromStorage) {
-            const userData = JSON.parse(userFromStorage);
+            const userData: UserData = JSON.parse(userFromStorage);
             setUsername(userData.name || "");
         }
     }, []);
 
+    // Editar perfil
     const handleEditClick = () => {
         const userFromStorage = localStorage.getItem("user");
         if (userFromStorage) {
-            const userData = JSON.parse(userFromStorage);
-            setName(userData.name || "");
-            setEmail(userData.email || "");
+            const userData: UserData = JSON.parse(userFromStorage);
+            setName(userData.name);
+            setEmail(userData.email);
         }
         setIsModalOpen(true);
     };
@@ -43,13 +51,9 @@ export const Configuration = () => {
         }
 
         const userFromStorage = localStorage.getItem("user");
-        if (!userFromStorage) {
-            console.log("Usuário não encontrado.");
-            return;
-        }
+        if (!userFromStorage) return console.log("Usuário não encontrado.");
 
-        const userData = JSON.parse(userFromStorage);
-        const userId = userData.id;
+        const userData: UserData = JSON.parse(userFromStorage);
 
         const updatedUser = {
             name,
@@ -58,14 +62,9 @@ export const Configuration = () => {
         };
 
         try {
-            await api.patch(`/users/${userId}`, updatedUser);
-
-            const newUserData = {
-                ...userData,
-                ...updatedUser
-            };
+            await api.patch(`/users/${userData.id}`, updatedUser);
+            const newUserData = { ...userData, ...updatedUser };
             localStorage.setItem("user", JSON.stringify(newUserData));
-
             setUsername(name);
             setIsModalOpen(false);
             console.log("Dados atualizados com sucesso.");
@@ -75,50 +74,27 @@ export const Configuration = () => {
     };
 
     const handleResetProgress = async () => {
+        const userFromStorage = localStorage.getItem("user");
+        if (!userFromStorage) return;
+
+        const userData: UserData = JSON.parse(userFromStorage);
         try {
-            const userFromStorage = localStorage.getItem("user");
-            if (!userFromStorage) {
-                console.log("Usuário não encontrado.");
-                return;
-            }
-
-            const userData = JSON.parse(userFromStorage);
-            const userId = userData.id;
-
-            await api.delete(`/answerlogs/user/${userId}`);
-
+            await api.delete(`/answerlogs/user/${userData.id}`);
             console.log("Progresso reiniciado com sucesso.");
         } catch (error) {
             console.error("Erro ao reiniciar progresso:", error);
         }
     };
 
-    const handleGoBack = () => {
-        const userFromStorage = localStorage.getItem("user");
-        if (userFromStorage) {
-            navigate("/Game");
-        } else {
-            navigate("/");
-        }
-    };
-
     const handleDeleteAccount = async () => {
+        const userFromStorage = localStorage.getItem("user");
+        if (!userFromStorage) return;
+
+        const userData: UserData = JSON.parse(userFromStorage);
         try {
-            const userFromStorage = localStorage.getItem("user");
-            if (!userFromStorage) {
-                console.log("Usuário não encontrado.");
-                return;
-            }
-
-            const userData = JSON.parse(userFromStorage);
-            const userId = userData.id;
-
-            await api.delete(`/users/${userId}`);
-
+            await api.delete(`/users/${userData.id}`);
             localStorage.removeItem("user");
             localStorage.removeItem("token");
-
-            setIsModalDeleteOpen(false)
             navigate("/");
             console.log("Conta excluída com sucesso.");
         } catch (error) {
@@ -126,186 +102,103 @@ export const Configuration = () => {
         }
     };
 
+    const handleGoBack = () => {
+        const userFromStorage = localStorage.getItem("user");
+        navigate(userFromStorage ? "/Game" : "/");
+    };
+
+    // ========== Componentes auxiliares ==========
+    const ConfirmationModal = ({
+        title,
+        message,
+        onConfirm,
+        onCancel
+    }: {
+        title: string;
+        message: string | JSX.Element;
+        onConfirm: () => void;
+        onCancel: () => void;
+    }) => (
+        <div className="modal">
+            <div className="modal-content">
+                <h2>{title}</h2>
+                <p>{message}</p>
+                <div className="button-group">
+                    <Button buttonVariation="type6" type="button" onClick={onConfirm}>
+            Confirmar
+                    </Button>
+                    <Button buttonVariation="type5" type="button" onClick={onCancel}>
+            Cancelar
+                    </Button>
+                </div>
+            </div>
+        </div>
+    );
+
+    const EditModal = () => (
+        <div className="modal">
+            <div className="modal-content">
+                <h2>Editar Perfil</h2>
+                <input type="text" placeholder="Nome" value={name} onChange={(e) => setName(e.target.value)} />
+                <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                <input type="password" placeholder="Nova senha" value={password} onChange={(e) => setPassword(e.target.value)} />
+                <input type="password" placeholder="Confirmar senha" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
+                <Button buttonVariation="type5" type="submit" onClick={handleSaveChanges}>Salvar</Button>
+                <Button buttonVariation="type6" type="button" onClick={() => setIsModalOpen(false)}>Cancelar</Button>
+            </div>
+        </div>
+    );
+
+    // ========== JSX ==========
     return (
         <StyledConfigurationPage>
             <div className="config-container">
                 <h1 className="title">Configurações</h1>
-                <p className="subtitle">
-                    Personalize sua experiência no CodeQuiz da maneira que preferir!
-                </p>
+                <p className="subtitle">Personalize sua experiência no CodeQuiz da maneira que preferir!</p>
             </div>
-            {/* <div className="section">
-                <h2>Configuração de Som:</h2>
-                <div className="button-group">
-                    <Button buttonVariation="type5" type="button">
-                        Ativar
-                    </Button>
-                    <Button buttonVariation="type5" type="button">
-                        Desativar
-                    </Button>
-                </div>
-                <div className="slider-container">
-                    <input type="range" className="custom-slider" min="0" max="100" value="100" />
-                </div>
-            </div> */}
-
-            {/* <div className="section">
-                <label>Idioma:</label>
-                <select className="dropdown">
-                    <option>Selecionar</option>
-                    <option>Português</option>
-                    <option>Inglês</option>
-                </select>
-            </div> */}
-
-            {/* <div className="section">
-                <h2>Preferências do Jogo:</h2>
-                <label>Dificuldade das perguntas</label>
-                <select className="dropdown">
-                    <option>Selecionar</option>
-                    <option>Fácil</option>
-                    <option>Médio</option>
-                    <option>Difícil</option>
-                </select>
-                <h2>Tempo para responder:</h2>
-                <Button buttonVariation="type5" type="button">
-                    Ativar
-                </Button>
-                <span>Padrão 5 minutos</span>
-                <label>Modo de Jogo:</label>
-                <select className="dropdown">
-                    <option>Selecionar</option>
-                    <option>Normal</option>
-                    <option>Desafio</option>
-                </select>
-            </div> */}
 
             <div className="section">
                 <h2>Conta e Progresso:</h2>
                 <h2>Perfil do Usuário</h2>
                 <div className="button-group">
-                    <input
-                        type="text"
-                        value={username}
-                        readOnly
-                    />
-                    <Button buttonVariation="type5" type="button" onClick={handleEditClick}>
-                        Editar
-                    </Button>
+                    <input type="text" value={username} readOnly />
+                    <Button buttonVariation="type5" type="button" onClick={handleEditClick}>Editar</Button>
                 </div>
-                <Button buttonVariation="type6" type="button" onClick={() => setIsResetModalOpen(true)}>
-                    Reiniciar progresso?
-                </Button>
-                <Button buttonVariation="type6" type="button" onClick={() => setIsDeleteModalOpen(true)}>
-                    Deletar conta
-                </Button>
 
+                <Button buttonVariation="type6" type="button" onClick={() => setIsResetModalOpen(true)}>Reiniciar progresso?</Button>
+                <Button buttonVariation="type6" type="button" onClick={() => setIsDeleteModalOpen(true)}>Deletar conta</Button>
             </div>
 
             <div className="buttonBack">
-                <Button buttonVariation="type6" type="button" onClick={handleGoBack}>
-                    Voltar
-                </Button>
+                <Button buttonVariation="type6" type="button" onClick={handleGoBack}>Voltar</Button>
             </div>
 
-            {isModalOpen && (
-                <div className="modal">
-                    <div className="modal-content">
-                        <h2>Editar Perfil</h2>
-                        <input
-                            type="text"
-                            placeholder="Nome"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                        />
-                        <input
-                            type="text"
-                            placeholder="Email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                        />
-                        <input
-                            type="password"
-                            placeholder="Nova senha"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
-                        <input
-                            type="password"
-                            placeholder="Confirmar senha"
-                            value={confirmPassword}
-                            onChange={(e) => setConfirmPassword(e.target.value)}
-                        />
-                        <Button
-                            buttonVariation="type5"
-                            type="submit"
-                            onClick={handleSaveChanges}
-                        >
-                            Salvar
-                        </Button>
-                        <Button
-                            buttonVariation="type6"
-                            type="button"
-                            onClick={() => setIsModalOpen(false)}
-                        >
-                            Cancelar
-                        </Button>
-                    </div>
-                </div>
-            )}
+            {isModalOpen && <EditModal />}
+
             {isDeleteModalOpen && (
-                <div className="modal">
-                    <div className="modal-content">
-                        <h2>Tem certeza que deseja deletar sua conta?</h2>
-                        <p style={{fontFamily:"Space Mono"}}>Essa ação é irreversível e apagará todos os seus dados.</p>
-                        <div className="button-group">
-                            <Button 
-                                buttonVariation="type6" 
-                                type="button" 
-                                onClick={() => {
-                                    handleDeleteAccount();
-                                    setIsDeleteModalOpen(false);
-                                }}
-                            >
-                                Sim, deletar
-                            </Button>
-                            <Button 
-                                buttonVariation="type5" 
-                                type="button" 
-                                onClick={() => setIsDeleteModalOpen(false)}
-                            >
-                                Não
-                            </Button>
-                        </div>
-                    </div>
-                </div>
+                <ConfirmationModal
+                    title="Tem certeza que deseja deletar sua conta?"
+                    message={<span style={{ fontFamily: "Space Mono" }}>Essa ação é irreversível e apagará todos os seus dados.</span>}
+                    onConfirm={() => {
+                        handleDeleteAccount();
+                        setIsDeleteModalOpen(false);
+                    }}
+                    onCancel={() => setIsDeleteModalOpen(false)}
+                />
             )}
+
             {isResetModalOpen && (
-                <div className="modal">
-                    <div className="modal-content">
-                        <h2>Tem certeza que deseja reiniciar seu progresso?</h2>
-                        <p>Essa ação removerá <strong>todas as questões já respondidas</strong> e seu histórico de pontuação.</p>
-                        <div className="button-group">
-                            <Button 
-                                buttonVariation="type6" 
-                                type="button" 
-                                onClick={() => {
-                                    handleResetProgress();
-                                    setIsResetModalOpen(false);
-                                }}
-                            >
-                                Sim, quero reiniciar
-                            </Button>
-                            <Button 
-                                buttonVariation="type5" 
-                                type="button" 
-                                onClick={() => setIsResetModalOpen(false)}
-                            >
-                                Não
-                            </Button>
-                        </div>
-                    </div>
-                </div>
+                <ConfirmationModal
+                    title="Tem certeza que deseja reiniciar seu progresso?"
+                    message={
+                        <span>Essa ação removerá <strong>todas as questões já respondidas</strong> e seu histórico de pontuação.</span>
+                    }
+                    onConfirm={() => {
+                        handleResetProgress();
+                        setIsResetModalOpen(false);
+                    }}
+                    onCancel={() => setIsResetModalOpen(false)}
+                />
             )}
         </StyledConfigurationPage>
     );

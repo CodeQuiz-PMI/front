@@ -1,46 +1,22 @@
-// import trophyIcon from "../../assets/Trophy.svg";
-import { useNavigate } from "react-router-dom";
+import React from "react";
+// import trophyIcon from "../../assets/Trophy.svg"; // Descomente se for usar
+// import { useNavigate } from "react-router-dom";
 import { StyledCardQuestion } from "./styled";
+import { Question } from "../../context/AppContext";
 
-interface Section {
-    _id: string;
-    title: string;
-    description: string;
-    createdAt: Date;
-    level: {
-      createdAt: string;
-      description: string;
-      difficulty: string;
-      title: string;
-      __v: number;
-      _id: string;
-    };
-}
-
-interface Question {
-    _id: string;
-    title: string;
-    text: string;
-    answer: string;
-    response_1: string;
-    response_2: string;
-    response_3: string;
-    response_4: string;
-    correctResponse: string;
-    type: string;
-    order: number;
-    points: number;
-    createdAt: Date;
-    section: Section;
-}
-
+// ========== TIPAGENS ==========
 interface CardQuestionProps {
-    question: Question;
+  question: Question;
 }
 
-export const CardQuestion: React.FC<CardQuestionProps> = ({question}) => {
-    return(
-        <StyledCardQuestion>
+// ========== COMPONENTE ==========
+export const CardQuestion: React.FC<CardQuestionProps> = ({ question }) => {
+    // const navigate = useNavigate(); // Exemplo de uso futuro: navegação ao clicar
+
+    return (
+        <StyledCardQuestion
+            // onClick={() => navigate(`/pergunta/${question._id}`)} // opcional
+        >
             <div className="number">{question.order}</div>
             <p>{question.title}</p>
         </StyledCardQuestion>

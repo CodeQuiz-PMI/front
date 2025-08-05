@@ -1,6 +1,8 @@
+/* eslint-disable react-refresh/only-export-components */
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { api } from "../services/api";
 
+// ========== INTERFACES ==========
 export interface User {
   id: string;
   name: string;
@@ -28,12 +30,12 @@ export interface Section {
   description: string;
   createdAt: Date;
   level: {
-    createdAt: string;
+    _id: string;
+    title: string;
     description: string;
     difficulty: string;
-    title: string;
+    createdAt: string;
     __v: number;
-    _id: string;
   };
 }
 
@@ -82,13 +84,13 @@ interface AppContextType {
   user: User | null;
 }
 
+// ========== CONTEXTO ==========
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
-export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
-    children,
-}) => {
+export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [user, setUser] = useState<User | null>(null);
 
+    // ---------- AUTENTICAÇÃO ----------
     const login = async (email: string, password: string) => {
         const res = await api.post("/auth/login", { email, password });
         setUser(res.data.user);
@@ -104,40 +106,43 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
         api.defaults.headers.common["Authorization"] = `Bearer ${res.data.token}`;
     };
 
+    // ---------- GETTERS ----------
     const getUsers = async () => {
         const res = await api.get("/users");
-        return res.data;
+        return res.data as User[];
     };
 
     const getLevels = async () => {
         const res = await api.get("/levels");
-        return res.data;
+        return res.data as Level[];
     };
 
     const getSections = async () => {
         const res = await api.get("/sections");
-        return res.data;
+        return res.data as Section[];
     };
 
     const getQuestions = async () => {
         const res = await api.get("/questions");
-        return res.data;
-    };
-
-    const submitAnswerLog = async (data: {
-    userId: string;
-    questionId: string;
-    userAnswer: string;
-    }) => {
-        const res = await api.post("/answerlog", data);
-        return res.data;
+        return res.data as Question[];
     };
 
     const getAnswerLogs = async () => {
         const res = await api.get("/answerlog");
-        return res.data;
+        return res.data as AnswerLog[];
     };
 
+    // ---------- POST: SUBMIT ANSWER ----------
+    const submitAnswerLog = async (data: {
+    userId: string;
+    questionId: string;
+    userAnswer: string;
+  }) => {
+        const res = await api.post("/answerlog", data);
+        return res.data as { correct: boolean; pointsEarned: number };
+    };
+
+    // ---------- EFEITO DE INICIALIZAÇÃO ----------
     useEffect(() => {
         const token = localStorage.getItem("token");
         const storedUser = localStorage.getItem("user");
@@ -170,7 +175,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
     );
 };
 
-export const useApp = () => {
+// ========== HOOK ==========
+export const useApp = (): AppContextType => {
     const context = useContext(AppContext);
     if (!context) throw new Error("useApp must be used within AppProvider");
     return context;

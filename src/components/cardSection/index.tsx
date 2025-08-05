@@ -1,21 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "../button";
 import { StyleCardSection } from "./style";
-
-interface Section {
-    _id: string;
-    title: string;
-    description: string;
-    createdAt: Date;
-    level: {
-      createdAt: string;
-      description: string;
-      difficulty: string;
-      title: string;
-      __v: number;
-      _id: string;
-    };
-}
+import { Section } from "../../context/AppContext";
 
 interface CardSectionProps {
     title: string;

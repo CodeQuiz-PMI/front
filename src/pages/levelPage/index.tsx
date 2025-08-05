@@ -169,7 +169,7 @@ export const LevelPage = () => {
                             </Button>
                         </div>
                     </div>
-            )}
+                )}
 
             {showRanking && (
                 <div className="modal">
@@ -201,7 +201,8 @@ export const LevelPage = () => {
                             </Button>
                         </div>
                     </div>
-                )
+                </div>
+            )
             }
         </StyleLevelPage>
     );
