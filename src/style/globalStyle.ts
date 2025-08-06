@@ -1,29 +1,30 @@
 import { createGlobalStyle } from "styled-components";
 
 export const GlobalStyle = createGlobalStyle`
-    *{
-        margin: 0;
-        padding: 0; 
-        box-sizing: border-box;               
-        color: #88FF3F;
+  *{
+    margin: 0;
+    padding: 0; 
+    box-sizing: border-box;               
+    color: #88FF3F;
+    width: 100%;
 	}
 		
 	body{
-		padding: 20px;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 		background: #2A2A2A;
 	}
+
 	main {
-		width: 1024px;
+		width: 100%;
 		display: flex;
 		flex-direction: column;
 	}
 
-    ul{
-        list-style: none;
-    }
+  ul{
+    list-style: none;
+  }
 		
 	.modal {
     position: fixed;

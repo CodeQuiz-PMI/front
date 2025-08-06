@@ -1,11 +1,10 @@
 import styled from "styled-components";
 
 export const HomeStyled = styled.main`
-  align-items: center;
-
-  nav {
+   nav {
     width: 100%;
-    height: 165px;
+    height: 140px;
+    padding: 10px;
     background: #2fff0026;
     border-bottom: #2FFF00 2px solid;
     display: flex;
@@ -14,15 +13,19 @@ export const HomeStyled = styled.main`
     justify-content: space-between;
 
     .img{
+        width: auto;
+        height: auto;
         padding-left: 20px;
     }
 
     .nav{
         display: flex;
         flex-direction: row;
+        justify-content: flex-end;
         gap: 20px;
         padding-right: 20px;
         a {
+            width: auto;
             text-decoration: none;
             color: #2FFF00;
             font-family: "Jersey 25";
@@ -41,7 +44,7 @@ export const HomeStyled = styled.main`
         padding-top: 50px;
 
         img {
-            width: 750px;
+            width: 610px;
             height: 200px;        
         }
 
