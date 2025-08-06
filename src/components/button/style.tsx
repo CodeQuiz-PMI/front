@@ -4,163 +4,51 @@ import { iStyledButtonProps } from "./types";
 export const StyledButton = styled.button<iStyledButtonProps>`
   ${({ buttonVariation }) => {
         switch (buttonVariation) {
-            case "type1":
+            case "buttonHomePage":
                 return css`
-          height: 103px;
-          width: 427px;
-          color: #88ff3f;
-          font-size: 40px;
-          border: 1px solid #88ff3f;
-          border-radius: 10px;
-          background-color: #121212;
-          font-family: "Space Mono";
+                width: 539px;
+                height: 104px;
 
-          &:hover {
-            cursor: pointer;
-            background-color: rgba(137, 255, 63, 0.5);
-          }
-        `;
-            case "type2":
-                return css`
-          height: 76px;
-          width: 304px;
-          color: #88ff3f;
-          font-size: 30px;
-          border: 1px solid #88ff3f;
-          border-radius: 10px;
-          background-color: #121212;
-          font-family: "Space Mono";
+                filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25));
 
-          &:hover {
-            cursor: pointer;
-            background-color: rgba(137, 255, 63, 0.5);
-          }
-        `;
-            case "type3":
-                return css`
-          height: 76px;
-          width: 304px;
-          color: rgba(137, 255, 63, 0.5);
-          font-size: 30px;
-          border: 1px solid rgba(137, 255, 63, 0.5);
-          border-radius: 10px;
-          background-color: #121212;
-          font-family: "Space Mono";
-        `;
-            case "type4":
-                return css`
-          width: 202px;
-          height: 51px;
-          color: #88ff3f;
-          font-size: 20px;
-          border: 1px solid #88ff3f;
-          border-radius: 10px;
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-          justify-content: space-around;
-          background-color: #121212;
-          font-family: "Space Mono";
+                color: #2FFF00;
+                font-size: 40px;
+                font-family: "Jersey 25";
+                
+                border-radius: 10px;
+                border: 1px solid transparent;
 
-          &:hover {
-            cursor: pointer;
-            background-color: rgba(137, 255, 63, 0.5);
-            img {
-              background-color: rgba(137, 255, 63, 0);
-            }
-          }
+                background-color: rgba(47, 255, 0, 0.15);  
+                &:hover {
+                    cursor: pointer;
+                    background-color: rgba(137, 255, 63, 0.5);
+                }
         `;
-            case "type5":
+            case "buttonLoginPage":
                 return css`
-          width: 145px;
-          height: 56px;
-          color: #88ff3f;
-          font-size: 20px;
-          border: 1px solid #88ff3f;
-          border-radius: 10px;
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-          justify-content: space-around;
-          background-color: #121212;
-          font-family: "Space Mono";
+                width: 371px;
+                height: 76px;
 
-          &:hover {
-            cursor: pointer;
-            background-color: rgba(137, 255, 63, 0.5);
-            img {
-              background-color: rgba(137, 255, 63, 0);
-            }
-          }
-        `;
-            case "type6":
-                return css`
-          width: 270px;
-          height: 56px;
-          color: #88ff3f;
-          font-size: 20px;
-          border: 1px solid #88ff3f;
-          border-radius: 10px;
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-          justify-content: space-around;
-          background-color: #121212;
-          font-family: "Space Mono";
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                
+                border-radius: 10px;
+                border: 1px solid #2FFF00;
+                
+                color: #2FFF00;
+                text-align: center;
+                font-family: "Jersey 25";
+                font-size: 36px;
+                font-style: normal;
+                font-weight: 400;
 
-          &:hover {
-            cursor: pointer;
-            background-color: rgba(137, 255, 63, 0.5);
-            img {
-              background-color: rgba(137, 255, 63, 0);
-            }
-          }
-        `;
-            case "buttonCardSection":
-                return css`
-          width: 150px;
-          height: 56px;
-          color: #88ff3f;
-          font-size: 20px;
-          border: 1px solid #88ff3f;
-          border-radius: 10px;
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-          justify-content: space-around;
-          background-color: #121212;
-          font-family: "Space Mono";
+                background-color: rgba(47, 255, 0, 0.1);  
 
-          &:hover {
-            cursor: pointer;
-            background-color: rgba(137, 255, 63, 0.5);
-            img {
-              background-color: rgba(137, 255, 63, 0);
-            }
-          }
-        `;
-            case "buttonMini":
-                return css`
-          width: 140px;
-          height: 45px;
-          color: #88ff3f;
-          font-size: 20px;
-          border: 1px solid #88ff3f;
-          border-radius: 10px;
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-          justify-content: space-around;
-          background-color: #121212;
-          font-family: "Space Mono";
-
-          &:hover {
-            cursor: pointer;
-            background-color: rgba(137, 255, 63, 0.5);
-            img {
-              background-color: rgba(137, 255, 63, 0);
-            }
-          }
+                &:hover {
+                    cursor: pointer;
+                    background-color: rgba(137, 255, 63, 0.5);
+                }
         `;
         }
     }}
