@@ -9,13 +9,15 @@ import googleImg from "../../assets/googleImg.svg";
 import gitImg from "../../assets/gitImg.svg";
 import arrowLeft from "../../assets/ArrowLeft.svg";
 
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 export const LoginPage = () => {
     const { login } = useApp();
     const navigate = useNavigate();
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [error, setError] = useState("");
 
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -24,7 +26,10 @@ export const LoginPage = () => {
             navigate("/Game");
         } catch (err) {
             console.error(err);
-            setError("Falha no login. Verifique suas credenciais.");
+            toast.error("Falha no login. Verifique suas credenciais.", {
+                position: "top-center",
+                autoClose: 3000,
+            });
         }
     };
 
@@ -44,7 +49,7 @@ export const LoginPage = () => {
 
             <div className="navigate">
                 <Link to="/">
-                    <img src={arrowLeft} alt="" />
+                    <img src={arrowLeft} alt="Voltar" />
                 </Link>
             </div>
 
@@ -60,9 +65,8 @@ export const LoginPage = () => {
 
             <div className="container">
                 <form className="loginForm" onSubmit={handleLogin}>
-                    
                     <div className="input">
-                        <label htmlFor="email">Email</label>
+                        <label htmlFor="email">Email:</label>
                         <input
                             type="email"
                             id="email"
@@ -73,8 +77,7 @@ export const LoginPage = () => {
                     </div>
 
                     <div className="input">
-    
-                        <label htmlFor="password">Senha</label>
+                        <label htmlFor="password">Senha:</label>
                         <input
                             type="password"
                             id="password"
@@ -84,13 +87,10 @@ export const LoginPage = () => {
                         />
                     </div>
 
-                    {error && <p style={{ color: "red", marginTop: "0.5rem", fontFamily: "Space Mono" }}>{error}</p>}
-
                     <div className="links">
                         <Link to="/register" className="link">Criar conta</Link>
                         <Link to="#" className="link">Esqueceu sua senha?</Link>
                     </div>
-
 
                     <div className="button">
                         <Button buttonVariation="buttonLoginPage" type="submit">Jogar</Button>
@@ -98,12 +98,6 @@ export const LoginPage = () => {
                 </form>
 
                 <div className="buttons">
-                    {/* <Button buttonVariation="type2" type="button" onClick={() => navigate("/Game")}>
-                        Modo Visitante
-                    </Button> */}
-                    {/* <Button buttonVariation="buttonLoginPage" type="button" onClick={() => navigate("/")}>
-                        Voltar
-                    </Button> */}
                 </div>
             </div>
         </StyledLoginPage>
