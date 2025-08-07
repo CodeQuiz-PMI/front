@@ -50,6 +50,102 @@ export const StyledButton = styled.button<iStyledButtonProps>`
                     background-color: rgba(137, 255, 63, 0.5);
                 }
         `;
+            case "buttonExit":
+                return css`
+                width: 250px;
+                height: 50px;
+
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                
+                border-radius: 10px;
+                border: 1px solid #2FFF00;
+                
+                color: #2FFF00;
+                text-align: center;
+                font-family: "Jersey 25";
+                font-size: 36px;
+                font-style: normal;
+                font-weight: 400;
+
+                background-color: rgba(47, 255, 0, 0.1);  
+
+                &:hover {
+                    cursor: pointer;
+                    background-color: rgba(137, 255, 63, 0.5);
+                }
+        `;
+            case "buttonImg":
+                return css`
+                width: 80px;
+                height: 50px;
+
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                
+
+                border: 1px solid transparent;
+            
+                background-color: #2A2A2A;  
+                cursor: pointer;
+
+        `;
+            case "buttonImg2":
+                return css`
+                    width: 60px;
+                    height: 50px;
+
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    
+
+                    border: 1px solid transparent;
+                
+                    background-color: #2A2A2A;
+                    cursor: pointer;
+            `;
+            case "buttonCardSection":
+                return css`
+                    width: 234px;
+                    height: 47px;
+
+                    color: #2FFF00;
+                    text-align: center;
+                    font-family: "Jersey 25";
+                    font-size: 32px;
+                    font-style: normal;
+                    font-weight: 400;
+                    line-height: normal;
+
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    
+                    border-radius: 5px;
+                    border: 1px solid transparent; 
+                    background: rgba(0, 0, 0, 0.25);
+
+                    &:hover {
+                        cursor: pointer;
+                        background-color: rgba(137, 255, 63, 0.5);
+                    }
+            `;
+            case "buttonModalRanking":
+                return css`
+                    width: 100px;
+                    height: 100px;
+
+                    padding: 10px;
+
+                    border-radius: 10px;
+                    border: 5px solid #2B4E23;
+
+                    cursor: pointer;
+                    background-color: #2FFF00;
+                `;
         }
     }}
 `;

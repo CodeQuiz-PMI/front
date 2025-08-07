@@ -2,7 +2,7 @@ import styled from "styled-components";
 export const StyledLoginPage = styled.main`
   nav {
     width: 100%;
-    height: 165px;
+    height: 140px;
     background: #2fff0026;
     border-bottom: #2FFF00 2px solid;
     display: flex;
@@ -11,6 +11,8 @@ export const StyledLoginPage = styled.main`
     justify-content: space-between;
 
     .img{
+        width: 140px;
+        height: auto;
         padding-left: 20px;
     }
 
@@ -117,9 +119,9 @@ export const StyledLoginPage = styled.main`
             justify-content: space-between;
 
             font-family: "Jersey 25", sans-serif;
-
             a {
                 text-decoration: none;
+                color: #88ff3f;
             }
         }
 

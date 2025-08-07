@@ -23,7 +23,7 @@ export const LoginPage = () => {
         e.preventDefault();
         try {
             await login(email, password);
-            navigate("/Game");
+            navigate("/Level");
         } catch (err) {
             console.error(err);
             toast.error("Falha no login. Verifique suas credenciais.", {
