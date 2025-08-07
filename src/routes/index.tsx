@@ -9,6 +9,7 @@ import { QuestionPage } from "../pages/questionPage";
 import { LevelPage } from "../pages/levelPage";
 import { SectionPage } from "../pages/sectionPage";
 import { SelectionLevelPage } from "../pages/selectionLevelPage";
+import { ModeSelectionPage } from "../pages/modeSelectionPage";
 
 
 
@@ -20,6 +21,7 @@ export const RoutesMain = () => {
             <Route path="/configurations" element={<Configuration/>}/>
             <Route path="/Login" element={<LoginPage/>}/>
             <Route path="/Register" element={<RegisterPage/>} />
+            <Route path="/Mode" element={<ModeSelectionPage/>}/>
             <Route path="/Level" element={<SelectionLevelPage/>}/>
             <Route path="/Game/:levelId" element={<LevelPage />} />
             <Route path="/Section/:sectionId" element={<SectionPage />} />

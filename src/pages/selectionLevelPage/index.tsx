@@ -30,9 +30,7 @@ export const SelectionLevelPage = () => {
     };
 
     const exit = () => {
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
-        navigate("/");
+        navigate("/Mode");
     };
 
     // cor de fundo padrao nao completo -> background: rgba(47, 255, 0, 0.10);
@@ -66,7 +64,7 @@ export const SelectionLevelPage = () => {
 
             <div className="back">
                 <Button buttonVariation="buttonExit" type="button" onClick={exit}>
-                    Sair
+                    Voltar
                 </Button>
             </div>
         </StyledSelectionLevelPage>
