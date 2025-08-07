@@ -1,6 +1,40 @@
 import styled from "styled-components";
 
 export const StyleLevelPage = styled.main`
+    nav {
+        width: 100%;
+        height: 140px;
+        padding: 10px;
+        background: #2fff0026;
+        border-bottom: #2FFF00 2px solid;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+
+        .img{
+            width: 140px;
+            height: auto;
+            padding-left: 20px;
+        }
+
+        .nav{
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+            gap: 20px;
+            padding-right: 20px;
+            a {
+                width: auto;
+                text-decoration: none;
+                color: #2FFF00;
+                font-family: "Jersey 25";
+                font-size: 40px;
+                font-style: normal;
+                font-weight: 400;
+            }
+        }
+    }
   .header {
     display: flex;
     justify-content: space-between;
@@ -39,36 +73,49 @@ export const StyleLevelPage = styled.main`
     }
   }
 
-  .buttons {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    margin-bottom: 5px;
+    .buttons {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 30px;
 
-    div {
-      display: flex;
-      gap: 10px;
+        h1{
+            color: #2FFF00;
+            font-family: "Jersey 25";
+            font-size: 96px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+        }
+
+        div {
+            display: flex;
+            gap: 10px;
+        }
     }
-  }
 
   .listCards {
-    .text {
-      display: flex;
-      justify-content: space-between;
-      font-size: 30px;
-      h1 {
-        font-family: "Space Mono";
-      }
-      p {
-        font-family: "Space Mono";
-      }
-    }
+    padding-left: 54px;
+    padding-right: 54px;
+    padding-bottom: 30px;
+
+    display: flex;
+    justify-content: center;
+
 
     ul {
       display: flex;
       flex-wrap: wrap;
-      gap: 15px 100px;
       justify-content: space-around;
+      gap: 15px;
+
+      max-width: 70%;
+    }
+
+    @media (max-width: 1024px) {
+        ul {
+            max-width: 100%;
+        }
     }
   }
 

@@ -1,20 +1,26 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
-import iconConfig from "../../assets/Settings.svg";
+import betinha from "../../assets/assetsV2/betinhalogo.svg";
 import iconGoldMedal from "../../assets/Gold Medal.svg";
-import iconArrowRight from "../../assets/ArrowRight.svg";
+import iconTrophy from "../../assets/Trophy.svg";
 import iconArrowLeft from "../../assets/ArrowLeft.svg";
+
+import home from "../../assets/assetsV2/ph_house.svg";
+import back from "../../assets/assetsV2/return.svg";
+import list from "../../assets/assetsV2/list.svg";
 
 import { Button } from "../../components/button";
 import { CardSection } from "../../components/cardSection";
 import { StyleLevelPage } from "./style";
-import { Level, Section, useApp, User } from "../../context/AppContext";
+import { Level, Section, useApp, User} from "../../context/AppContext";
 import { api } from "../../services/api";
 
 export const LevelPage = () => {
     const navigate = useNavigate();
+
+    const { levelId } = useParams();
+
     const { getLevels, getSections } = useApp();
 
     const [levels, setLevels] = useState<Level[]>([]);
@@ -23,40 +29,33 @@ export const LevelPage = () => {
 
     const [showRanking, setShowRanking] = useState(false);
     const [rankingData, setRankingData] = useState<User[]>([]);
-    const [modalMessage, setModalMessage] = useState("");
-    const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const lvls = await getLevels();
                 const secs = await getSections();
+
                 setLevels(lvls);
                 setSections(secs);
+
+                const levelIndex = lvls.findIndex(level => level._id === levelId);
+                if (levelIndex !== -1) {
+                    setCurrentLevelIndex(levelIndex);
+                }
             } catch (error) {
                 console.error("Erro ao carregar dados:", error);
             }
         };
         fetchData();
-    }, [getLevels, getSections]);
+    }, [getLevels, getSections, levelId]);
+
 
     const currentLevel = levels[currentLevelIndex] || null;
 
     const currentSections = currentLevel
         ? sections.filter((section) => section.level._id === currentLevel._id)
         : [];
-
-    const goToNextLevel = () => {
-        if (currentLevelIndex < levels.length - 1) {
-            setCurrentLevelIndex((prev) => prev + 1);
-        }
-    };
-
-    const goToPreviousLevel = () => {
-        if (currentLevelIndex > 0) {
-            setCurrentLevelIndex((prev) => prev - 1);
-        }
-    };
 
     const fetchRanking = async () => {
         try {
@@ -75,69 +74,37 @@ export const LevelPage = () => {
     };
 
     const exit = () => {
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
-        navigate("/");
+        navigate("/Level");
     };
-
-    const modalMode = () => {
-        setModalMessage("Este modo estará disponível em breve!");
-        setShowModal(true);
-    };
-
 
     return (
         <StyleLevelPage>
-            <div className="header">
-                <div className="title">
-                    <h1>Escolha um tema</h1>
-                    <p>Complete os desafios para testar e aprimorar seus conhecimentos em programação!</p>
+            <nav>
+                <div className="img">
+                    <img src={betinha} alt="Imagem do logo" />
                 </div>
-                <div className="config">
-                    <img src={iconConfig} alt="icon setting" onClick={() => navigate("/configurations")} />
+                <div className="nav">
+                    <Link to="/About">Sobre</Link>
+                    <Link to="/Configurations">Configuração</Link>
                 </div>
-            </div>
+            </nav>
 
             <div className="buttons">
-                <Button buttonVariation="type2" type="button" onClick={modalMode}>
-                    Modo de Jogo
+                <Button buttonVariation="buttonImg" type="button" onClick={exit}>
+                    <img src={iconArrowLeft} alt="Anterior" />
                 </Button>
-
+                <h1 style={{ margin: "0 auto" }}>{currentLevel?.title || "Carregando fase..."}</h1>
                 <div>
-                    <Button buttonVariation="type4" type="button" onClick={fetchRanking}>
-                        Ranking <img src={iconGoldMedal} alt="" />
+                    <Button buttonVariation="buttonImg2" type="button" onClick={fetchRanking}>
+                        <img src={iconGoldMedal} alt="" />
+                    </Button>
+                    <Button buttonVariation="buttonImg2" type="button" >
+                        <img src={iconTrophy} alt="" />
                     </Button>
                 </div>
             </div>
 
             <div className="listCards">
-                <div className="text" style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-                    <div style={{width:"98px"}}>
-                        {currentLevelIndex > 0 && (
-                            <button
-                                onClick={goToPreviousLevel}
-                                style={{ background: "none", border: "none", cursor: "pointer" }}
-                            >
-                                <img src={iconArrowLeft} alt="Anterior" />
-                            </button>
-                        )}
-                    </div>
-
-                    <h1 style={{ margin: "0 auto" }}>{currentLevel?.title || "Carregando fase..."}</h1>
-                    
-                    <div style={{width:"98px"}}>
-                        {currentLevelIndex < levels.length - 1 && (
-                            <button
-                                onClick={goToNextLevel}
-                                style={{ background: "none", border: "none", cursor: "pointer" }}
-                            >
-                                <img src={iconArrowRight} alt="Próximo" />
-                            </button>
-                        )}
-                    </div>
-                </div>
-
-
                 <ul>
                     {currentSections.map((section) => (
                         <CardSection
@@ -150,60 +117,48 @@ export const LevelPage = () => {
                         />
                     ))}
                 </ul>
-
             </div>
-
-            <div className="back">
-                <Button buttonVariation="type4" type="button" onClick={exit}>
-                    Sair
-                </Button>
-            </div>
-
-            {
-                showModal && (
-                    <div className="modal">
-                        <div className="modal-content">
-                            <h2>{modalMessage}</h2>
-                            <Button buttonVariation="type6" type="button" onClick={() => setShowModal(false)}>
-                                Fechar
-                            </Button>
-                        </div>
-                    </div>
-                )}
 
             {showRanking && (
                 <div className="modal">
                     <div className="modal-content">
-                        <h2>Ranking de Jogadores</h2>
+                        <div className="ranking-title">
+                            <img src={iconTrophy} alt="Troféu" />
+                            <h2>Ranking dos Desafiados!</h2>
+                        </div>
+
                         {rankingData.length > 0 ? (
-                            <ul style={{ textAlign: "left", width: "auto" }}>
-                                {rankingData.map((player, index) => {
-                                    const topIcon = index === 0 ? "🥇" : index === 1 ? "🥈" : index === 2 ? "🥉" : `${index + 1}º`;
-                                    return (
-                                        <li key={player.id} style={{display: "flex", flexDirection: "row"}}>
-                                            <strong style={{ display: "flex", width: "2em", textAlign: "center", flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
-                                                {topIcon}
-                                            </strong>{" "}
-                                            - {player.name} ({player.totalPoints} pts)
-                                        </li>
-                                    );
-                                })}
+                            <ul className="ranking-list">
+                                {rankingData.map((player, index) => (
+                                    <li key={player.id}>
+                                        <div>
+                                            <span>{index + 1}. </span>
+                                            <span className="player-name">{player.name}</span>
+                                        </div>
+                                        <span className="player-points">{player.totalPoints} pontos</span>
+                                    </li>
+                                ))}
                             </ul>
                         ) : (
-                            <p style={{ fontFamily: "Space Mono" }}>
-                                Nenhum jogador com pontuação no ranking ainda.
-                            </p>
+                            <p className="no-ranking">Nenhum jogador com pontuação no ranking ainda.</p>
                         )}
 
-                        <div style={{ display: "flex", justifyContent: "space-between", marginTop: "1rem"}}>
-                            <Button buttonVariation="buttonMini" type="button" onClick={() => setShowRanking(false)}>
-                                Fechar
+                        <div className="ranking-buttons">
+                            <Button buttonVariation="buttonModalRanking" type="button">
+                                <img src={home} alt="Home" />
+                            </Button>
+                            <Button buttonVariation="buttonModalRanking" type="button">
+                                <img src={list} alt="List" />
+                            </Button>
+                            <Button buttonVariation="buttonModalRanking" type="button" onClick={() => setShowRanking(false)}>
+                                <img src={back} alt="Back" />
                             </Button>
                         </div>
                     </div>
                 </div>
-            )
-            }
+            )}
+
+            
         </StyleLevelPage>
     );
 };

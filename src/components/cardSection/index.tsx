@@ -3,6 +3,8 @@ import { Button } from "../button";
 import { StyleCardSection } from "./style";
 import { Section } from "../../context/AppContext";
 
+import star from "../../assets/assetsV2/Star 3.svg";
+
 interface CardSectionProps {
     title: string;
     description: string;
@@ -11,7 +13,7 @@ interface CardSectionProps {
     difficulty: string;
 }
 
-export const CardSection: React.FC<CardSectionProps> = ({ title, description, sectionId, section, difficulty }) => {
+export const CardSection: React.FC<CardSectionProps> = ({ title, sectionId, section, difficulty }) => {
     const navigate = useNavigate();
 
     const handlePlay = () => {
@@ -21,8 +23,8 @@ export const CardSection: React.FC<CardSectionProps> = ({ title, description, se
     return (
         <StyleCardSection>
             <h3>{title}</h3>
-            <p>{description}</p>
             <div>
+                <img src={star} alt="Estrela" />
                 <span>{difficulty}</span>
             </div>
 

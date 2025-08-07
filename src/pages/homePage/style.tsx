@@ -13,7 +13,7 @@ export const HomeStyled = styled.main`
     justify-content: space-between;
 
     .img{
-        width: auto;
+        width: 140px;
         height: auto;
         padding-left: 20px;
     }
