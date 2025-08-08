@@ -4,6 +4,7 @@ import { StyleCardSection } from "./style";
 import { Section } from "../../context/AppContext";
 
 import star from "../../assets/assetsV2/Star 3.svg";
+import lock from "../../assets/assetsV2/Lock.svg";
 
 interface CardSectionProps {
     title: string;
@@ -11,26 +12,44 @@ interface CardSectionProps {
     sectionId: string;
     section: Section;
     difficulty: string;
+    isAnswered: boolean;
+    isLocked: boolean;
 }
 
-export const CardSection: React.FC<CardSectionProps> = ({ title, sectionId, section, difficulty }) => {
+export const CardSection: React.FC<CardSectionProps> = ({
+    title,
+    sectionId,
+    section,
+    difficulty,
+    isAnswered,
+    isLocked
+}) => {
     const navigate = useNavigate();
 
     const handlePlay = () => {
-        navigate(`/Section/${sectionId}`, { state: { section } });
+        if (!isLocked) {
+            navigate(`/Section/${sectionId}`, { state: { section } });
+        }
     };
 
     return (
-        <StyleCardSection>
+        <StyleCardSection isAnswered={isAnswered} isLocked={isLocked}>
             <h3>{title}</h3>
             <div>
                 <img src={star} alt="Estrela" />
                 <span>{difficulty}</span>
             </div>
 
-            <Button buttonVariation="buttonCardSection" type="button" onClick={handlePlay}>
-                Iniciar
+            <Button
+                buttonVariation="buttonCardSection"
+                type="button"
+                onClick={handlePlay}
+                disabled={isLocked}
+            >
+                {isLocked ? "Bloqueado" : "Iniciar"}
             </Button>
+
+            {isLocked && <img className="lock-icon" src={lock} alt="Bloqueado" />}
         </StyleCardSection>
     );
 };
