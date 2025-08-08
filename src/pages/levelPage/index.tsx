@@ -22,6 +22,7 @@ export const LevelPage = () => {
     const navigate = useNavigate();
 
     const { levelId } = useParams();
+    localStorage.setItem("level", levelId!);
 
     const { getLevels, getSections, getRanking, user } = useApp();
 

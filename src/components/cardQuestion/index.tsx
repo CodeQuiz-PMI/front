@@ -23,25 +23,3 @@ export const CardQuestion: React.FC<CardQuestionProps> = ({ question, isAnswered
         </StyledCardQuestion>
     );
 };
-
-
-
-// export const CardQuestion: React.FC<CardQuestionProps> = ({ question, isAnswered, isLocked }) => {
-//     return (
-//         <StyledCardQuestion isAnswered={isAnswered}>
-//             <div className={`card-question ${isLocked ? "locked" : ""}`}>
-//                 {isLocked ? (
-//                     <div className="lock">
-//                         <p className="number">{question.order}</p>
-//                         <img id="lock" src={lock} alt="Bloqueado" />
-//                     </div>
-//                 ) : (
-//                     <>
-//                         <p className="number">{question.order}</p>
-//                         <p>{question.title}</p>
-//                     </>
-//                 )}
-//             </div>
-//         </StyledCardQuestion>
-//     );
-// };

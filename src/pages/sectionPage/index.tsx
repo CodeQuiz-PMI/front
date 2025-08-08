@@ -26,9 +26,7 @@ export const SectionPage = () => {
     const { getQuestions, user, getRanking } = useApp();
         
     const { section } = location.state as { section: Section };
-
-    const [sectionLevel, setSectionLevel] = useState<string>();
-
+    
     const [questions, setQuestions] = useState<Question[]>([]);
     const [answeredIds, setAnsweredIds] = useState<string[]>([]);
 
@@ -38,12 +36,11 @@ export const SectionPage = () => {
     useEffect(() => {
         const fetchQuestions = async () => {
             try {
-                setSectionLevel(section.level._id);
                 const allQuestions = await getQuestions();
                 const filtered = allQuestions
                     .filter((q) => q.section && q.section._id === section._id)
                     .sort((a, b) => a.order - b.order);
-
+                
                 setQuestions(filtered);
             } catch (error) {
                 console.error("Erro ao carregar questões:", error);
@@ -61,6 +58,7 @@ export const SectionPage = () => {
                 console.error("Erro ao buscar respostas do usuário:", error);
             }
         };
+        
 
         fetchQuestions();
         if (user?.id) fetchAnswered();
@@ -77,7 +75,8 @@ export const SectionPage = () => {
     };
 
     const exit = () => {
-        navigate(`/Game/${sectionLevel}`);
+        const level = localStorage.getItem("level");
+        navigate(`/Game/${level}`);
     };
 
     const handleQuestionClick = (question: Question) => {

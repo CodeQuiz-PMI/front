@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../../components/button";
 import { StyleAboutPage } from "./styled";
@@ -7,12 +7,26 @@ import betinha from "../../assets/assetsV2/betinhalogo.svg";
 
 export const AboutPage: React.FC = () => {
     const navigate = useNavigate();
+    const [hasToken, setHasToken] = useState(false);
+    
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        setHasToken(!!token);
+    }, []);
+
+    const handleLogin = () => {
+        if (hasToken) {
+            navigate("/Mode");
+        } else {
+            navigate("/");
+        }
+    };
 
     return (
         <StyleAboutPage>
             <nav>
                 <div className="img">
-                    <img src={betinha} alt="Imagem do logo"  onClick={() => navigate("/Mode")}/>
+                    <img src={betinha} alt="Imagem do logo"  onClick={handleLogin}/>
                 </div>
                 <div className="nav">
                     <Link to="/About">Sobre</Link>
@@ -49,7 +63,7 @@ export const AboutPage: React.FC = () => {
                 <Button
                     buttonVariation="buttonExit"
                     type="button"
-                    onClick={() => navigate("/Mode")}
+                    onClick={handleLogin}
                 >
                     Voltar
                 </Button>
