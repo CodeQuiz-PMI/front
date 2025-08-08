@@ -18,7 +18,7 @@ export const ModeSelectionPage = () => {
             <nav>
                 <div className="img">
                     <Link to={"/"}>
-                        <img src={betinha} alt="Imagem do logo" />
+                        <img src={betinha} alt="Imagem do logo" onClick={() => navigate("/")}/>
                     </Link>
                 </div>
                 <div className="nav">
