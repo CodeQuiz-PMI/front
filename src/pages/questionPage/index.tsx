@@ -1,10 +1,19 @@
-import { useLocation, useNavigate } from "react-router-dom";
-import settings from "../../assets/Settings.svg";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+
 import { QuestionPageStyled } from "./styled";
 import { useEffect, useState } from "react";
 import { Button } from "../../components/button";
 import { api } from "../../services/api";
 import { AnswerLog, Question, useApp } from "../../context/AppContext";
+
+import betinha from "../../assets/assetsV2/betinhalogo.svg";
+import lamp from "../../assets/assetsV2/lamp.svg";
+import arrow from "../../assets/ArrowLeft.svg";
+
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+import { ToastOptions } from "react-toastify";
 
 type ResponseOption = {
     label: string;
@@ -18,11 +27,7 @@ export const QuestionPage = () => {
 
     const { user } = useApp();
 
-    const [showModal, setShowModal] = useState(false);
-    const [modalMessage, setModalMessage] = useState("");
-
     const [selected, setSelected] = useState("");
-    const [terminalInput, setTerminalInput] = useState("");
     const [shuffledResponses, setShuffledResponses] = useState<ResponseOption[]>([]);
 
     useEffect(() => {
@@ -46,9 +51,6 @@ export const QuestionPage = () => {
             setShuffledResponses(responsesWithPrefix);
         }
 
-        if (question.type === "dissertativa") {
-            setTerminalInput(question.response_1 || "Digite seu código aqui...");
-        }
     }, [question]);
     
     const shuffleArray = (array: string[]) => {
@@ -57,57 +59,68 @@ export const QuestionPage = () => {
             .sort(() => Math.random() - 0.5);
     };
 
+    const handleContinue = () => {
+        navigate(`/section/${question.section._id}`, { state: { section: question.section } });
+    };
+
     const handleMultipleChoiceSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         const isCorrect = selected === question.correctResponse;
-        const msg = isCorrect ? "✅ Resposta correta!" : "❌ Resposta incorreta.";
-        setModalMessage(msg);
-        await submitAnswerLog(selected, isCorrect);
-        setShowModal(true);
-    };
-     
-    const handleDissertativeSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-      
-        try {
-            const response = await api.post("questions/code", {
-                language: "python",
-                version: "3.10.0",
-                code: terminalInput,
-            });
-      
-            const result = response.data;
-      
-            const outputReceived = result?.run?.output;
-            const correct = question.correctResponse;
-      
-            console.log(result);
-            console.log(correct);
 
-            if (!outputReceived) {
-                setModalMessage("⚠️ Seu código não gerou saída ou ocorreu um erro. Tente novamente.");
-            } else if (outputReceived === correct) {
-                setModalMessage("✅ Resposta correta!");
-            } else {
-                setModalMessage(`❌ Resposta incorreta.`);
-            }
-        } catch (error) {
-            console.error("Erro ao executar código:", error);
-            setModalMessage("⚠️ Erro ao executar seu código. Tente novamente.");
+        const toastContent = (
+            <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                <p style={{ color: "#2FFF00" }}>
+                    {isCorrect
+                        ? "Resposta correta!"
+                        : "Resposta incorreta."}
+                </p>
+                <div style={{ display: "flex", justifyContent: "center", gap: "8px" }}>
+                    <button
+                        style={{
+                            backgroundColor: "#2FFF00",
+                            color: "#2A2A2A",
+                            padding: "4px 8px",
+                            border: "none",
+                            borderRadius: "4px",
+                            cursor: "pointer",
+                            fontFamily: "Jersey 25, sans-serif",
+                        }}
+                        onClick={() => {
+                            handleContinue();
+                            toast.dismiss();
+                        }}
+                    >
+                    Continuar
+                    </button>
+                </div>
+            </div>
+        );
+
+        const toastOptions: ToastOptions = {
+            style: {
+                backgroundColor: "#2A2A2A",
+                color: "#2FFF00",
+                fontFamily: "Jersey 25, sans-serif",
+            },
+            autoClose: false,
+            closeOnClick: false,
+        };
+
+        if (isCorrect) {
+            toast.success(toastContent, toastOptions);
+        } else {
+            toast.warn(toastContent, toastOptions);
         }
-      
-        setShowModal(true);
+
+        await submitAnswerLog(selected, isCorrect);
     };
-    
+
+
+         
     const handleBackToSection = () => {
         navigate(`/section/${question.section._id}`, { state: { section: question.section } });
     };
     
-    const handleContinue = () => {
-        setShowModal(false);
-        navigate(`/section/${question.section._id}`, { state: { section: question.section } });
-    };
-
     const formatTextWithCode = (text: string) => {
         const withBlockCode = text.replace(/```([\s\S]*?)```/g, (_match, code) => {
             return `<pre><code>${code.trim()}</code></pre>`;
@@ -177,11 +190,21 @@ export const QuestionPage = () => {
       
     return (
         <QuestionPageStyled>
-            <div className="header">
-                <h1>{question.title}</h1>
-                <div className="config">
-                    <img src={settings} alt="Configurações" onClick={() => navigate("/configurations")}/>
+            <nav>
+                <div className="img">
+                    <img src={betinha} alt="Imagem do logo" />
                 </div>
+                <div className="nav">
+                    <Link to="/About">Sobre</Link>
+                    <Link to="/Configurations">Configuração</Link>
+                </div>
+            </nav>
+
+            
+            <div className="header">
+                <img src={arrow} alt="" onClick={handleBackToSection}/>
+                <h1>{question.title}</h1>
+                <img src={lamp} alt="Configurações"/>
             </div>
 
             <div className="container">
@@ -197,68 +220,40 @@ export const QuestionPage = () => {
                 }               
 
                 <div className="question">
-                    {question.type === "múltipla-escolha" ? (
-                        <form onSubmit={handleMultipleChoiceSubmit}>
-                            <h2 dangerouslySetInnerHTML={{ __html: formatTextWithCode(question.answer) }} />
-                            <div className="options">
-                                {shuffledResponses.map((responseObj, idx) => (
-                                    <label key={idx} className={selected === responseObj.value ? "selected" : ""}>
-                                        <input
-                                            type="radio"
-                                            name="answer"
-                                            value={responseObj.value}
-                                            onChange={(e) => setSelected(e.target.value)}
-                                        />
-                                        <span dangerouslySetInnerHTML={{ __html: formatTextWithCode2(responseObj.label) }} />
-                                    </label>
-                                ))}
-                            </div>
+                    <form onSubmit={handleMultipleChoiceSubmit}>
+                        <h2 dangerouslySetInnerHTML={{ __html: formatTextWithCode(question.answer) }} />
+                        <div className="options">
+                            {shuffledResponses.map((responseObj, idx) => (
+                                <label key={idx} className={selected === responseObj.value ? "selected" : ""}>
+                                    <input
+                                        type="radio"
+                                        name="answer"
+                                        value={responseObj.value}
+                                        onChange={(e) => setSelected(e.target.value)}
+                                    />
+                                    <span dangerouslySetInnerHTML={{ __html: formatTextWithCode2(responseObj.label) }} />
+                                </label>
+                            ))}
+                        </div>
 
-                            <div style={{ display: "flex", justifyContent: "center", marginTop: "20px" }}>
-                                <Button type="submit" buttonVariation="type6">
-                                    Confirmar
-                                </Button>
-                            </div>
-                        </form>
-                    ) : (
-                        <form onSubmit={handleDissertativeSubmit}>
-                            <h2 dangerouslySetInnerHTML={{ __html: formatTextWithCode(question.answer) }} />
-                            <textarea
-                                value={terminalInput}
-                                onChange={(e) => setTerminalInput(e.target.value)}
-                                rows={8}
-                                spellCheck={false}
-                                autoComplete="off"
-                            />
-                            <div style={{ display: "flex", justifyContent: "center", marginTop: "20px" }}>
-                                <Button type="submit" buttonVariation="type6">
-                                    Confirmar
-                                </Button>
-                            </div>
-                        </form>
-                    )}
+                        <div style={{ display: "flex", justifyContent: "center", marginTop: "20px", gap: "20px" }}>
+                            <Button
+                                type="button"
+                                buttonVariation="buttonExit2"
+                                onClick={handleBackToSection}
+                            >
+                                Desistir
+                            </Button>
+                            <Button type="submit" buttonVariation="buttonExit2">
+                                Confirmar
+                            </Button>
+                        </div>
+                    </form>
+                                        
                     
-                    <div style={{ display: "flex", justifyContent: "center", marginTop: "20px" }}>
-                        <Button
-                            type="button"
-                            buttonVariation="type6"
-                            onClick={handleBackToSection}
-                        >
-                            Voltar
-                        </Button>
-                    </div>
                 </div>
             </div>
-            {showModal && (
-                <div className="modal">
-                    <div className="modal-content">
-                        <h2>{modalMessage}</h2>
-                        <Button type="button" buttonVariation="type6" onClick={handleContinue}>
-                            Continuar
-                        </Button>
-                    </div>
-                </div>
-            )}
+    
         </QuestionPageStyled>
     );
 };

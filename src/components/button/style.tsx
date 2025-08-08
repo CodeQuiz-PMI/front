@@ -146,6 +146,32 @@ export const StyledButton = styled.button<iStyledButtonProps>`
                     cursor: pointer;
                     background-color: #2FFF00;
                 `;
+            case "buttonExit2":
+                return css`
+                width: 200px;
+                height: 50px;
+
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                
+                border-radius: 10px;
+                border: 1px solid #2FFF00;
+                
+                color: #2FFF00;
+                text-align: center;
+                font-family: "Jersey 25";
+                font-size: 36px;
+                font-style: normal;
+                font-weight: 400;
+
+                background-color: rgba(47, 255, 0, 0.1);  
+
+                &:hover {
+                    cursor: pointer;
+                    background-color: rgba(137, 255, 63, 0.5);
+                }
+        `;
         }
     }}
 `;

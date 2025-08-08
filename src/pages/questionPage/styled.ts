@@ -1,24 +1,59 @@
 import styled from "styled-components";
 
 export const QuestionPageStyled = styled.main`
+  nav {
+    width: 100%;
+    height: 140px;
+    padding: 10px;
+    background: #2fff0026;
+    border-bottom: #2fff00 2px solid;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    .img {
+      width: 140px;
+      height: auto;
+      padding-left: 20px;
+    }
+
+    .nav {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+      gap: 20px;
+      padding-right: 20px;
+      a {
+        width: auto;
+        text-decoration: none;
+        color: #2fff00;
+        font-family: "Jersey 25";
+        font-size: 40px;
+        font-style: normal;
+        font-weight: 400;
+      }
+    }
+  }
+
   align-items: center;
   font-family: "Space Mono";
 
   .header {
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: space-between;
     width: 100%;
+    padding: 20px 30px 0px 30px;
 
     h1 {
+      color: #2fff00;
       text-align: center;
-        font-family: "Space Mono", monospace;
-    }
-
-    div {
-      display: flex;
-      justify-content: flex-end;
-      width: 35%;
+      font-family: "Jersey 25";
+      font-size: 75px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
     }
   }
 
@@ -27,19 +62,23 @@ export const QuestionPageStyled = styled.main`
     flex-direction: column;
     margin-bottom: 20px;
     margin-top: 50px;
+    padding: 0px 80px;
 
     .text {
-       p,
+      p,
       ul,
       li,
       code,
       pre,
-      strong, h3, {
-        font-family: "Space Mono", monospace;
-        text-align: justify;
-        font-size: 18px;
+      strong,
+      h3 {
+        color: #2fff00;
+        font-family: "Space Mono";
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
       }
-
 
       ul {
         list-style: disc;
@@ -55,7 +94,12 @@ export const QuestionPageStyled = styled.main`
       code {
         padding: 2px 4px;
         border-radius: 4px;
-        font-size: 16px;
+        color: #2fff00;
+        font-family: "Space Mono";
+        font-size: 22px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
       }
 
       pre {
@@ -69,33 +113,48 @@ export const QuestionPageStyled = styled.main`
 
     .question {
       border-top: 2px solid green;
-	  margin-top: 10px;
+      margin-top: 10px;
 
       h2 {
-        font-family: "Space Mono", monospace;
-		margin-bottom: 10px;
+        color: #2fff00;
+        font-family: "Space Mono";
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
       }
 
       form {
         h2,
         p,
         strong,
-        code, li, label span {
-          font-family: "Space Mono", monospace;
-          font-size: 18px;
+        code,
+        li,
+        label span {
+          color: #2fff00;
+          font-family: "Space Mono";
+          font-size: 20px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: normal;
         }
 
-		ul {
-        list-style: disc;
-        padding-left: 30px;
-        margin-top: 10px;
-        margin-bottom: 10px;
-      }
+        ul {
+          list-style: disc;
+          padding-left: 30px;
+          margin-top: 10px;
+          margin-bottom: 10px;
+        }
 
         code {
           padding: 2px 4px;
           border-radius: 4px;
-          font-size: 16px;
+          color: #2fff00;
+          font-family: "Space Mono";
+          font-size: 20px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: normal;
         }
 
         pre {
@@ -178,16 +237,16 @@ export const QuestionPageStyled = styled.main`
   }
 
   .config {
-            display: flex;
-            align-items: center;
+    display: flex;
+    align-items: center;
 
-            &:hover {
-                cursor: pointer;
-                img {
-                    border: 0px solid transparent;
-                    border-radius: 50%;
-                    background-color: rgba(137, 255, 63, 0.5);
-                }
-            }
-        }
+    &:hover {
+      cursor: pointer;
+      img {
+        border: 0px solid transparent;
+        border-radius: 50%;
+        background-color: rgba(137, 255, 63, 0.5);
+      }
+    }
+  }
 `;
