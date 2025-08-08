@@ -66,8 +66,8 @@ export const StyledCardQuestion = styled.div<StyledProps>`
     position: absolute;
     width: 40px;
     height: auto;
-    top: 85%;
-    left: 50%;
+    top: 15%;
+    left: 135px;
     transform: translate(-50%, -50%);
     pointer-events: none;
   }
