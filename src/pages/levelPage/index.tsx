@@ -1,4 +1,5 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+ 
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
@@ -14,7 +15,7 @@ import list from "../../assets/assetsV2/list.svg";
 import { Button } from "../../components/button";
 import { CardSection } from "../../components/cardSection";
 import { StyleLevelPage } from "./style";
-import { Level, Section, useApp, User} from "../../context/AppContext";
+import { AnswerLog, Level, Section, useApp, User} from "../../context/AppContext";
 import { api } from "../../services/api";
 
 export const LevelPage = () => {
@@ -22,7 +23,7 @@ export const LevelPage = () => {
 
     const { levelId } = useParams();
 
-    const { getLevels, getSections } = useApp();
+    const { getLevels, getSections, getRanking, user } = useApp();
 
     const [levels, setLevels] = useState<Level[]>([]);
     const [sections, setSections] = useState<Section[]>([]);
@@ -31,25 +32,57 @@ export const LevelPage = () => {
     const [showRanking, setShowRanking] = useState(false);
     const [rankingData, setRankingData] = useState<User[]>([]);
 
+    const [answeredSections, setAnsweredSections] = useState<string[]>([]);
+
     useEffect(() => {
-        const fetchData = async () => {
+        const fetchAll = async () => {
             try {
                 const lvls = await getLevels();
                 const secs = await getSections();
-
                 setLevels(lvls);
                 setSections(secs);
 
                 const levelIndex = lvls.findIndex(level => level._id === levelId);
-                if (levelIndex !== -1) {
-                    setCurrentLevelIndex(levelIndex);
-                }
+                if (levelIndex !== -1) setCurrentLevelIndex(levelIndex);
+
+                if (user?.id) await fetchAnsweredSections(user.id);
             } catch (error) {
                 console.error("Erro ao carregar dados:", error);
             }
         };
-        fetchData();
-    }, [getLevels, getSections, levelId]);
+
+        fetchAll();
+    }, [getLevels, getSections, levelId, user?.id]);
+
+    const fetchAnsweredSections = async (userId: string) => {
+        try {
+            const res = await api.get(`/answerlogs/user/${userId}`);
+            const logs: AnswerLog[] = res.data;
+
+            const sectionAnswersMap = new Map<string, Set<string>>();
+
+            logs.forEach((log) => {
+                if (log.isCorrect) {
+                    const sectionId = typeof log.section === "string" ? log.section : log.section._id;
+                    const questionId = typeof log.question === "string" ? log.question : log.question._id;
+
+                    if (!sectionAnswersMap.has(sectionId)) {
+                        sectionAnswersMap.set(sectionId, new Set());
+                    }
+
+                sectionAnswersMap.get(sectionId)!.add(questionId);
+                }
+            });
+
+            const completed = Array.from(sectionAnswersMap.entries())
+                .filter(([_, answeredQuestions]) => answeredQuestions.size >= 3)
+                .map(([sectionId]) => sectionId);
+
+            setAnsweredSections(completed);
+        } catch (error) {
+            console.error("Erro ao buscar respostas do usuário:", error);
+        }
+    };
 
 
     const currentLevel = levels[currentLevelIndex] || null;
@@ -60,14 +93,8 @@ export const LevelPage = () => {
 
     const fetchRanking = async () => {
         try {
-            const res = await api.get("/users");
-          
-            const filteredAndSorted = res.data
-                .filter((user: any) => user.totalPoints && user.totalPoints > 0)
-                .sort((a: any, b: any) => b.totalPoints - a.totalPoints)
-                .slice(0, 10);
-
-            setRankingData(filteredAndSorted);
+            const data = await getRanking();
+            setRankingData(data);
             setShowRanking(true);
         } catch (error) {
             console.error("Erro ao carregar ranking:", error);
@@ -107,18 +134,26 @@ export const LevelPage = () => {
 
             <div className="listCards">
                 <ul>
-                    {currentSections.map((section) => (
-                        <CardSection
-                            key={section._id}
-                            sectionId={section._id}
-                            title={section.title}
-                            description={section.description}
-                            section={section}
-                            difficulty={currentLevel.difficulty}
-                        />
-                    ))}
+                    {currentSections.map((section, index) => {
+                        const isAnswered = answeredSections.includes(section._id);
+                        const isLocked = index > 0 && !answeredSections.includes(currentSections[index - 1]._id);
+
+                        return (
+                            <CardSection
+                                key={section._id}
+                                sectionId={section._id}
+                                title={section.title}
+                                description={section.description}
+                                section={section}
+                                difficulty={currentLevel.difficulty}
+                                isAnswered={isAnswered}
+                                isLocked={isLocked}
+                            />
+                        );
+                    })}
                 </ul>
             </div>
+
 
             {showRanking && (
                 <div className="modal">
@@ -126,6 +161,7 @@ export const LevelPage = () => {
                         <div className="ranking-title">
                             <img src={iconTrophy} alt="Troféu" />
                             <h2>Ranking dos Desafiados!</h2>
+                            <img src={iconTrophy} alt="Troféu" />
                         </div>
 
                         {rankingData.length > 0 ? (

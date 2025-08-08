@@ -1,20 +1,38 @@
 import styled from "styled-components";
 
-export const StyleCardSection = styled.li`
+interface StyledProps {
+  isAnswered?: boolean;
+  isLocked?: boolean;
+}
+
+export const StyleCardSection = styled.li<StyledProps>`
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    gap: 20px;
+    
+    padding: 25px 10px;
 
-    padding:10px;
-
-    width: 370px;
+    width: 280px;
     height: 245px;
 
     border-radius: 9px;
     border: 3px solid #2FFF00;
-    background: rgba(47, 255, 0, 0.10);
+
+    background-color: ${({ isAnswered }) =>
+        isAnswered ? "#287E15" : "#294623"};
+
+    position: relative;
+    opacity: ${({ isLocked }) => (isLocked ? 0.5 : 1)};
+    pointer-events: ${({ isLocked }) => (isLocked ? "none" : "auto")};
+
+    .lock-icon {
+        position: absolute;
+        bottom: 28px;
+        left: 25px;
+        width: 40px;
+        height: 40px;
+    }
 
     h3{
         color: #2FFF00;

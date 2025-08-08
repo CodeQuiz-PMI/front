@@ -82,6 +82,7 @@ interface AppContextType {
   }) => Promise<{ correct: boolean; pointsEarned: number }>;
   getAnswerLogs: () => Promise<AnswerLog[]>;
   user: User | null;
+  getRanking: () => Promise<User[]>;
 }
 
 // ========== CONTEXTO ==========
@@ -132,6 +133,17 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         return res.data as AnswerLog[];
     };
 
+    const getRanking = async () => {
+        const res = await api.get("/users");
+        const filteredAndSorted = res.data
+            .filter((user: any) => user.totalPoints && user.totalPoints > 0)
+            .sort((a: any, b: any) => b.totalPoints - a.totalPoints)
+            .slice(0, 10);
+
+        return filteredAndSorted;
+    };
+
+
     // ---------- POST: SUBMIT ANSWER ----------
     const submitAnswerLog = async (data: {
     userId: string;
@@ -168,6 +180,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
                 submitAnswerLog,
                 getAnswerLogs,
                 user,
+                getRanking,
             }}
         >
             {children}

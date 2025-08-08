@@ -1,12 +1,26 @@
 import styled from "styled-components";
 
-export const StyledCardQuestion = styled.div`
+interface StyledProps {
+  isAnswered?: boolean;
+}
+
+export const StyledCardQuestion = styled.div<StyledProps>`
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 280px;
   height: 350px;
   justify-content: center;
+
+  .card-question {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 280px;
+    height: 350px;
+    justify-content: center;
+    position: relative;
+  }
 
   .number {
     width: 160px;
@@ -15,12 +29,21 @@ export const StyledCardQuestion = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    font-size: 50px;
+
     border: 2px solid;
     border-radius: 10px;
-	cursor: pointer;
-        font-family: "Space Mono", monospace;
+    cursor: pointer;
 
+    color: #2fff00;
+    font-family: "Jersey 25";
+    font-size: 96px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+
+    background-color: ${({ isAnswered }) =>
+      isAnswered ? "#287E15" : "#294623"};
+    position: relative;
   }
 
   p {
@@ -28,7 +51,24 @@ export const StyledCardQuestion = styled.div`
     text-align: center;
     margin-top: 15px;
     height: 70px;
-        font-family: "Space Mono", monospace;
+    color: #2fff00;
+    font-family: "Jersey 25";
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
 
+  .card-question.lock {
+    position: relative;
+  }
+
+  #lock {
+    position: absolute;
+    width: 40px;
+    height: auto;
+    top: 85%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
   }
 `;

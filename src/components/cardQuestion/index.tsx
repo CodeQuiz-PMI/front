@@ -1,24 +1,47 @@
 import React from "react";
-// import trophyIcon from "../../assets/Trophy.svg"; // Descomente se for usar
-// import { useNavigate } from "react-router-dom";
 import { StyledCardQuestion } from "./styled";
 import { Question } from "../../context/AppContext";
 
-// ========== TIPAGENS ==========
+import lock from "../../assets/assetsV2/Lock.svg";
+
 interface CardQuestionProps {
   question: Question;
+  isAnswered?: boolean;
+  isLocked?: boolean; 
 }
 
-// ========== COMPONENTE ==========
-export const CardQuestion: React.FC<CardQuestionProps> = ({ question }) => {
-    // const navigate = useNavigate(); // Exemplo de uso futuro: navegação ao clicar
-
+export const CardQuestion: React.FC<CardQuestionProps> = ({ question, isAnswered, isLocked }) => {
     return (
-        <StyledCardQuestion
-            // onClick={() => navigate(`/pergunta/${question._id}`)} // opcional
-        >
-            <div className="number">{question.order}</div>
-            <p>{question.title}</p>
+        <StyledCardQuestion isAnswered={isAnswered}>
+            <div className={`card-question ${isLocked ? "locked" : ""}`}>
+                <p className="number">
+                    {question.order}
+                    {isLocked && <img id="lock" src={lock} alt="Bloqueado" />}
+                </p>
+                <p>{question.title}</p>
+            </div>
         </StyledCardQuestion>
     );
 };
+
+
+
+// export const CardQuestion: React.FC<CardQuestionProps> = ({ question, isAnswered, isLocked }) => {
+//     return (
+//         <StyledCardQuestion isAnswered={isAnswered}>
+//             <div className={`card-question ${isLocked ? "locked" : ""}`}>
+//                 {isLocked ? (
+//                     <div className="lock">
+//                         <p className="number">{question.order}</p>
+//                         <img id="lock" src={lock} alt="Bloqueado" />
+//                     </div>
+//                 ) : (
+//                     <>
+//                         <p className="number">{question.order}</p>
+//                         <p>{question.title}</p>
+//                     </>
+//                 )}
+//             </div>
+//         </StyledCardQuestion>
+//     );
+// };

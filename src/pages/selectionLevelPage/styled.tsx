@@ -75,14 +75,23 @@ export const StyledSelectionLevelPage = styled.main`
                 font-weight: 400;
                 line-height: normal;
                 
-                background: rgba(47, 255, 0, 0.10);
+                background: #294623;
                 
                 &:hover{
-                    background: rgb(47 255 0 / 23%);
+                    background: #287E15;
                     cursor: pointer;
                 }
             }
 
+            .level-square.isAnswered {
+                background: #287E15;
+            }
+            
+            .level-square.locked {
+                opacity: 0.4;
+                cursor: not-allowed;
+                pointer-events: none; /* Evita clique */
+            }
         }
     }
 
