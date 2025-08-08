@@ -128,7 +128,7 @@ export const SectionPage = () => {
         <StyledSectionPage>
             <nav>
                 <div className="img">
-                    <img src={betinha} alt="Imagem do logo" />
+                    <img src={betinha} alt="Imagem do logo" onClick={() => navigate("/Mode")}/>
                 </div>
                 <div className="nav">
                     <Link to="/About">Sobre</Link>

@@ -90,7 +90,7 @@ export const SelectionLevelPage = () => {
             <nav>
                 <div className="img">
                     <Link to={"/"}>
-                        <img src={betinha} alt="Imagem do logo" />
+                        <img src={betinha} alt="Imagem do logo" onClick={() => navigate("/Mode")}/>
                     </Link>
                 </div>
                 <div className="nav">
