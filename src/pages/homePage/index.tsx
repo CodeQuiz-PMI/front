@@ -21,7 +21,7 @@ export const HomePage = () => {
 
     const handleLogin = () => {
         if (hasToken) {
-            navigate("/Game");
+            navigate("/Mode");
         } else {
             navigate("/Login");
         }
@@ -29,7 +29,7 @@ export const HomePage = () => {
 
     const handleContinue = () => {
         if (hasToken) {
-            navigate("/Game");
+            navigate("/Mode");
         } else {
             toast.warn("Você precisa estar logado para continuar o jogo!", {
                 position: "top-center",
