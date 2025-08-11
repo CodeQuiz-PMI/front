@@ -1,10 +1,16 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../../components/button";
 import { StyledConfigurationPage } from "./style";
 import { api } from "../../services/api";
 
-// Tipagem opcional do usuário (evita repetição do JSON.parse)
+import betinha from "../../assets/assetsV2/betinhalogo.svg";
+import bolsa from "../../assets/assetsV2/bolsamoedas.svg";
+import iconArrowLeft from "../../assets/ArrowLeft.svg";
+
+import { JSX } from "react/jsx-dev-runtime";
+import { FaVolumeMute, FaVolumeUp } from "react-icons/fa";
+
 interface UserData {
   id: string;
   name: string;
@@ -19,12 +25,13 @@ export const Configuration = () => {
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [isResetModalOpen, setIsResetModalOpen] = useState(false);
 
+    const [volume, setVolume] = useState(50);
+
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
 
-    // Carregar nome do usuário
     useEffect(() => {
         const userFromStorage = localStorage.getItem("user");
         if (userFromStorage) {
@@ -33,7 +40,6 @@ export const Configuration = () => {
         }
     }, []);
 
-    // Editar perfil
     const handleEditClick = () => {
         const userFromStorage = localStorage.getItem("user");
         if (userFromStorage) {
@@ -104,10 +110,9 @@ export const Configuration = () => {
 
     const handleGoBack = () => {
         const userFromStorage = localStorage.getItem("user");
-        navigate(userFromStorage ? "/Game" : "/");
+        navigate(userFromStorage ? "/Mode" : "/");
     };
 
-    // ========== Componentes auxiliares ==========
     const ConfirmationModal = ({
         title,
         message,
@@ -125,10 +130,10 @@ export const Configuration = () => {
                 <p>{message}</p>
                 <div className="button-group">
                     <Button buttonVariation="type6" type="button" onClick={onConfirm}>
-            Confirmar
+                        Confirmar
                     </Button>
                     <Button buttonVariation="type5" type="button" onClick={onCancel}>
-            Cancelar
+                        Cancelar
                     </Button>
                 </div>
             </div>
@@ -149,28 +154,92 @@ export const Configuration = () => {
         </div>
     );
 
-    // ========== JSX ==========
+    const sliderBackground = {
+        background: `linear-gradient(
+        to right,
+        #2fff00 ${volume}%,
+        #2C9415 ${volume}%
+        )`
+    };
+
     return (
         <StyledConfigurationPage>
-            <div className="config-container">
-                <h1 className="title">Configurações</h1>
-                <p className="subtitle">Personalize sua experiência no CodeQuiz da maneira que preferir!</p>
-            </div>
-
-            <div className="section">
-                <h2>Conta e Progresso:</h2>
-                <h2>Perfil do Usuário</h2>
-                <div className="button-group">
-                    <input type="text" value={username} readOnly />
-                    <Button buttonVariation="type5" type="button" onClick={handleEditClick}>Editar</Button>
+            <nav>
+                <div className="img">
+                    <img src={betinha} alt="Imagem do logo" />
                 </div>
-
-                <Button buttonVariation="type6" type="button" onClick={() => setIsResetModalOpen(true)}>Reiniciar progresso?</Button>
-                <Button buttonVariation="type6" type="button" onClick={() => setIsDeleteModalOpen(true)}>Deletar conta</Button>
+                <div className="nav">
+                    <Link to="/About">Sobre</Link>
+                    <Link to="/Configurations">Configuração</Link>
+                </div>
+            </nav>
+            
+            <div className="config-container">
+                <Button buttonVariation="buttonImg" type="button" onClick={handleGoBack}>
+                    <img src={iconArrowLeft} alt="Anterior" />
+                </Button>
+                <div className="title">
+                    <h1>Configurações</h1>
+                    <p>Personalize sua experiência no CodeQuiz da maneira que preferir!</p>
+                </div>
+                <div style={{width: "78px"}}>
+                </div>
             </div>
 
-            <div className="buttonBack">
-                <Button buttonVariation="type6" type="button" onClick={handleGoBack}>Voltar</Button>
+            <div className="container">
+                <div className="containerLeft">
+                    <div className="inputs">
+                        <p>Perfil</p>
+                        <div className="button">
+                            <Button buttonVariation="buttonConfigPage" type="button" onClick={handleEditClick}>{username}</Button>
+                        </div>
+                    </div>
+                    <div className="inputs">
+                        <p>Configuração de Som</p>
+                        <div className="volume-control">
+                            <div className="volume-icon" onClick={() => setVolume(volume === 0 ? 50 : 0)}>
+                                {volume === 0 ? <FaVolumeMute /> : <FaVolumeUp />}
+                            </div>
+                            <input
+                                type="range"
+                                min="0"
+                                max="100"
+                                value={volume}
+                                onChange={(e) => setVolume(Number(e.target.value))}
+                                className="volume-slider"
+                                style={sliderBackground}
+                            />
+                        </div>
+                    </div>
+                    <div className="inputs">
+                        <p>Reiniciar progresso?</p>
+                        <div className="button">
+                            <Button buttonVariation="buttonConfigPage" type="button" onClick={() => setIsResetModalOpen(true)}>Reiniciar</Button>
+                        </div>
+                    </div>
+                    <div className="inputs">
+                        <p>Deletar conta?</p>
+                        <div className="button">
+                            <Button buttonVariation="buttonConfigPage" type="button" onClick={() => setIsDeleteModalOpen(true)}>Deletar</Button>
+                        </div>
+                    </div>
+                </div>
+                <div className="containerRight">
+                    <div className="background">
+                        <p>
+                            Você possui:
+                        </p>
+
+                        <div className="gold">
+                            <img src={bolsa} alt="" />
+                            <p>Moedas</p>
+                        </div>
+                    
+                        <Button buttonVariation="buttonConfigPageStore" type="button">
+                            Acesse a Loja CodeQuiz
+                        </Button>
+                    </div>
+                </div>
             </div>
 
             {isModalOpen && <EditModal />}
