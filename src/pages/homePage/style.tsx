@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const HomeStyled = styled.main`
    nav {
     width: 100%;
-    height: 140px;
+    height: 100px;
     padding: 10px;
     background: #2fff0026;
     border-bottom: #2FFF00 2px solid;
@@ -13,7 +13,7 @@ export const HomeStyled = styled.main`
     justify-content: space-between;
 
     .img{
-        width: 140px;
+        width: 96px;
         height: auto;
         padding-left: 20px;
     }

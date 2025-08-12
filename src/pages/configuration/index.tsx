@@ -10,17 +10,16 @@ import iconArrowLeft from "../../assets/ArrowLeft.svg";
 
 import { JSX } from "react/jsx-dev-runtime";
 import { FaVolumeMute, FaVolumeUp } from "react-icons/fa";
-
-interface UserData {
-  id: string;
-  name: string;
-  email: string;
-}
+import { useApp } from "../../context/AppContext";
 
 export const Configuration = () => {
     const navigate = useNavigate();
 
+    const { user } = useApp();
+
     const [username, setUsername] = useState("");
+    const [coins, setCoins] = useState("");
+
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [isResetModalOpen, setIsResetModalOpen] = useState(false);
@@ -35,15 +34,26 @@ export const Configuration = () => {
     useEffect(() => {
         const userFromStorage = localStorage.getItem("user");
         if (userFromStorage) {
-            const userData: UserData = JSON.parse(userFromStorage);
-            setUsername(userData.name || "");
+            const fetchUser = async () => {
+                const get = await api.get(`/users/${user?.id}`);
+                const userData = {
+                    ...get.data,
+                    id: get.data._id,
+                };
+                delete userData._id;
+
+                localStorage.setItem("user", JSON.stringify(userData));
+            };
+            fetchUser();
         }
-    }, []);
+        
+    }, [user?.id]);
+
 
     const handleEditClick = () => {
         const userFromStorage = localStorage.getItem("user");
         if (userFromStorage) {
-            const userData: UserData = JSON.parse(userFromStorage);
+            const userData = JSON.parse(userFromStorage);
             setName(userData.name);
             setEmail(userData.email);
         }
@@ -59,7 +69,7 @@ export const Configuration = () => {
         const userFromStorage = localStorage.getItem("user");
         if (!userFromStorage) return console.log("Usuário não encontrado.");
 
-        const userData: UserData = JSON.parse(userFromStorage);
+        const userData = JSON.parse(userFromStorage);
 
         const updatedUser = {
             name,
@@ -83,7 +93,7 @@ export const Configuration = () => {
         const userFromStorage = localStorage.getItem("user");
         if (!userFromStorage) return;
 
-        const userData: UserData = JSON.parse(userFromStorage);
+        const userData = JSON.parse(userFromStorage);
         try {
             await api.delete(`/answerlogs/user/${userData.id}`);
             console.log("Progresso reiniciado com sucesso.");
@@ -96,7 +106,7 @@ export const Configuration = () => {
         const userFromStorage = localStorage.getItem("user");
         if (!userFromStorage) return;
 
-        const userData: UserData = JSON.parse(userFromStorage);
+        const userData = JSON.parse(userFromStorage);
         try {
             await api.delete(`/users/${userData.id}`);
             localStorage.removeItem("user");
@@ -232,7 +242,7 @@ export const Configuration = () => {
 
                         <div className="gold">
                             <img src={bolsa} alt="" />
-                            <p>Moedas</p>
+                            <p>{coins} Moedas</p>
                         </div>
                     
                         <Button buttonVariation="buttonConfigPageStore" type="button">

@@ -124,7 +124,9 @@ export const LevelPage = () => {
                 </Button>
                 <h1 style={{ margin: "0 auto" }}>{currentLevel?.title || "Carregando fase..."}</h1>
                 <div>
-                    <Button buttonVariation="buttonImg2" type="button" onClick={fetchRanking}>
+                    <Button buttonVariation="buttonImg2" type="button" 
+                        onClick={fetchRanking}
+                    >
                         <img src={iconGoldMedal} alt="" />
                     </Button>
                     <Button buttonVariation="buttonImg2" type="button" >
