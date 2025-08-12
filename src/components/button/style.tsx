@@ -224,6 +224,34 @@ export const StyledButton = styled.button<iStyledButtonProps>`
                     background-color: rgba(137, 255, 63, 0.5);
                 }
         `;
+            case "buttonModalHint":
+                return css`
+                width: auto;
+                height: 50px;
+
+                padding: 10px;
+
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                
+                border-radius: 10px;
+                border: 1px solid #2FFF00;
+                
+                color: #2FFF00;
+                text-align: center;
+                font-family: "Jersey 25";
+                font-size: 36px;
+                font-style: normal;
+                font-weight: 400;
+                
+                background: #214419;  
+
+                &:hover {
+                    cursor: pointer;
+                    background-color: rgba(137, 255, 63, 0.5);
+                }
+        `;
         }
     }}
 `;

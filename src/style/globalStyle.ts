@@ -137,6 +137,36 @@ export const GlobalStyle = createGlobalStyle`
 			bottom: -60px;
     		gap: 25px;
 		}
+
+		.hintModel{
+			display: flex;
+			flex-direction: column;
+			gap: 20px;
+		}
+
+		.imgmodel{
+			display: flex;
+			align-items: center;
+			gap: 10px;
+
+			color: #2FFF00;
+			text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+			font-family: "Jersey 25";
+			font-size: 30px;
+			font-style: normal;
+			font-weight: 400;
+			line-height: normal;
+			img{
+				width: 50px;
+			}
+		}
+
+		.butons{
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: 20px;
+		}
     }
   }
 `;

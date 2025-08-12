@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const QuestionPageStyled = styled.main`
   nav {
     width: 100%;
-    height: 140px;
+    height: 100px;
     padding: 10px;
     background: #2fff0026;
     border-bottom: #2fff00 2px solid;
@@ -13,7 +13,7 @@ export const QuestionPageStyled = styled.main`
     justify-content: space-between;
 
     .img {
-      width: 140px;
+      width: 96px;
       height: auto;
       padding-left: 20px;
     }
@@ -204,48 +204,6 @@ export const QuestionPageStyled = styled.main`
           color: #88ff3f;
           resize: none;
         }
-      }
-    }
-  }
-
-  .modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-
-    .modal-content {
-      background-color: #121212;
-      padding: 30px;
-      border-radius: 8px;
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 15px;
-
-      h2 {
-        font-family: "Space Mono", monospace;
-      }
-    }
-  }
-
-  .config {
-    display: flex;
-    align-items: center;
-
-    &:hover {
-      cursor: pointer;
-      img {
-        border: 0px solid transparent;
-        border-radius: 50%;
-        background-color: rgba(137, 255, 63, 0.5);
       }
     }
   }

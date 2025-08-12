@@ -3,7 +3,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { api } from "../services/api";
 
-// ========== INTERFACES ==========
 export interface User {
   id: string;
   name: string;
@@ -14,6 +13,9 @@ export interface User {
   currentQuestion: string;
   trophies: number;
   totalPoints: number;
+  lifes: number;
+  hints: number;
+  coins: number;
   createdAt: Date;
 }
 
@@ -53,6 +55,8 @@ export interface Question {
   type: string;
   order: number;
   points: number;
+  hint: string;
+  coinsValues: number;
   createdAt: Date;
   section: Section;
 }
@@ -86,13 +90,11 @@ interface AppContextType {
   getRanking: () => Promise<User[]>;
 }
 
-// ========== CONTEXTO ==========
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [user, setUser] = useState<User | null>(null);
 
-    // ---------- AUTENTICAÇÃO ----------
     const login = async (email: string, password: string) => {
         const res = await api.post("/auth/login", { email, password });
         setUser(res.data.user);
@@ -108,7 +110,6 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         api.defaults.headers.common["Authorization"] = `Bearer ${res.data.token}`;
     };
 
-    // ---------- GETTERS ----------
     const getUsers = async () => {
         const res = await api.get("/users");
         return res.data as User[];
@@ -144,18 +145,16 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         return filteredAndSorted;
     };
 
-
-    // ---------- POST: SUBMIT ANSWER ----------
     const submitAnswerLog = async (data: {
-    userId: string;
-    questionId: string;
-    userAnswer: string;
-  }) => {
+        userId: string;
+        questionId: string;
+        userAnswer: string;
+    }) => {
         const res = await api.post("/answerlog", data);
         return res.data as { correct: boolean; pointsEarned: number };
     };
 
-    // ---------- EFEITO DE INICIALIZAÇÃO ----------
+
     useEffect(() => {
         const token = localStorage.getItem("token");
         const storedUser = localStorage.getItem("user");
@@ -189,7 +188,6 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     );
 };
 
-// ========== HOOK ==========
 export const useApp = (): AppContextType => {
     const context = useContext(AppContext);
     if (!context) throw new Error("useApp must be used within AppProvider");
