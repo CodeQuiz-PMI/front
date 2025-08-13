@@ -4,7 +4,7 @@ import { StyledLoginPage } from "./styled";
 import { useNavigate, Link } from "react-router-dom";
 import { useApp } from "../../context/AppContext";
 
-import betinha from "../../assets/assetsV2/betinhalogo.svg";
+import betinha from "../../assets/assetsV2/betinha.png";
 import googleImg from "../../assets/googleImg.svg";
 import gitImg from "../../assets/gitImg.svg";
 import arrowLeft from "../../assets/ArrowLeft.svg";

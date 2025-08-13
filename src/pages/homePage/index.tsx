@@ -7,7 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { HomeStyled } from "./style";
 import { Button } from "../../components/button";
 
-import betinha from "../../assets/assetsV2/betinhalogo.svg";
+import betinha from "../../assets/assetsV2/betinha.png";
 import codequiz from "../../assets/assetsV2/CodeQuiz.svg";
 
 export const HomePage = () => {

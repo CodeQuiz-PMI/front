@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../../components/button";
 import { StyleAboutPage } from "./styled";
 
-import betinha from "../../assets/assetsV2/betinhalogo.svg";
+import betinha from "../../assets/assetsV2/betinha.png";
 
 export const AboutPage: React.FC = () => {
     const navigate = useNavigate();

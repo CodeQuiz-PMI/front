@@ -10,6 +10,7 @@ import { LevelPage } from "../pages/levelPage";
 import { SectionPage } from "../pages/sectionPage";
 import { SelectionLevelPage } from "../pages/selectionLevelPage";
 import { ModeSelectionPage } from "../pages/modeSelectionPage";
+import { Store } from "../pages/store";
 
 
 
@@ -26,6 +27,7 @@ export const RoutesMain = () => {
             <Route path="/Game/:levelId" element={<LevelPage />} />
             <Route path="/Section/:sectionId" element={<SectionPage />} />
             <Route path="/Question/:questionId" element={<QuestionPage/>}/>
+            <Route path="/Store" element={<Store/>}/>
         </Routes>
     );
 };

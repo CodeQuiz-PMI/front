@@ -2,7 +2,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { StyledSelectionLevelPage } from "./styled";
 
-import betinha from "../../assets/assetsV2/betinhalogo.svg";
+import betinha from "../../assets/assetsV2/betinha.png";
 import { AnswerLog, Level, useApp } from "../../context/AppContext";
 import { useEffect, useState } from "react";
 import { Button } from "../../components/button";

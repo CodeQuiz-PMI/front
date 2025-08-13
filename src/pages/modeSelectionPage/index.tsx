@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { StyledModeSelectionPage } from "./styled";
 
-import betinha from "../../assets/assetsV2/betinhalogo.svg";
+import betinha from "../../assets/assetsV2/betinha.png";
 import { Button } from "../../components/button";
 
 export const ModeSelectionPage = () => {

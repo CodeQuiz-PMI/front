@@ -6,12 +6,13 @@ import { Button } from "../../components/button";
 import { api } from "../../services/api";
 import { AnswerLog, Question, useApp } from "../../context/AppContext";
 
-import betinha from "../../assets/assetsV2/betinhalogo.svg";
+import betinha from "../../assets/assetsV2/betinha.png";
 import lamp from "../../assets/assetsV2/lamp.svg";
 import arrow from "../../assets/ArrowLeft.svg";
 import back from "../../assets/assetsV2/return.svg";
 import bolsa from "../../assets/assetsV2/bolsamoedas.svg";
 import coin from "../../assets/assetsV2/coin.svg";
+import betinhaDica from "../../assets/assetsV2/Dica 1.svg";
 
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -221,7 +222,14 @@ export const QuestionPage = () => {
                 const updates = { hints: userFromStorage.hints - 1 };
                 const res = await api.patch(`/users/${user?.id}`, updates);
 
-                localStorage.setItem("user", JSON.stringify(res.data));
+                const userData = {
+                    ...res.data,
+                    id: res.data._id,
+                };
+                delete userData._id;
+                setCoins(res.data.coins);
+
+                localStorage.setItem("user", JSON.stringify(userData));
 
             } catch (err) {
                 console.error("Erro ao debitar dica:", err);
@@ -357,6 +365,7 @@ export const QuestionPage = () => {
                                 __html: formatTextWithCode(question.hint),
                             }}
                         />
+                        <img className="imgBetinha" src={betinhaDica} alt="" />
                         <div className="ranking-buttons">
                             <Button buttonVariation="buttonModalRanking" type="button" onClick={() => setShowHint(false)}>
                                 <img src={back} alt="Back" />
