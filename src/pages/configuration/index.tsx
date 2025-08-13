@@ -4,7 +4,7 @@ import { Button } from "../../components/button";
 import { StyledConfigurationPage } from "./style";
 import { api } from "../../services/api";
 
-import betinha from "../../assets/assetsV2/betinhalogo.svg";
+import betinha from "../../assets/assetsV2/betinha.png";
 import bolsa from "../../assets/assetsV2/bolsamoedas.svg";
 import iconArrowLeft from "../../assets/ArrowLeft.svg";
 
@@ -41,6 +41,8 @@ export const Configuration = () => {
                     id: get.data._id,
                 };
                 delete userData._id;
+                setUsername(userData.name);
+                setCoins(userData.coins);
 
                 localStorage.setItem("user", JSON.stringify(userData));
             };
@@ -245,7 +247,7 @@ export const Configuration = () => {
                             <p>{coins} Moedas</p>
                         </div>
                     
-                        <Button buttonVariation="buttonConfigPageStore" type="button">
+                        <Button buttonVariation="buttonConfigPageStore" type="button" onClick={() => navigate("/Store")}>
                             Acesse a Loja CodeQuiz
                         </Button>
                     </div>

@@ -1,7 +1,7 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-import betinha from "../../assets/assetsV2/betinhalogo.svg";
+import betinha from "../../assets/assetsV2/betinha.png";
 import iconArrowLeft from "../../assets/ArrowLeft.svg";
 import iconGoldMedal from "../../assets/Gold Medal.svg";
 import iconTrophy from "../../assets/Trophy.svg";
