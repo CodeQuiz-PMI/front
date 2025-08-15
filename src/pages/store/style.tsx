@@ -36,170 +36,115 @@ export const StyledStorePage = styled.main`
     }
   }    
 
-    .config-container{
+    .Notification{
         display: flex;
+        align-items: flex-start;
         justify-content: space-between;
-        align-items: center;
 
-        padding-top: 20px;
+        padding: 40px 20px 0px 0px;
 
-        .title{
+        .balon{
             display: flex;
-            flex-direction: column;
             align-items: center;
+            position: relative;
+            
+            .text {
+                position: relative;
+                width: 720px;
 
-            h1{
                 color: #2FFF00;
+                text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
                 font-family: "Jersey 25";
-                font-size: 80px;
+                font-size: 32px;
                 font-style: normal;
                 font-weight: 400;
-                line-height: normal;
+
+                .p1{
+                    position: absolute;
+                    top: 20px;
+                    left: 20px;
+                    width: 550px;
+                }
+
+                .p2{
+                    position: absolute;
+                    bottom: 20px;
+                    left: 20px;
+                    width: 550px;
+                }
             }
-            p{
-                color: #2FFF00;
-                text-align: center;
-                font-family: "Jersey 25";
-                font-size: 30px;
-                font-style: normal;
-                font-weight: 400;
-                line-height: normal;
+
+            .img{
+                width: 270px;
+                position: relative;
+
+                img{
+                    position: absolute;
+                    width: 270px;
+                    right: 30px;
+                    top: -70px;
+                }
             }
+        }
+
+        .coins{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+
+            background-color: #393939;
+
+            padding: 10px;
+
+            border: 1px solid transparente;
+            border-radius: 10px ;
+
+            color: #2FFF00;
+
+            font-family: "Jersey 25";
+            font-size: 36px;
+            font-style: normal;
+            font-weight: 400;
+
+            width: 120px;
         }
     }
 
-    .container{
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-
-        .containerLeft{
-            width: auto;
+    .Divlist{
+        width: 100%;
+        padding-top: 80px;
+        .list{
+            display: flex;
+            justify-content: space-evenly;
+            padding: 0px 100px 0px 50px;
             
-            display:flex;
-            flex-direction: column;
-            gap: 45px;
-
-            border-right: 1px solid grey;
-
-            padding: 20px;
-
-            .inputs{
-                width: 300px;
-                height: 90px;
-                border: 1px solid transparent;
-                border-radius: 10px;
-                background-color: #393939;
-                padding: 10px;
-                text-align: center;
-
-                p{
-                    color: #2FFF00;
-                    font-family: "Jersey 25";
-                    font-size: 20px;
-                    font-style: normal;
-                    font-weight: 400;
-                    line-height: normal;
-
-                    padding-bottom: 10px;
-
-                }
-
-                .volume-control{
-                    display: flex;
-                    align-items: center;
-
-                    gap: 10px;
-
-                    .volume-icon{
-                        display: flex;
-                        align-items: center;
-
-                        background: none;
-                        border: none;
-                        color: #2fff00;
-                        font-size: 25px;
-                        cursor: pointer
-                    }
-                    
-                    .volume-slider{
-                        -webkit-appearance: none;
-                        width: 100%;
-                        height: 10px;
-                        background: #2fff00;
-                        border-radius: 4px;
-                        outline: none;
-                    }
-
-                    .volume-slider::-webkit-slider-thumb {
-                        -webkit-appearance: none;
-                        width: 30px;
-                        height: 30px;
-                        background: #2fff00;
-                        border-radius: 50%;
-                        cursor: pointer;
-                        border: 1px solid transparente;
-                    }
-
-                    .volume-slider::-moz-range-thumb {
-                        width: 30px;
-                        height: 30px;
-                        background: #2fff00;
-                        border-radius: 50%;
-                        cursor: pointer;
-                        border: 2px solid transparente;
-                    }
-                }
-
-                .button{
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                }
-            }
-        }
-
-        .containerRight{
-            width: auto;
-            
-            display:flex;
-            flex-direction: column;
-            gap: 20px;
-
-            padding: 20px;
-
-            .background{
-                display:flex;
+            li{
+                display: flex;
                 flex-direction: column;
                 align-items: center;
+                justify-content: center;
+                gap: 10px;
                 
-                width: 300px;
-                height: auto;
-
+                width: 240px;
+                height: 200px;
+                
+                border: 1px solid transparent;
+                border-radius: 10px;
+                
                 background-color: #393939;
                 
-                border-radius: 10px;
-                border: 1px solid transparent;
-                
-                padding: 10px;
-
-                p{
-                    color: #2FFF00;
-                    font-family: "Jersey 25";
-                    font-size: 20px;
-                    font-style: normal;
-                    font-weight: 400;
-                    line-height: normal;
-    
-                    padding-bottom: 10px;
-                }
-
-                .gold{
-                    display:flex;
-                    flex-direction: column;
-                    align-items: center;
+                color: #2FFF00;
+                font-family: "Jersey 25";
+                font-size: 25px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: normal;
+                img{
+                    width: 100px;
                 }
             }
         }
     }
+            
 `;

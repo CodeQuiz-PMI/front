@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../../components/button";
@@ -5,12 +6,14 @@ import { StyledStorePage } from "./style";
 import { api } from "../../services/api";
 
 import betinha from "../../assets/assetsV2/betinha.png";
-import bolsa from "../../assets/assetsV2/bolsamoedas.svg";
 import coin from "../../assets/assetsV2/coin.svg";
 import iconArrowLeft from "../../assets/ArrowLeft.svg";
 import back from "../../assets/assetsV2/return.svg";
 import hearts from "../../assets/assetsV2/heart.svg";
 import lamp from "../../assets/assetsV2/lamp.svg";
+import balon from "../../assets/assetsV2/balon.svg";
+import BetinhaHint from "../../assets/assetsV2/Dica 1.svg";
+import musica from "../../assets/assetsV2/musica.svg";
 
 import { useApp } from "../../context/AppContext";
 
@@ -21,12 +24,16 @@ import music4 from "../../assets/musics/Musica4.mp3";
 
 import { Play, Pause } from "lucide-react";
 
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+
 export const Store = () => {
     const navigate = useNavigate();
 
     const { user } = useApp();
 
-    const [coins, setCoins] = useState("");
+    const [coins, setCoins] = useState(Number);
 
     const [currentMusic, setCurrentMusic] = useState<string | null>(null);
     const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -60,10 +67,10 @@ export const Store = () => {
     };
 
     const musics = [
-        { title: "Echoes of Dawn", price: 5, src: music1 },
-        { title: "Mystic Winds", price: 5, src: music2 },
-        { title: "Celestial Journey", price: 5, src: music3 },
-        { title: "Forest Dreams", price: 5, src: music4 },
+        { title: "Echoes of Dawn", price: 50, src: music1 },
+        { title: "Mystic Winds", price: 50, src: music2 },
+        { title: "Celestial Journey", price: 50, src: music3 },
+        { title: "Forest Dreams", price: 50, src: music4 },
     ];
 
     const handlePlay = (src: string) => {
@@ -80,22 +87,67 @@ export const Store = () => {
     };
 
     const lifes = [
-        { title: "1x", price: 5, src: hearts },
-        { title: "5x", price: 10, src: hearts },
-        { title: "10x", price: 100, src: hearts },
-        { title: "100x", price: 500, src: hearts },
-        { title: "500x", price: 800, src: hearts },
-        { title: "1000x", price: 1000, src: hearts },
+        { title: "3", price: 25, src: hearts },
+        { title: "7", price: 55, src: hearts },
+        { title: "15", price: 110, src: hearts },
+        { title: "35", price: 245, src: hearts },
+        { title: "80", price: 520, src: hearts },
+        { title: "200", price: 1200, src: hearts },
     ];
 
-    const lamps = [
-        { title: "1x", price: 5, src: lamp },
-        { title: "5x", price: 10, src: lamp },
-        { title: "10x", price: 100, src: lamp },
-        { title: "100x", price: 500, src: lamp },
-        { title: "500x", price: 800, src: lamp },
-        { title: "1000x", price: 1000, src: lamp },
+    const hints = [
+        { title: "5", price: 20, src: lamp },
+        { title: "15", price: 55, src: lamp },
+        { title: "30", price: 100, src: lamp },
+        { title: "70", price: 200, src: lamp },
+        { title: "150", price: 375, src: lamp },
+        { title: "400", price: 800, src: lamp },
     ];
+
+    const handlePurchase = async (type: "life" | "hint" | "music", item: any) => {
+        const userFromStorage = localStorage.getItem("user");
+        if (!userFromStorage) return;
+
+        const currentUser = JSON.parse(userFromStorage);
+
+        if (coins < item.price) {
+            toast.error("Você não tem moedas suficientes!", {
+                style: { background: "#2A2A2A", color: "#2FFF00" }
+            });
+            return;
+        }
+
+        console.log(currentUser);
+
+        const updatedCoins = coins - item.price;
+
+        const updateData: any = { coins: updatedCoins };
+
+        if (type === "life") {
+            updateData.lifes = (currentUser.lifes || 0) + Number(item.title);
+        }
+        if (type === "hint") {
+            updateData.hints = (currentUser.hints || 0) + Number(item.title);
+        }
+        // if (type === "music") {
+        //     updateData.musics = [...(currentUser.musics || []), item.src];
+        // }
+
+        try {
+            await api.patch(`/users/${currentUser.id}`, updateData);
+
+            const newUserData = { ...currentUser, ...updateData };
+            localStorage.setItem("user", JSON.stringify(newUserData));
+            setCoins(updatedCoins);
+
+            toast.success("Compra realizada com sucesso!", {
+                style: { background: "#2A2A2A", color: "#2FFF00" }
+            });
+        } catch (error) {
+            console.error("Erro ao atualizar usuário:", error);
+        }
+    };
+
 
     return (
         <StyledStorePage>
@@ -109,53 +161,43 @@ export const Store = () => {
                 </div>
             </nav>
             
-            <div className="config-container">
-                <Button buttonVariation="buttonImg" type="button" onClick={handleGoBack}>
-                    <img src={iconArrowLeft} alt="Anterior" />
-                </Button>
-                <div className="title">
-                    <h1>Loja</h1>
-                    <p>Personalize sua experiência com novas músicas, colecionáveis e muito mais!</p>
+            <div className="Notification">
+                <img src={iconArrowLeft} alt="" onClick={handleGoBack}/>
+
+                <div className="balon">
+                    <div className="text">
+                        <img src={balon} alt="" />
+                        <p className="p1">Bem-vindo(a) à Loja do CodeQuiz! Aqui você pode comprar vidas extras, dicas valiosas e muito mais para deixar sua experiência ainda mais divertida e do seu jeito.</p>
+                        <p className="p2">Confira as opções e personalize sua aventura!</p>
+                    </div>
+                    <div className="img">
+                        <img src={BetinhaHint} alt="" />
+                    </div>
                 </div>
-                <div style={{width: "78px"}}>
+
+                <div className="coins">
+                    {coins}
+                    <img src={coin} alt="" />
                 </div>
             </div>
-
-            <div className="container">
-                <div className="containerLeft">
-                    <div className="inputs">
-                        <p>Músicas</p>
-                        <div className="button">
-                            <Button buttonVariation="buttonConfigPage" type="button" onClick={() => setIsMusicsModalOpen(true)}>Ver mais</Button>
-                        </div>
-                    </div>
-                    <div className="inputs">
-                        <p>Vidas</p>
-                        <div className="button">
-                            <Button buttonVariation="buttonConfigPage" type="button" onClick={() => setIsLifesModalOpen(true)}>Ver mais</Button>
-                        </div>
-                    </div>
-                    <div className="inputs">
-                        <p>Dicas</p>
-                        <div className="button">
-                            <Button buttonVariation="buttonConfigPage" type="button" onClick={() => setIsHintsModalOpen(true)}>Ver mais</Button>
-                        </div>
-                    </div>
-                </div>
-                <div className="containerRight">
-                    <div className="background">
-                        <p>
-                            Você possui:
-                        </p>
-
-                        <div className="gold">
-                            <img src={bolsa} alt="" />
-                            <p>{coins} Moedas</p>
-                        </div>
-                    </div>
-                </div>
+            
+            <div className="Divlist">
+                <ul className="list">
+                    <li onClick={() => setIsHintsModalOpen(true)}>
+                        <h2>Dicas</h2>
+                        <img src={lamp} alt="" />
+                    </li>
+                    <li onClick={() => setIsLifesModalOpen(true)}>
+                        <h2>Vidas</h2>
+                        <img src={hearts} alt="" />
+                    </li>
+                    <li onClick={() => setIsMusicsModalOpen(true)}>
+                        <h2>Músicas</h2>
+                        <img src={musica} alt="" />
+                    </li>
+                </ul>
             </div>
-
+            
             {isMusicsModalOpen && (
                 <div className="modal">
                     <div className="modal-content" style={{padding: "30px 40px 55px", alignItems: "stretch"}}>
@@ -198,7 +240,7 @@ export const Store = () => {
                             />
                         </div>
                         <div className="Store-buttons">
-                            <Button buttonVariation="buttonModalRanking" type="button" onClick={() => setIsMusicsModalOpen(false)}>
+                            <Button buttonVariation="buttonModalStore" type="button" onClick={() => setIsMusicsModalOpen(false)}>
                                 <img src={back} alt="Back" />
                             </Button>
                         </div>
@@ -221,9 +263,9 @@ export const Store = () => {
                         <div className="listLifes">
                             <ul>
                                 {lifes.map((life) => (
-                                    <li key={life.src} className="liLifes">
+                                    <li key={life.src} className="liLifes" onClick={() => handlePurchase("life", life)}>
                                         <div className="lifesTitle">
-                                            <p>{life.title}</p>
+                                            <p>{life.title}x</p>
                                             <img src={life.src} alt="coin" />
                                         </div>
                                         <div className="price">
@@ -235,7 +277,7 @@ export const Store = () => {
                             </ul>
                         </div>
                         <div className="Store-buttons">
-                            <Button buttonVariation="buttonModalRanking" type="button" onClick={() => setIsLifesModalOpen(false)}>
+                            <Button buttonVariation="buttonModalStore" type="button" onClick={() => setIsLifesModalOpen(false)}>
                                 <img src={back} alt="Back" />
                             </Button>
                         </div>
@@ -257,14 +299,14 @@ export const Store = () => {
                         </div>
                         <div className="listLifes">
                             <ul className="hintsUl">
-                                {lamps.map((lamp) => (
-                                    <li key={lamp.src} className="liLifes">
+                                {hints.map((hint) => (
+                                    <li key={hint.src} className="liLifes" onClick={() => handlePurchase("hint", hint)}>
                                         <div className="lifesTitle">
-                                            <p>{lamp.title}</p>
-                                            <img src={lamp.src} alt="coin" />
+                                            <p>{hint.title}x</p>
+                                            <img src={hint.src} alt="coin" />
                                         </div>
                                         <div className="price">
-                                            <p>{lamp.price}</p>
+                                            <p>{hint.price}</p>
                                             <img src={coin} alt="coin" />
                                         </div>
                                     </li>
@@ -272,7 +314,7 @@ export const Store = () => {
                             </ul>
                         </div>
                         <div className="Store-buttons">
-                            <Button buttonVariation="buttonModalRanking" type="button" onClick={() => setIsHintsModalOpen(false)}>
+                            <Button buttonVariation="buttonModalStore" type="button" onClick={() => setIsHintsModalOpen(false)}>
                                 <img src={back} alt="Back" />
                             </Button>
                         </div>

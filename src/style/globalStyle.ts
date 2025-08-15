@@ -128,7 +128,7 @@ export const GlobalStyle = createGlobalStyle`
 					justify-content: space-between;
 					gap: 10px;
 
-					width: 320px;
+					width: 400px;
 
 					.price{
 						display: flex;
@@ -167,7 +167,7 @@ export const GlobalStyle = createGlobalStyle`
 						border: 1px solid transparent;
 						border-radius: 20px;
 						
-						width: 190px;
+						width: 270px;
 
 						p{
 							color: #2FFF00;
@@ -207,8 +207,8 @@ export const GlobalStyle = createGlobalStyle`
 			    display: flex;
 				flex-wrap: wrap;
 				align-items: center;
-				gap: 20px;
 				justify-content: center;
+				gap: 15px 36px;
 
 				.liLifes{
 				    display: flex;
@@ -227,6 +227,10 @@ export const GlobalStyle = createGlobalStyle`
 						
 						border: 1px solid transparent;
     					border-radius: 10px;
+
+						img{
+							width: 69px;
+						}
 					}
 
 					.price{
@@ -328,7 +332,7 @@ export const GlobalStyle = createGlobalStyle`
 			display: flex;
 			margin-top: 20px;
 			position: absolute;
-			bottom: -60px;
+			bottom: -40px;
 			gap: 25px;
 			justify-content: center;
 			width: 87%;

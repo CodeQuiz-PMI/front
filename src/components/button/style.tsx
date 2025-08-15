@@ -146,6 +146,23 @@ export const StyledButton = styled.button<iStyledButtonProps>`
                     cursor: pointer;
                     background-color: #2FFF00;
                 `;
+            case "buttonModalStore":
+                return css`
+                    width: 100px;
+                    height: 75px;
+
+                    padding: 10px;
+
+                    border-radius: 10px;
+                    border: 5px solid #2B4E23;
+
+                    cursor: pointer;
+                    background-color: #2FFF00;
+
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                `;
             case "buttonExit2":
                 return css`
                 width: 200px;
