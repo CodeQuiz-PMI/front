@@ -1,8 +1,8 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { StyledModeSelectionPage } from "./styled";
 
-import betinha from "../../assets/assetsV2/betinha.png";
 import { Button } from "../../components/button";
+import { NavBar } from "../../components/navbar";
 
 export const ModeSelectionPage = () => {
     const navigate = useNavigate();
@@ -15,17 +15,7 @@ export const ModeSelectionPage = () => {
    
     return (
         <StyledModeSelectionPage>
-            <nav>
-                <div className="img">
-                    <Link to={"/"}>
-                        <img src={betinha} alt="Imagem do logo" onClick={() => navigate("/")}/>
-                    </Link>
-                </div>
-                <div className="nav">
-                    <Link to="/About">Sobre</Link>
-                    <Link to="/Configurations">Configuração</Link>
-                </div>
-            </nav>
+            <NavBar/>
 
             <div className="container">
                 <h1>Escolha o modo de jogo:</h1>

@@ -2,39 +2,39 @@ import styled from "styled-components";
 
 export const StyleLevelPage = styled.main`
     nav {
-    width: 100%;
-    height: 100px;
-    padding: 10px;
-    background: #2fff0026;
-    border-bottom: #2FFF00 2px solid;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-
-    .img{
-        width: 96px;
-        height: auto;
-        padding-left: 20px;
-    }
-
-    .nav{
+        width: 100%;
+        height: 100px;
+        padding: 10px;
+        background: var(--nav-background);
+        border-bottom: #2FFF00 2px solid;
         display: flex;
         flex-direction: row;
-        justify-content: flex-end;
-        gap: 20px;
-        padding-right: 20px;
-        a {
-            width: auto;
-            text-decoration: none;
-            color: #2FFF00;
-            font-family: "Jersey 25";
-            font-size: 40px;
-            font-style: normal;
-            font-weight: 400;
+        align-items: center;
+        justify-content: space-between;
+
+        .img{
+            width: 96px;
+            height: auto;
+            padding-left: 20px;
+        }
+
+        .nav{
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+            gap: 20px;
+            padding-right: 20px;
+            a {
+                width: auto;
+                text-decoration: none;
+                color: var(--primary-color-light);
+                font-family: var(--main-font);
+                font-size: var(--font-size-xxl);
+                font-style: normal;
+                font-weight: var(--font-weight-normal);
+            }
         }
     }
-  }
     
   .header {
     display: flex;
@@ -62,13 +62,13 @@ export const StyleLevelPage = styled.main`
       width: 100%;
 
       h1 {
-        font-size: 30px;
-        font-family: "Space Mono";
+        font-size: var(--font-size-xxl);
+        font-family: var(--main-font);
       }
 
       p {
-        font-size: 20px;
-        font-family: "Space Mono";
+        font-size: var(--font-size-lg);
+        font-family: var(--main-font);
         text-align: center;
       }
     }
@@ -81,12 +81,11 @@ export const StyleLevelPage = styled.main`
         padding: 30px;
 
         h1{
-            color: #2FFF00;
-            font-family: "Jersey 25";
-            font-size: 96px;
+            color: var(--primary-color-light);
+            font-family: var(--main-font);
+            font-size: var(--font-size-xxxxxl);
             font-style: normal;
-            font-weight: 400;
-            line-height: normal;
+            font-weight: var(--font-weight-normal);
         }
 
         div {

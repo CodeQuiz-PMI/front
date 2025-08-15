@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { StyledSelectionLevelPage } from "./styled";
 
-import betinha from "../../assets/assetsV2/betinha.png";
 import { AnswerLog, Level, useApp } from "../../context/AppContext";
 import { useEffect, useState } from "react";
 import { Button } from "../../components/button";
 import { api } from "../../services/api";
+import { NavBar } from "../../components/navbar";
 
 export const SelectionLevelPage = () => {
     const navigate = useNavigate();
@@ -87,17 +87,7 @@ export const SelectionLevelPage = () => {
 
     return (
         <StyledSelectionLevelPage>
-            <nav>
-                <div className="img">
-                    <Link to={"/"}>
-                        <img src={betinha} alt="Imagem do logo" onClick={() => navigate("/Mode")}/>
-                    </Link>
-                </div>
-                <div className="nav">
-                    <Link to="/About">Sobre</Link>
-                    <Link to="/Configurations">Configuração</Link>
-                </div>
-            </nav>
+            <NavBar/>
 
             <div className="container">
                 <h1>Fases</h1>

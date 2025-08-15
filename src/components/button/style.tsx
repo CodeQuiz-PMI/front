@@ -215,6 +215,40 @@ export const StyledButton = styled.button<iStyledButtonProps>`
                     background-color: rgba(137, 255, 63, 0.5);
                 }
         `;
+            case "buttonConfigPage2":
+                return css`
+                width: 100%;
+                height: 40px;
+
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-end;
+                align-items: center;
+                gap: 100px;
+
+                border-radius: 10px;
+                border: 2px solid #2FFF00;
+
+                color: #2FFF00;
+
+                text-align: center;
+                font-family: "Jersey 25";
+                font-size: 36px;
+                font-style: normal;
+                font-weight: 400;
+                background-color: #4A4A4A;
+
+                padding: 5px;
+
+                img{
+                    width: 30px
+                }
+
+                &:hover {
+                    cursor: pointer;
+                    background-color: rgba(137, 255, 63, 0.5);
+                }
+        `;
             case "buttonConfigPageStore":
                 return css`
                 width: 100%;

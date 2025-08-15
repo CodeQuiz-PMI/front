@@ -1,4 +1,4 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import { QuestionPageStyled } from "./styled";
 import { useEffect, useState } from "react";
@@ -6,7 +6,6 @@ import { Button } from "../../components/button";
 import { api } from "../../services/api";
 import { AnswerLog, Question, useApp } from "../../context/AppContext";
 
-import betinha from "../../assets/assetsV2/betinha.png";
 import lamp from "../../assets/assetsV2/lamp.svg";
 import arrow from "../../assets/ArrowLeft.svg";
 import back from "../../assets/assetsV2/return.svg";
@@ -18,6 +17,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import { ToastOptions } from "react-toastify";
+import { NavBar } from "../../components/navbar";
 
 type ResponseOption = {
     label: string;
@@ -277,7 +277,8 @@ export const QuestionPage = () => {
 
             setShowHint(true);
             setShowHintStore(false);
-
+            
+            return res;
         } catch (err) {
             console.error("Erro ao comprar dica:", err);
             toast.error("Erro ao processar compra da dica!", toastOptions);
@@ -288,17 +289,8 @@ export const QuestionPage = () => {
           
     return (
         <QuestionPageStyled>
-            <nav>
-                <div className="img">
-                    <img src={betinha} alt="Imagem do logo" />
-                </div>
-                <div className="nav">
-                    <Link to="/About">Sobre</Link>
-                    <Link to="/Configurations">Configuração</Link>
-                </div>
-            </nav>
+            <NavBar/>
 
-            
             <div className="header">
                 <img src={arrow} alt="" onClick={handleBackToSection}/>
                 <h1>{question.title}</h1>
@@ -364,6 +356,7 @@ export const QuestionPage = () => {
                             dangerouslySetInnerHTML={{
                                 __html: formatTextWithCode(question.hint),
                             }}
+                            style={{fontFamily: "var(--second-font)", fontSize: "var(--font-size-base)", textAlign: "justify"}}
                         />
                         <img className="imgBetinha" src={betinhaDica} alt="" />
                         <div className="ranking-buttons">

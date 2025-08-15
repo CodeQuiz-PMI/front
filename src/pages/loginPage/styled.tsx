@@ -1,40 +1,5 @@
 import styled from "styled-components";
 export const StyledLoginPage = styled.main`
-  nav {
-    width: 100%;
-    height: 100px;
-    padding: 10px;
-    background: #2fff0026;
-    border-bottom: #2FFF00 2px solid;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-
-    .img{
-        width: 96px;
-        height: auto;
-        padding-left: 20px;
-    }
-
-    .nav{
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-end;
-        gap: 20px;
-        padding-right: 20px;
-        a {
-            width: auto;
-            text-decoration: none;
-            color: #2FFF00;
-            font-family: "Jersey 25";
-            font-size: 40px;
-            font-style: normal;
-            font-weight: 400;
-        }
-    }
-  }
-    
     .navigate{
         img{
             width: 70px;
@@ -42,20 +7,20 @@ export const StyledLoginPage = styled.main`
     }
 
     .title {
-        font-family: "Jersey 25", sans-serif;
-        color: #2FFF00;
+        font-family: var(--main-font);
+        color: var(--primary-color-light);
         h1 {
-            font-size: 55px;
+            font-size: var(--font-size-xxxxl);
             text-align: center;
             font-style: normal;
-            font-weight: 400;
+            font-weight: var(--font-weight-normal);
         }
 
         h2 {
-            font-size: 35px;
+            font-size: var(--font-size-xxl);
             text-align: center;
             font-style: normal;
-            font-weight: 400;
+            font-weight: var(--font-weight-normal);
         }
             
         margin-bottom: 20px;
@@ -94,7 +59,7 @@ export const StyledLoginPage = styled.main`
 
                 label {
                     font-size: 20px;
-                    font-family: "Jersey 25", sans-serif;   
+                    font-family: var(--main-font);   
                 }
     
                 input {
@@ -105,12 +70,12 @@ export const StyledLoginPage = styled.main`
                     border: 1px solid transparent;
                     border-radius: 10px;
                     background: rgba(217, 217, 217, 0.15);
-                    color: #88ff3f;
-                    font-family: "Jersey 25", sans-serif;
+                    color: var(--primary-color-light);
+                    font-family: var(--main-font);
                 }
     
                 input::placeholder {
-                    color: #88ff3f;
+                    color: var(--primary-color-light);
                 }
             }
 
@@ -122,10 +87,10 @@ export const StyledLoginPage = styled.main`
             align-items: center;
             justify-content: space-between;
 
-            font-family: "Jersey 25", sans-serif;
+            font-family: var(--main-font);
             a {
                 text-decoration: none;
-                color: #88ff3f;
+                color: var(--primary-color-light);
             }
         }
 

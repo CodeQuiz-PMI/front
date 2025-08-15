@@ -1,7 +1,6 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-import betinha from "../../assets/assetsV2/betinha.png";
 import iconArrowLeft from "../../assets/ArrowLeft.svg";
 import iconGoldMedal from "../../assets/Gold Medal.svg";
 import iconTrophy from "../../assets/Trophy.svg";
@@ -18,6 +17,7 @@ import { api } from "../../services/api";
 
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { NavBar } from "../../components/navbar";
 
 export const SectionPage = () => {
     const navigate = useNavigate();
@@ -125,15 +125,7 @@ export const SectionPage = () => {
 
     return(
         <StyledSectionPage>
-            <nav>
-                <div className="img">
-                    <img src={betinha} alt="Imagem do logo" onClick={() => navigate("/Mode")}/>
-                </div>
-                <div className="nav">
-                    <Link to="/About">Sobre</Link>
-                    <Link to="/Configurations">Configuração</Link>
-                </div>
-            </nav>
+            <NavBar/>
 
             <div className="buttons">
                 <Button buttonVariation="buttonImg" type="button" onClick={exit}>

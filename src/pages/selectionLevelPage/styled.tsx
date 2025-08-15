@@ -5,7 +5,7 @@ export const StyledSelectionLevelPage = styled.main`
     width: 100%;
     height: 100px;
     padding: 10px;
-    background: #2fff0026;
+    background: var(--nav-background);
     border-bottom: #2FFF00 2px solid;
     display: flex;
     flex-direction: row;
@@ -27,11 +27,11 @@ export const StyledSelectionLevelPage = styled.main`
         a {
             width: auto;
             text-decoration: none;
-            color: #2FFF00;
-            font-family: "Jersey 25";
-            font-size: 40px;
+            color: var(--primary-color-light);
+            font-family: var(--main-font);
+            font-size: var(--font-size-xxl);
             font-style: normal;
-            font-weight: 400;
+            font-weight: var(--font-weight-normal);
         }
     }
   }
@@ -45,12 +45,12 @@ export const StyledSelectionLevelPage = styled.main`
         padding-top:20px;
 
         h1{
-            color: #2FFF00;
+            color: var(--primary-color-light);
             text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
-            font-family: "Jersey 25";
-            font-size: 96px;
+            font-family: var(--main-font);
+            font-size: var(--font-size-xxxxxl);
             font-style: normal;
-            font-weight: 400;
+            font-weight: var(--font-weight-normal);
         }
 
         ul{
@@ -63,20 +63,19 @@ export const StyledSelectionLevelPage = styled.main`
                 width: 200px;
                 height: 190px;
                 
-                border-radius: 10px;
+                border-radius: var(--border-radius-sm);
                 border: 5px solid #2FFF00;
                 
                 display: flex; 
                 align-items: center;
                 justify-content: center;   
                 
-                color: #2FFF00;
+                color: var(--primary-color-light);
                 text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
-                font-family: "Jersey 25";
-                font-size: 128px;
+                font-family: var(--main-font);
+                font-size: var(--font-size-xxxxxxl);
                 font-style: normal;
-                font-weight: 400;
-                line-height: normal;
+                font-weight: var(--font-weight-normal);
                 
                 background: #294623;
                 
@@ -93,7 +92,7 @@ export const StyledSelectionLevelPage = styled.main`
             .level-square.locked {
                 opacity: 0.4;
                 cursor: not-allowed;
-                pointer-events: none; /* Evita clique */
+                pointer-events: none;
             }
         }
     }

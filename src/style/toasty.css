@@ -1,11 +1,11 @@
 .custom-toast {
-  background-color: #2a2a2a !important;
-  color: #2fff00 !important;
-  font-family: "Jersey 25", cursive !important;
-  border-radius: 8px;
+  background-color: var(--background-color) !important;
+  color: var(--primary-color-light) !important;
+  font-family: var(--main-font) !important;
+  border-radius: var(--border-radius-sm);
   padding: 15px;
 
   .custom-toast-body {
-    font-size: 1.2rem;
+    font-size: var(--font-size-lg);
   }
 }

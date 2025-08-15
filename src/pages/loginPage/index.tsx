@@ -4,13 +4,13 @@ import { StyledLoginPage } from "./styled";
 import { useNavigate, Link } from "react-router-dom";
 import { useApp } from "../../context/AppContext";
 
-import betinha from "../../assets/assetsV2/betinha.png";
 import googleImg from "../../assets/googleImg.svg";
 import gitImg from "../../assets/gitImg.svg";
 import arrowLeft from "../../assets/ArrowLeft.svg";
 
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { NavBar } from "../../components/navbar";
 
 export const LoginPage = () => {
     const { login } = useApp();
@@ -35,17 +35,7 @@ export const LoginPage = () => {
 
     return (
         <StyledLoginPage>
-            <nav>
-                <div className="img">
-                    <Link to={"/"}>
-                        <img src={betinha} alt="Imagem do logo" onClick={() => navigate("/")}/>
-                    </Link>
-                </div>
-                <div className="nav">
-                    <Link to="/About">Sobre</Link>
-                    <Link to="/Configurations">Configuração</Link>
-                </div>
-            </nav>
+            <NavBar/>
 
             <div className="navigate">
                 <Link to="/">

@@ -1,11 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Button } from "../../components/button";
 import { StyledStorePage } from "./style";
 import { api } from "../../services/api";
 
-import betinha from "../../assets/assetsV2/betinha.png";
 import coin from "../../assets/assetsV2/coin.svg";
 import iconArrowLeft from "../../assets/ArrowLeft.svg";
 import back from "../../assets/assetsV2/return.svg";
@@ -26,6 +25,7 @@ import { Play, Pause } from "lucide-react";
 
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { NavBar } from "../../components/navbar";
 
 
 export const Store = () => {
@@ -151,15 +151,7 @@ export const Store = () => {
 
     return (
         <StyledStorePage>
-            <nav>
-                <div className="img">
-                    <img src={betinha} alt="Imagem do logo" />
-                </div>
-                <div className="nav">
-                    <Link to="/About">Sobre</Link>
-                    <Link to="/Configurations">Configuração</Link>
-                </div>
-            </nav>
+            <NavBar/>
             
             <div className="Notification">
                 <img src={iconArrowLeft} alt="" onClick={handleGoBack}/>
