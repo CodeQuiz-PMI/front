@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Button } from "../../components/button";
 import { StyledConfigurationPage } from "./style";
 import { api } from "../../services/api";
 
-import betinha from "../../assets/assetsV2/betinha.png";
-import bolsa from "../../assets/assetsV2/bolsamoedas.svg";
+import edit from "../../assets/assetsV2/edit.svg";
 import iconArrowLeft from "../../assets/ArrowLeft.svg";
 
 import { JSX } from "react/jsx-dev-runtime";
 import { FaVolumeMute, FaVolumeUp } from "react-icons/fa";
 import { useApp } from "../../context/AppContext";
+import { NavBar } from "../../components/navbar";
 
 export const Configuration = () => {
     const navigate = useNavigate();
@@ -18,7 +18,6 @@ export const Configuration = () => {
     const { user } = useApp();
 
     const [username, setUsername] = useState("");
-    const [coins, setCoins] = useState("");
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -42,7 +41,6 @@ export const Configuration = () => {
                 };
                 delete userData._id;
                 setUsername(userData.name);
-                setCoins(userData.coins);
 
                 localStorage.setItem("user", JSON.stringify(userData));
             };
@@ -154,14 +152,14 @@ export const Configuration = () => {
 
     const EditModal = () => (
         <div className="modal">
-            <div className="modal-content">
-                <h2>Editar Perfil</h2>
-                <input type="text" placeholder="Nome" value={name} onChange={(e) => setName(e.target.value)} />
-                <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-                <input type="password" placeholder="Nova senha" value={password} onChange={(e) => setPassword(e.target.value)} />
-                <input type="password" placeholder="Confirmar senha" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
-                <Button buttonVariation="type5" type="submit" onClick={handleSaveChanges}>Salvar</Button>
-                <Button buttonVariation="type6" type="button" onClick={() => setIsModalOpen(false)}>Cancelar</Button>
+            <div className="modal-content" style={{background: "var(--modal-background)"}}>
+                <h2 style={{color: "var(--primary-color-light"}}>Editar Perfil</h2>
+                <input id="inp" type="text" placeholder="Nome" value={name} onChange={(e) => setName(e.target.value)} />
+                <input id="inp" type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                <input id="inp" type="password" placeholder="Nova senha" value={password} onChange={(e) => setPassword(e.target.value)} />
+                <input id="inp" type="password" placeholder="Confirmar senha" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
+                <Button buttonVariation="buttonExit2" type="submit" onClick={handleSaveChanges}>Salvar</Button>
+                <Button buttonVariation="buttonExit2" type="button" onClick={() => setIsModalOpen(false)}>Cancelar</Button>
             </div>
         </div>
     );
@@ -176,15 +174,7 @@ export const Configuration = () => {
 
     return (
         <StyledConfigurationPage>
-            <nav>
-                <div className="img">
-                    <img src={betinha} alt="Imagem do logo" />
-                </div>
-                <div className="nav">
-                    <Link to="/About">Sobre</Link>
-                    <Link to="/Configurations">Configuração</Link>
-                </div>
-            </nav>
+            <NavBar/>
             
             <div className="config-container">
                 <Button buttonVariation="buttonImg" type="button" onClick={handleGoBack}>
@@ -203,7 +193,10 @@ export const Configuration = () => {
                     <div className="inputs">
                         <p>Perfil</p>
                         <div className="button">
-                            <Button buttonVariation="buttonConfigPage" type="button" onClick={handleEditClick}>{username}</Button>
+                            <Button buttonVariation="buttonConfigPage2" type="button" onClick={handleEditClick}>
+                                {username}
+                                <img src={edit} alt="" />
+                            </Button>
                         </div>
                     </div>
                     <div className="inputs">
@@ -234,22 +227,6 @@ export const Configuration = () => {
                         <div className="button">
                             <Button buttonVariation="buttonConfigPage" type="button" onClick={() => setIsDeleteModalOpen(true)}>Deletar</Button>
                         </div>
-                    </div>
-                </div>
-                <div className="containerRight">
-                    <div className="background">
-                        <p>
-                            Você possui:
-                        </p>
-
-                        <div className="gold">
-                            <img src={bolsa} alt="" />
-                            <p>{coins} Moedas</p>
-                        </div>
-                    
-                        <Button buttonVariation="buttonConfigPageStore" type="button" onClick={() => navigate("/Store")}>
-                            Acesse a Loja CodeQuiz
-                        </Button>
                     </div>
                 </div>
             </div>

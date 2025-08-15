@@ -5,7 +5,7 @@ export const QuestionPageStyled = styled.main`
     width: 100%;
     height: 100px;
     padding: 10px;
-    background: #2fff0026;
+    background: var(--nav-background);
     border-bottom: #2fff00 2px solid;
     display: flex;
     flex-direction: row;
@@ -27,17 +27,17 @@ export const QuestionPageStyled = styled.main`
       a {
         width: auto;
         text-decoration: none;
-        color: #2fff00;
-        font-family: "Jersey 25";
-        font-size: 40px;
+        color: var(--primary-color-light);
+        font-family: var(--main-font);
+        font-size: var(--font-size-xxl);
         font-style: normal;
-        font-weight: 400;
+        font-weight: var(--font-weight-normal);
       }
     }
   }
 
   align-items: center;
-  font-family: "Space Mono";
+  font-family: var(--main-font);
 
   .header {
     display: flex;
@@ -47,13 +47,12 @@ export const QuestionPageStyled = styled.main`
     padding: 20px 30px 0px 30px;
 
     h1 {
-      color: #2fff00;
+      color: var(--primary-color-light);
       text-align: center;
-      font-family: "Jersey 25";
-      font-size: 75px;
+      font-family: var(--main-font);
+      font-size: var(--font-size-xxxxxll);
       font-style: normal;
-      font-weight: 400;
-      line-height: normal;
+      font-weight: var(--font-weight-normal);
     }
   }
 
@@ -65,6 +64,8 @@ export const QuestionPageStyled = styled.main`
     padding: 0px 80px;
 
     .text {
+      padding: 0px 45px;
+
       p,
       ul,
       li,
@@ -72,12 +73,11 @@ export const QuestionPageStyled = styled.main`
       pre,
       strong,
       h3 {
-        color: #2fff00;
-        font-family: "Space Mono";
-        font-size: 20px;
+        color: var(--primary-color-light);
+        font-family: var(--second-font);
+        font-size: var(--font-size-lg);
         font-style: normal;
-        font-weight: 400;
-        line-height: normal;
+        font-weight: var(--font-weight-normal);
       }
 
       ul {
@@ -94,12 +94,11 @@ export const QuestionPageStyled = styled.main`
       code {
         padding: 2px 4px;
         border-radius: 4px;
-        color: #2fff00;
-        font-family: "Space Mono";
-        font-size: 22px;
+        color: var(--primary-color-light);
+        font-family: var(--main-font);
+        font-size: var(--font-size-xl);
         font-style: normal;
-        font-weight: 400;
-        line-height: normal;
+        font-weight: var(--font-weight-normal);
       }
 
       pre {
@@ -116,27 +115,27 @@ export const QuestionPageStyled = styled.main`
       margin-top: 10px;
 
       h2 {
-        color: #2fff00;
-        font-family: "Space Mono";
-        font-size: 20px;
+        color: var(--primary-color-light);
+        font-family: var(--second-font);
+        font-size: var(--font-size-xl);
         font-style: normal;
-        font-weight: 400;
-        line-height: normal;
+        font-weight: var(--font-weight-normal);
       }
 
       form {
+        padding: 5px 45px;
+
         h2,
         p,
         strong,
         code,
         li,
         label span {
-          color: #2fff00;
-          font-family: "Space Mono";
-          font-size: 20px;
+          color: var(--primary-color-light);
+          font-family: var(--second-font);
+          font-size: var(--font-size-lg);
           font-style: normal;
-          font-weight: 400;
-          line-height: normal;
+          font-weight: var(--font-weight-normal);
         }
 
         ul {
@@ -149,12 +148,11 @@ export const QuestionPageStyled = styled.main`
         code {
           padding: 2px 4px;
           border-radius: 4px;
-          color: #2fff00;
-          font-family: "Space Mono";
-          font-size: 20px;
+          color: var(--primary-color-light);
+          font-family: var(--main-font);
+          font-size: var(--font-size-lg);
           font-style: normal;
-          font-weight: 400;
-          line-height: normal;
+          font-weight: var(--font-weight-normal);
         }
 
         pre {
@@ -166,7 +164,7 @@ export const QuestionPageStyled = styled.main`
         }
 
         label {
-          font-family: "Space Mono", monospace;
+          font-family: var(--main-font);
           display: block;
           padding: 10px;
           margin-bottom: 10px;
@@ -196,12 +194,12 @@ export const QuestionPageStyled = styled.main`
           background-color: rgba(18, 18, 18, 0.71);
           margin-top: 10px;
           padding: 10px;
-          font-family: "Space Mono", monospace;
+          font-family: var(--main-font);
           font-size: 16px;
           border: 2px solid green;
           border-radius: 8px;
           resize: vertical;
-          color: #88ff3f;
+          color: var(--primary-color-light);
           resize: none;
         }
       }

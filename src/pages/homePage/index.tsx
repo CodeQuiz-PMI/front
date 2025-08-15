@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -7,8 +7,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { HomeStyled } from "./style";
 import { Button } from "../../components/button";
 
-import betinha from "../../assets/assetsV2/betinha.png";
 import codequiz from "../../assets/assetsV2/CodeQuiz.svg";
+import { NavBar } from "../../components/navbar";
 
 export const HomePage = () => {
     const navigate = useNavigate();
@@ -40,16 +40,8 @@ export const HomePage = () => {
 
     return (
         <HomeStyled>
-            <nav>
-                <div className="img">
-                    <img src={betinha} alt="Imagem do logo" />
-                </div>
-                <div className="nav">
-                    <Link to="/About">Sobre</Link>
-                    <Link to="/Configurations">Configuração</Link>
-                </div>
-            </nav>
-
+            <NavBar/>
+            
             <div className="menu">
                 <img src={codequiz} alt="Logo do CodeQuiz" />
                 <div className="buttons">

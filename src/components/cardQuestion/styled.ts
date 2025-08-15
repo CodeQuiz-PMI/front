@@ -34,12 +34,11 @@ export const StyledCardQuestion = styled.div<StyledProps>`
     border-radius: 10px;
     cursor: pointer;
 
-    color: #2fff00;
-    font-family: "Jersey 25";
+    color: var(--primary-color-light);
+    font-family: var(--main-font);
     font-size: 96px;
     font-style: normal;
-    font-weight: 400;
-    line-height: normal;
+    font-weight: var(--font-weight-normal);
 
     background-color: ${({ isAnswered }) =>
       isAnswered ? "#287E15" : "#294623"};
@@ -51,11 +50,10 @@ export const StyledCardQuestion = styled.div<StyledProps>`
     text-align: center;
     margin-top: 15px;
     height: 70px;
-    color: #2fff00;
-    font-family: "Jersey 25";
+    color: var(--primary-color-light);
+    font-family: var(--main-font);
     font-style: normal;
-    font-weight: 400;
-    line-height: normal;
+    font-weight: var(--font-weight-normal);
   }
 
   .card-question.lock {

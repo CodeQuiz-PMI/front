@@ -5,7 +5,7 @@ export const StyledSectionPage = styled.main`
     width: 100%;
     height: 100px;
     padding: 10px;
-    background: #2fff0026;
+    background: var(--nav-background);
     border-bottom: #2fff00 2px solid;
     display: flex;
     flex-direction: row;
@@ -27,11 +27,11 @@ export const StyledSectionPage = styled.main`
       a {
         width: auto;
         text-decoration: none;
-        color: #2fff00;
-        font-family: "Jersey 25";
-        font-size: 40px;
+        color: var(--primary-color-light);
+        font-family: var(--main-font);
+        font-size: var(--font-size-xxl);
         font-style: normal;
-        font-weight: 400;
+        font-weight: var(--font-weight-normal);
       }
     }
   }
@@ -43,12 +43,11 @@ export const StyledSectionPage = styled.main`
     padding: 30px;
 
     h1 {
-      color: #2fff00;
-      font-family: "Jersey 25";
-      font-size: 60px;
+      color: var(--primary-color-light);
+      font-family: var(--main-font);
+      font-size: var(--font-size-xxxxl);
       font-style: normal;
-      font-weight: 400;
-      line-height: normal;
+      font-weight: var(--font-weight-normal);
     }
 
     div {

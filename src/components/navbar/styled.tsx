@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
-export const StyledModeSelectionPage = styled.main`
-    nav {
+export const StyledNavBar = styled.nav`
     width: 100%;
     height: 100px;
     padding: 10px;
@@ -33,18 +32,5 @@ export const StyledModeSelectionPage = styled.main`
             font-style: normal;
             font-weight: var(--font-weight-normal);
         }
-    }
-  }
-
-    .container {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 20px;
-        
-        padding-top: 40px;
-        
-        height: 500px;
     }
 `;

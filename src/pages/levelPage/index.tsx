@@ -1,9 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
- 
 import { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
-import betinha from "../../assets/assetsV2/betinha.png";
 import iconGoldMedal from "../../assets/Gold Medal.svg";
 import iconTrophy from "../../assets/Trophy.svg";
 import iconArrowLeft from "../../assets/ArrowLeft.svg";
@@ -17,6 +15,7 @@ import { CardSection } from "../../components/cardSection";
 import { StyleLevelPage } from "./style";
 import { AnswerLog, Level, Section, useApp, User} from "../../context/AppContext";
 import { api } from "../../services/api";
+import { NavBar } from "../../components/navbar";
 
 export const LevelPage = () => {
     const navigate = useNavigate();
@@ -108,15 +107,7 @@ export const LevelPage = () => {
 
     return (
         <StyleLevelPage>
-            <nav>
-                <div className="img">
-                    <img src={betinha} alt="Imagem do logo" onClick={() => navigate("/Mode")}/>
-                </div>
-                <div className="nav">
-                    <Link to="/About">Sobre</Link>
-                    <Link to="/Configurations">Configuração</Link>
-                </div>
-            </nav>
+            <NavBar/>
 
             <div className="buttons">
                 <Button buttonVariation="buttonImg" type="button" onClick={exit}>

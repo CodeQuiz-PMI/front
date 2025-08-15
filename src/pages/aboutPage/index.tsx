@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Button } from "../../components/button";
 import { StyleAboutPage } from "./styled";
 
-import betinha from "../../assets/assetsV2/betinha.png";
+import { NavBar } from "../../components/navbar";
 
 export const AboutPage: React.FC = () => {
     const navigate = useNavigate();
@@ -24,15 +24,7 @@ export const AboutPage: React.FC = () => {
 
     return (
         <StyleAboutPage>
-            <nav>
-                <div className="img">
-                    <img src={betinha} alt="Imagem do logo"  onClick={handleLogin}/>
-                </div>
-                <div className="nav">
-                    <Link to="/About">Sobre</Link>
-                    <Link to="/Configurations">Configuração</Link>
-                </div>
-            </nav>
+            <NavBar/>
             <section className="title">
                 <h1>
                     O que é o CodeQuiz?

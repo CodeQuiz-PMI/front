@@ -2,39 +2,39 @@ import styled from "styled-components";
 
 export const StyledStorePage = styled.main` 
     nav {
-    width: 100%;
-    height: 100px;
-    padding: 10px;
-    background: #2fff0026;
-    border-bottom: #2FFF00 2px solid;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-
-    .img{
-        width: 96px;
-        height: auto;
-        padding-left: 20px;
-    }
-
-    .nav{
+        width: 100%;
+        height: 100px;
+        padding: 10px;
+        background: var(--nav-background);
+        border-bottom: #2FFF00 2px solid;
         display: flex;
         flex-direction: row;
-        justify-content: flex-end;
-        gap: 20px;
-        padding-right: 20px;
-        a {
-            width: auto;
-            text-decoration: none;
-            color: #2FFF00;
-            font-family: "Jersey 25";
-            font-size: 40px;
-            font-style: normal;
-            font-weight: 400;
+        align-items: center;
+        justify-content: space-between;
+
+        .img{
+            width: 96px;
+            height: auto;
+            padding-left: 20px;
         }
-    }
-  }    
+
+        .nav{
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+            gap: 20px;
+            padding-right: 20px;
+            a {
+                width: auto;
+                text-decoration: none;
+                color: var(--primary-color-light);
+                font-family: var(--main-font);
+                font-size: var(--font-size-xxl);
+                font-style: normal;
+                font-weight: var(--font-weight-normal);
+            }
+        }
+    }    
 
     .Notification{
         display: flex;
@@ -52,12 +52,12 @@ export const StyledStorePage = styled.main`
                 position: relative;
                 width: 720px;
 
-                color: #2FFF00;
+                color: var(--primary-color-light);
                 text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
-                font-family: "Jersey 25";
-                font-size: 32px;
+                font-family: var(--main-font);
+                font-size: var(--font-size-xxl);
                 font-style: normal;
-                font-weight: 400;
+                font-weight: var(--font-weight-normal);
 
                 .p1{
                     position: absolute;
@@ -93,19 +93,19 @@ export const StyledStorePage = styled.main`
             justify-content: center;
             gap: 10px;
 
-            background-color: #393939;
+            background-color: var(--surface-color);
 
             padding: 10px;
 
             border: 1px solid transparente;
-            border-radius: 10px ;
+            border-radius: var(--border-radius-sm);
 
-            color: #2FFF00;
+            color: var(--primary-color);
 
-            font-family: "Jersey 25";
-            font-size: 36px;
+            font-family: var(--main-font);
+            font-size: var(--font-size-xxl);
             font-style: normal;
-            font-weight: 400;
+            font-weight: var(--font-weight-normal);
 
             width: 120px;
         }
@@ -130,15 +130,15 @@ export const StyledStorePage = styled.main`
                 height: 200px;
                 
                 border: 1px solid transparent;
-                border-radius: 10px;
+                border-radius: var(--border-radius-sm);
                 
-                background-color: #393939;
+                background-color: var(--surface-color);
                 
-                color: #2FFF00;
-                font-family: "Jersey 25";
-                font-size: 25px;
+                color: var(--primary-color-light);
+                font-family: var(--main-font);
+                font-size: var(--font-size-xl);
                 font-style: normal;
-                font-weight: 400;
+                font-weight: var(--font-weight-normal);
                 line-height: normal;
                 img{
                     width: 100px;
