@@ -34,6 +34,31 @@ export const StyleCardSection = styled.li<StyledProps>`
         height: 40px;
     }
 
+    button{
+        width: 234px;
+        height: 47px;
+
+        color: #2FFF00;
+        text-align: center;
+        font-family: "Jersey 25";
+        font-size: 32px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        
+        border-radius: 5px;
+        border: 1px solid transparent; 
+        background: rgba(0, 0, 0, 0.25);
+
+        &:hover {
+            background-color: rgba(137, 255, 63, 0.5);
+        }
+    }
+
     h3{
         color: #2FFF00;
         text-align: center;

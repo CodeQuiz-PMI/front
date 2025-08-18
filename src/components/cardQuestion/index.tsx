@@ -14,10 +14,10 @@ export const CardQuestion: React.FC<CardQuestionProps> = ({ question, isAnswered
     return (
         <StyledCardQuestion isAnswered={isAnswered}>
             <div className={`card-question ${isLocked ? "locked" : ""}`}>
-                <p className="number">
+                <button className="number">
                     {question.order}
                     {isLocked && <img id="lock" src={lock} alt="Bloqueado" />}
-                </p>
+                </button>
                 <p>{question.title}</p>
             </div>
         </StyledCardQuestion>

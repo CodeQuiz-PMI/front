@@ -17,6 +17,8 @@ export interface User {
   hints: number;
   coins: number;
   createdAt: Date;
+  activeCursor?: string;
+  ownedCursors?: string[];
 }
 
 export interface Level {
@@ -88,6 +90,7 @@ interface AppContextType {
   getAnswerLogs: () => Promise<AnswerLog[]>;
   user: User | null;
   getRanking: () => Promise<User[]>;
+  applyCursor: (cursor: { arrow: string; pointer: string }) => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -164,9 +167,32 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         }
 
         if (storedUser) {
-            setUser(JSON.parse(storedUser));
+            const parsedUser = JSON.parse(storedUser);
+            setUser(parsedUser);
+        }
+
+        const savedCursor = localStorage.getItem("activeCursor");
+        if (savedCursor) {
+            const cursor = JSON.parse(savedCursor);
+            applyCursor(cursor); 
         }
     }, []);
+
+    const applyCursor = (cursor: { arrow: string; pointer: string }) => {
+        document.body.style.cursor = cursor.arrow;
+        localStorage.setItem('activeCursor', JSON.stringify(cursor));
+
+        const styleId = 'custom-cursor-style';
+        let style = document.getElementById(styleId) as HTMLStyleElement | null;
+
+        if (!style) {
+            style = document.createElement("style");
+            style.id = styleId;
+            document.head.appendChild(style);
+        }
+
+        style.innerHTML = `a, button, label { cursor: ${cursor.pointer}; }`;
+    };
 
     return (
         <AppContext.Provider
@@ -181,6 +207,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
                 getAnswerLogs,
                 user,
                 getRanking,
+                applyCursor,
             }}
         >
             {children}

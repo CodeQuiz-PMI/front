@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { StyledModeSelectionPage } from "./styled";
 
-import { Button } from "../../components/button";
 import { NavBar } from "../../components/navbar";
 
 export const ModeSelectionPage = () => {
@@ -20,17 +19,17 @@ export const ModeSelectionPage = () => {
             <div className="container">
                 <h1>Escolha o modo de jogo:</h1>
 
-                <Button buttonVariation="buttonHomePage" type="button" onClick={() => navigate("/Level")}>
+                <button className="buttonHomePage" type="button" onClick={() => navigate("/Level")}>
                     Modo de Estudos
-                </Button>
+                </button>
 
-                <Button buttonVariation="buttonHomePage" type="button">
+                <button className="buttonHomePage" type="button">
                     Modo Desafio
-                </Button>
+                </button>
 
-                <Button buttonVariation="buttonExit" type="button" onClick={exit}>
+                <button className="buttonExit" type="button" onClick={exit}>
                     Sair
-                </Button>
+                </button>
             </div>
         </StyledModeSelectionPage>
     );

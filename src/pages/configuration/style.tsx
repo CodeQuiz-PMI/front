@@ -43,6 +43,20 @@ export const StyledConfigurationPage = styled.main`
 
         padding-top: 20px;
 
+        button{
+            width: 80px;
+            height: 50px;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            
+
+            border: 1px solid transparent;
+        
+            background-color: #2A2A2A;
+        }
+
         .title{
             display: flex;
             flex-direction: column;
@@ -116,7 +130,6 @@ export const StyledConfigurationPage = styled.main`
                         border: none;
                         color: var(--primary-color-light);
                         font-size: var(--font-size-xl);
-                        cursor: pointer
                     }
                     
                     .volume-slider{
@@ -134,7 +147,6 @@ export const StyledConfigurationPage = styled.main`
                         height: 30px;
                         background: var(--primary-color-light);
                         border-radius: 50%;
-                        cursor: pointer;
                         border: 1px solid transparente;
                     }
 
@@ -143,7 +155,6 @@ export const StyledConfigurationPage = styled.main`
                         height: 30px;
                         background: var(--primary-color-light);
                         border-radius: 50%;
-                        cursor: pointer;
                         border: 2px solid transparente;
                     }
                 }
@@ -152,6 +163,63 @@ export const StyledConfigurationPage = styled.main`
                     display: flex;
                     justify-content: center;
                     align-items: center;
+                    .buttonConfigPage{
+                        width: 100%;
+                        height: 40px;
+
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        
+                        border-radius: 10px;
+                        border: 2px solid #2FFF00;
+                        
+                        color: #2FFF00;
+                        text-align: center;
+                        font-family: "Jersey 25";
+                        font-size: 36px;
+                        font-style: normal;
+                        font-weight: 400;
+
+                        background-color: #4A4A4A;  
+
+                        &:hover {
+                            background-color: rgba(137, 255, 63, 0.5);
+                        }
+                    }
+
+                    .buttonConfigPage2{
+                        width: 100%;
+                        height: 40px;
+
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: flex-end;
+                        align-items: center;
+                        gap: 100px;
+
+                        border-radius: 10px;
+                        border: 2px solid #2FFF00;
+
+                        color: #2FFF00;
+
+                        text-align: center;
+                        font-family: "Jersey 25";
+                        font-size: 36px;
+                        font-style: normal;
+                        font-weight: 400;
+                        background-color: #4A4A4A;
+
+                        padding: 5px;
+
+                        img{
+                            width: 30px
+                        }
+
+                        &:hover {
+                            background-color: rgba(137, 255, 63, 0.5);
+                        }
+                    }
                 }
             }
         }
@@ -182,6 +250,62 @@ export const StyledConfigurationPage = styled.main`
 
             h2 {
                 font-family: var(--main-font);
+            }
+
+            .buttonExit2{
+                width: 200px;
+                height: 50px;
+
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                
+                border-radius: 10px;
+                border: 1px solid #2FFF00;
+                
+                color: #2FFF00;
+                text-align: center;
+                font-family: "Jersey 25";
+                font-size: 36px;
+                font-style: normal;
+                font-weight: 400;
+
+                background-color: rgba(47, 255, 0, 0.1);  
+
+                &:hover {
+                    background-color: rgba(137, 255, 63, 0.5);
+                }
+            }
+
+            .button-group{
+                display: flex;
+                align-items: center;
+                gap: 10px;
+
+                button{
+                    width: 200px;
+                    height: 50px;
+
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    
+                    border-radius: 10px;
+                    border: 1px solid #2FFF00;
+                    
+                    color: #2FFF00;
+                    text-align: center;
+                    font-family: "Jersey 25";
+                    font-size: 36px;
+                    font-style: normal;
+                    font-weight: 400;
+
+                    background-color: rgba(47, 255, 0, 0.1);  
+
+                    &:hover {
+                        background-color: rgba(137, 255, 63, 0.5);
+                    }
+                }
             }
         }
     }

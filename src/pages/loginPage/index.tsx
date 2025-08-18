@@ -49,8 +49,8 @@ export const LoginPage = () => {
             </div>
 
             <div className="socialIcons">
-                <img src={gitImg} alt="GitHub login" />
-                <img src={googleImg} alt="Google login" />
+                {/* <img src={gitImg} alt="GitHub login" />
+                <img src={googleImg} alt="Google login" /> */}
             </div>
 
             <div className="container">
@@ -79,11 +79,11 @@ export const LoginPage = () => {
 
                     <div className="links">
                         <Link to="/register" className="link">Criar conta</Link>
-                        <Link to="#" className="link">Esqueceu sua senha?</Link>
+                        {/* <Link to="#" className="link">Esqueceu sua senha?</Link> */}
                     </div>
 
                     <div className="button">
-                        <Button buttonVariation="buttonLoginPage" type="submit">Jogar</Button>
+                        <button className="buttonLoginPage" type="submit">Jogar</button>
                     </div>
                 </form>
 

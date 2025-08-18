@@ -52,13 +52,13 @@ export const AboutPage: React.FC = () => {
             </article>
 
             <div className="menu">
-                <Button
-                    buttonVariation="buttonExit"
+                <button
+                    className="buttonExit"
                     type="button"
                     onClick={handleLogin}
                 >
                     Voltar
-                </Button>
+                </button>
             </div>
         </StyleAboutPage>
     );

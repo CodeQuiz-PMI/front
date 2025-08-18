@@ -2,18 +2,17 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-import iconGoldMedal from "../../assets/Gold Medal.svg";
-import iconTrophy from "../../assets/Trophy.svg";
 import iconArrowLeft from "../../assets/ArrowLeft.svg";
 
-import home from "../../assets/assetsV2/ph_house.svg";
-import back from "../../assets/assetsV2/return.svg";
-import list from "../../assets/assetsV2/list.svg";
+import coin from "../../assets/assetsV2/coin.svg";
 
-import { Button } from "../../components/button";
+// import home from "../../assets/assetsV2/ph_house.svg";
+// import back from "../../assets/assetsV2/return.svg";
+// import list from "../../assets/assetsV2/list.svg";
+
 import { CardSection } from "../../components/cardSection";
 import { StyleLevelPage } from "./style";
-import { AnswerLog, Level, Section, useApp, User} from "../../context/AppContext";
+import { AnswerLog, Level, Section, useApp } from "../../context/AppContext";
 import { api } from "../../services/api";
 import { NavBar } from "../../components/navbar";
 
@@ -23,14 +22,18 @@ export const LevelPage = () => {
     const { levelId } = useParams();
     localStorage.setItem("level", levelId!);
 
-    const { getLevels, getSections, getRanking, user } = useApp();
+    const { getLevels, getSections, 
+        // getRanking,
+        user } = useApp();
 
     const [levels, setLevels] = useState<Level[]>([]);
     const [sections, setSections] = useState<Section[]>([]);
     const [currentLevelIndex, setCurrentLevelIndex] = useState(0);
 
-    const [showRanking, setShowRanking] = useState(false);
-    const [rankingData, setRankingData] = useState<User[]>([]);
+    // const [showRanking, setShowRanking] = useState(false);
+    // const [rankingData, setRankingData] = useState<User[]>([]);
+
+    const [coins, setCoins] = useState(Number);
 
     const [answeredSections, setAnsweredSections] = useState<string[]>([]);
 
@@ -50,6 +53,21 @@ export const LevelPage = () => {
                 console.error("Erro ao carregar dados:", error);
             }
         };
+        const userFromStorage = localStorage.getItem("user");
+        if (userFromStorage) {
+            const fetchUser = async () => {
+                const get = await api.get(`/users/${user?.id}`);
+                const userData = {
+                    ...get.data,
+                    id: get.data._id,
+                };
+                delete userData._id;
+                setCoins(userData.coins);
+
+                localStorage.setItem("user", JSON.stringify(userData));
+            };
+            fetchUser();
+        }
 
         fetchAll();
     }, [getLevels, getSections, levelId, user?.id]);
@@ -91,15 +109,15 @@ export const LevelPage = () => {
         ? sections.filter((section) => section.level._id === currentLevel._id)
         : [];
 
-    const fetchRanking = async () => {
-        try {
-            const data = await getRanking();
-            setRankingData(data);
-            setShowRanking(true);
-        } catch (error) {
-            console.error("Erro ao carregar ranking:", error);
-        }
-    };
+    // const fetchRanking = async () => {
+    //     try {
+    //         const data = await getRanking();
+    //         setRankingData(data);
+    //         setShowRanking(true);
+    //     } catch (error) {
+    //         console.error("Erro ao carregar ranking:", error);
+    //     }
+    // };
 
     const exit = () => {
         navigate("/Level");
@@ -110,19 +128,15 @@ export const LevelPage = () => {
             <NavBar/>
 
             <div className="buttons">
-                <Button buttonVariation="buttonImg" type="button" onClick={exit}>
+                <button className="buttonImg" type="button" onClick={exit}>
                     <img src={iconArrowLeft} alt="Anterior" />
-                </Button>
+                </button>
                 <h1 style={{ margin: "0 auto" }}>{currentLevel?.title || "Carregando fase..."}</h1>
-                <div>
-                    <Button buttonVariation="buttonImg2" type="button" 
-                        onClick={fetchRanking}
-                    >
-                        <img src={iconGoldMedal} alt="" />
-                    </Button>
-                    <Button buttonVariation="buttonImg2" type="button" >
-                        <img src={iconTrophy} alt="" />
-                    </Button>
+                <div className="containerCoin">
+                    <div className="coins">
+                        {coins}
+                        <img src={coin} alt="" />
+                    </div>
                 </div>
             </div>
 
@@ -149,7 +163,7 @@ export const LevelPage = () => {
             </div>
 
 
-            {showRanking && (
+            {/* {showRanking && (
                 <div className="modal">
                     <div className="modal-content">
                         <div className="ranking-title">
@@ -187,7 +201,7 @@ export const LevelPage = () => {
                         </div>
                     </div>
                 </div>
-            )}
+            )} */}
 
             
         </StyleLevelPage>

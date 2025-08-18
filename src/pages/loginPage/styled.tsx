@@ -98,6 +98,31 @@ export const StyledLoginPage = styled.main`
             display: flex;
             align-items: center;
             justify-content: center;
+
+            button{
+                width: 371px;
+                height: 76px;
+
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                
+                border-radius: 10px;
+                border: 1px solid #2FFF00;
+                
+                color: #2FFF00;
+                text-align: center;
+                font-family: "Jersey 25";
+                font-size: 36px;
+                font-style: normal;
+                font-weight: 400;
+
+                background-color: rgba(47, 255, 0, 0.1);  
+
+                &:hover {
+                    background-color: rgba(137, 255, 63, 0.5);
+                }
+            }
         }
     }
 `;

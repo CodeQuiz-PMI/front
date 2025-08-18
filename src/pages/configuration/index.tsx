@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button } from "../../components/button";
 import { StyledConfigurationPage } from "./style";
 import { api } from "../../services/api";
 
@@ -135,16 +134,16 @@ export const Configuration = () => {
         onCancel: () => void;
     }) => (
         <div className="modal">
-            <div className="modal-content">
+            <div className="modal-content" style={{background: "var(--modal-background)", color: "var(--primary-color-light)"}}>
                 <h2>{title}</h2>
                 <p>{message}</p>
                 <div className="button-group">
-                    <Button buttonVariation="type6" type="button" onClick={onConfirm}>
+                    <button className="buttonExit2" type="button" onClick={onConfirm}>
                         Confirmar
-                    </Button>
-                    <Button buttonVariation="type5" type="button" onClick={onCancel}>
+                    </button>
+                    <button className="buttonExit2" type="button" onClick={onCancel}>
                         Cancelar
-                    </Button>
+                    </button>
                 </div>
             </div>
         </div>
@@ -158,8 +157,8 @@ export const Configuration = () => {
                 <input id="inp" type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
                 <input id="inp" type="password" placeholder="Nova senha" value={password} onChange={(e) => setPassword(e.target.value)} />
                 <input id="inp" type="password" placeholder="Confirmar senha" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
-                <Button buttonVariation="buttonExit2" type="submit" onClick={handleSaveChanges}>Salvar</Button>
-                <Button buttonVariation="buttonExit2" type="button" onClick={() => setIsModalOpen(false)}>Cancelar</Button>
+                <button className="buttonExit2" type="submit" onClick={handleSaveChanges}>Salvar</button>
+                <button className="buttonExit2" type="button" onClick={() => setIsModalOpen(false)}>Cancelar</button>
             </div>
         </div>
     );
@@ -177,9 +176,9 @@ export const Configuration = () => {
             <NavBar/>
             
             <div className="config-container">
-                <Button buttonVariation="buttonImg" type="button" onClick={handleGoBack}>
+                <button className="buttonImg" type="button" onClick={handleGoBack}>
                     <img src={iconArrowLeft} alt="Anterior" />
-                </Button>
+                </button>
                 <div className="title">
                     <h1>Configurações</h1>
                     <p>Personalize sua experiência no CodeQuiz da maneira que preferir!</p>
@@ -193,10 +192,10 @@ export const Configuration = () => {
                     <div className="inputs">
                         <p>Perfil</p>
                         <div className="button">
-                            <Button buttonVariation="buttonConfigPage2" type="button" onClick={handleEditClick}>
+                            <button className="buttonConfigPage2" type="button" onClick={handleEditClick}>
                                 {username}
                                 <img src={edit} alt="" />
-                            </Button>
+                            </button>
                         </div>
                     </div>
                     <div className="inputs">
@@ -219,13 +218,13 @@ export const Configuration = () => {
                     <div className="inputs">
                         <p>Reiniciar progresso?</p>
                         <div className="button">
-                            <Button buttonVariation="buttonConfigPage" type="button" onClick={() => setIsResetModalOpen(true)}>Reiniciar</Button>
+                            <button className="buttonConfigPage" type="button" onClick={() => setIsResetModalOpen(true)}>Reiniciar</button>
                         </div>
                     </div>
                     <div className="inputs">
                         <p>Deletar conta?</p>
                         <div className="button">
-                            <Button buttonVariation="buttonConfigPage" type="button" onClick={() => setIsDeleteModalOpen(true)}>Deletar</Button>
+                            <button className="buttonConfigPage" type="button" onClick={() => setIsDeleteModalOpen(true)}>Deletar</button>
                         </div>
                     </div>
                 </div>
@@ -249,7 +248,7 @@ export const Configuration = () => {
                 <ConfirmationModal
                     title="Tem certeza que deseja reiniciar seu progresso?"
                     message={
-                        <span>Essa ação removerá <strong>todas as questões já respondidas</strong> e seu histórico de pontuação.</span>
+                        <span style={{ fontFamily: "Space Mono" }}>Essa ação removerá <strong>todas as questões já respondidas</strong> e seu histórico de pontuação.</span>
                     }
                     onConfirm={() => {
                         handleResetProgress();

@@ -40,14 +40,14 @@ export const CardSection: React.FC<CardSectionProps> = ({
                 <span>{difficulty}</span>
             </div>
 
-            <Button
-                buttonVariation="buttonCardSection"
+            <button
+                className="buttonCardSection"
                 type="button"
                 onClick={handlePlay}
                 disabled={isLocked}
             >
                 {isLocked ? "Bloqueado" : "Iniciar"}
-            </Button>
+            </button>
 
             {isLocked && <img className="lock-icon" src={lock} alt="Bloqueado" />}
         </StyleCardSection>

@@ -1,41 +1,6 @@
 import styled from "styled-components";
 
 export const StyledStorePage = styled.main` 
-    nav {
-        width: 100%;
-        height: 100px;
-        padding: 10px;
-        background: var(--nav-background);
-        border-bottom: #2FFF00 2px solid;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-
-        .img{
-            width: 96px;
-            height: auto;
-            padding-left: 20px;
-        }
-
-        .nav{
-            display: flex;
-            flex-direction: row;
-            justify-content: flex-end;
-            gap: 20px;
-            padding-right: 20px;
-            a {
-                width: auto;
-                text-decoration: none;
-                color: var(--primary-color-light);
-                font-family: var(--main-font);
-                font-size: var(--font-size-xxl);
-                font-style: normal;
-                font-weight: var(--font-weight-normal);
-            }
-        }
-    }    
-
     .Notification{
         display: flex;
         align-items: flex-start;
@@ -125,6 +90,17 @@ export const StyledStorePage = styled.main`
                 align-items: center;
                 justify-content: center;
                 gap: 10px;
+
+                button{
+                    background: transparent;
+                    border: 1px solid transparent;
+                    color: var(--primary-color-light);
+                    font-family: var(--main-font);
+                    font-size: var(--font-size-xl);
+                    font-style: normal;
+                    font-weight: var(--font-weight-normal);
+                    line-height: normal;
+                }
                 
                 width: 240px;
                 height: 200px;
@@ -134,12 +110,6 @@ export const StyledStorePage = styled.main`
                 
                 background-color: var(--surface-color);
                 
-                color: var(--primary-color-light);
-                font-family: var(--main-font);
-                font-size: var(--font-size-xl);
-                font-style: normal;
-                font-weight: var(--font-weight-normal);
-                line-height: normal;
                 img{
                     width: 100px;
                 }
