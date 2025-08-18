@@ -10,7 +10,9 @@ export const NavBar = () => {
     return (
         <StyledNavBar>
             <div className="img">
-                <img src={betinha} alt="Imagem do logo" />
+                <Link to="/">
+                    <img src={betinha} alt="Imagem do logo" />
+                </Link>
             </div>
             <div className="nav">
                 <Link to="/About"><img src={about} alt="" /></Link>

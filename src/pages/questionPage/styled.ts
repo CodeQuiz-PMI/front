@@ -1,41 +1,6 @@
 import styled from "styled-components";
 
 export const QuestionPageStyled = styled.main`
-  nav {
-    width: 100%;
-    height: 100px;
-    padding: 10px;
-    background: var(--nav-background);
-    border-bottom: #2fff00 2px solid;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-
-    .img {
-      width: 96px;
-      height: auto;
-      padding-left: 20px;
-    }
-
-    .nav {
-      display: flex;
-      flex-direction: row;
-      justify-content: flex-end;
-      gap: 20px;
-      padding-right: 20px;
-      a {
-        width: auto;
-        text-decoration: none;
-        color: var(--primary-color-light);
-        font-family: var(--main-font);
-        font-size: var(--font-size-xxl);
-        font-style: normal;
-        font-weight: var(--font-weight-normal);
-      }
-    }
-  }
-
   align-items: center;
   font-family: var(--main-font);
 
@@ -170,7 +135,6 @@ export const QuestionPageStyled = styled.main`
           margin-bottom: 10px;
           border: 2px solid green;
           border-radius: 8px;
-          cursor: pointer;
           transition: 0.3s ease;
         }
 
@@ -201,6 +165,31 @@ export const QuestionPageStyled = styled.main`
           resize: vertical;
           color: var(--primary-color-light);
           resize: none;
+        }
+      }
+
+      button {
+        width: 200px;
+        height: 50px;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        border-radius: 10px;
+        border: 1px solid #2fff00;
+
+        color: #2fff00;
+        text-align: center;
+        font-family: "Jersey 25";
+        font-size: 36px;
+        font-style: normal;
+        font-weight: 400;
+
+        background-color: rgba(47, 255, 0, 0.1);
+
+        &:hover {
+          background-color: rgba(137, 255, 63, 0.5);
         }
       }
     }

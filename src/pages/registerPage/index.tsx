@@ -1,13 +1,12 @@
 import { useState } from "react";
-import { Button } from "../../components/button";
 import { StyledLoginPage } from "./styled";
 
 import { Link, useNavigate } from "react-router-dom";
 import { useApp } from "../../context/AppContext";
 
 import arrowLeft from "../../assets/ArrowLeft.svg";
-import googleImg from "../../assets/googleImg.svg";
-import gitImg from "../../assets/gitImg.svg";
+// import googleImg from "../../assets/googleImg.svg";
+// import gitImg from "../../assets/gitImg.svg";
 
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -64,8 +63,8 @@ export const RegisterPage = () => {
             </div>
 
             <div className="socialIcons">
-                <img src={gitImg} alt="Login com GitHub" />
-                <img src={googleImg} alt="Login com Google" />
+                {/* <img src={gitImg} alt="Login com GitHub" />
+                <img src={googleImg} alt="Login com Google" /> */}
             </div>
 
             <div className="container">
@@ -117,7 +116,7 @@ export const RegisterPage = () => {
                     </div>
 
                     <div className="button">
-                        <Button buttonVariation="buttonLoginPage" type="submit">Jogar</Button>
+                        <button className="buttonLoginPage" type="submit">Jogar</button>
                     </div>
                 </form>
 

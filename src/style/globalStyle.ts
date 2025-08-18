@@ -37,7 +37,7 @@ export const GlobalStyle = createGlobalStyle`
 		padding: 0;
 		box-sizing: border-box;
 	}
-
+	
 	body {
 		background-color: var(--background-color);
 		font-family: var(--main-font);
@@ -67,6 +67,11 @@ export const GlobalStyle = createGlobalStyle`
 
 	input, button {
 		font-family: inherit;
+	}
+
+	button{
+		background: transparent;
+    	border: 1px solid transparent;
 	}
 
 	.modal {
@@ -243,13 +248,19 @@ export const GlobalStyle = createGlobalStyle`
 			}
 
 			.listLifes{
+				#cursor{
+					gap: 15px 15px;
+					li .lifesTitle {
+						width: 130px;
+					}
+				}
 				ul{
 					display: flex;
 					flex-wrap: wrap;
 					align-items: center;
 					gap: 15px 36px;
 					justify-content: center;
-
+					
 					.liLifes{
 						display: flex;
 						flex-direction: column;
@@ -365,6 +376,18 @@ export const GlobalStyle = createGlobalStyle`
 				position: absolute;
 				bottom: -60px;
 				gap: 25px;
+
+				button{
+					width: 100px;
+                    height: 100px;
+
+                    padding: 10px;
+
+                    border-radius: 10px;
+                    border: 5px solid #2B4E23;
+
+                    background-color: #2FFF00;
+				}
 			}
 
 			.Store-buttons {
@@ -375,6 +398,22 @@ export const GlobalStyle = createGlobalStyle`
 				gap: 25px;
 				justify-content: center;
 				width: 87%;
+
+				.buttonModalStore{
+					width: 100px;
+					height: 75px;
+
+					padding: 10px;
+
+					border-radius: 10px;
+					border: 5px solid #2B4E23;
+
+					background-color: #2FFF00;
+
+					display: flex;
+					align-items: center;
+					justify-content: center;
+				}
 			}
 
 			.hintModel{
@@ -412,6 +451,33 @@ export const GlobalStyle = createGlobalStyle`
 				align-items: center;
 				justify-content: center;
 				gap: 20px;
+
+				button{
+					width: auto;
+					height: 50px;
+
+					padding: 10px;
+
+					display: flex;
+					flex-direction: column;
+					justify-content: center;
+					
+					border-radius: 10px;
+					border: 1px solid #2FFF00;
+					
+					color: #2FFF00;
+					text-align: center;
+					font-family: "Jersey 25";
+					font-size: 36px;
+					font-style: normal;
+					font-weight: 400;
+					
+					background: #214419;  
+
+					&:hover {
+						background-color: rgba(137, 255, 63, 0.5);
+					}
+				}
 			}
 		}
 	}

@@ -45,13 +45,13 @@ export const HomePage = () => {
             <div className="menu">
                 <img src={codequiz} alt="Logo do CodeQuiz" />
                 <div className="buttons">
-                    <Button buttonVariation="buttonHomePage" type="button" onClick={handleLogin}>
+                    <button className="buttonHomePage" type="button" onClick={handleLogin}>
                         Jogar Agora
-                    </Button>
+                    </button>
 
-                    <Button buttonVariation="buttonHomePage" type="button" onClick={handleContinue}>
+                    <button className="buttonHomePage" type="button" onClick={handleContinue}>
                         Continuar
-                    </Button>
+                    </button>
                 </div>
             </div>
         </HomeStyled>

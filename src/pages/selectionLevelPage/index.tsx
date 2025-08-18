@@ -2,11 +2,12 @@
 import { useNavigate } from "react-router-dom";
 import { StyledSelectionLevelPage } from "./styled";
 
-import { AnswerLog, Level, useApp } from "../../context/AppContext";
+import { AnswerLog, Level, useApp} from "../../context/AppContext";
 import { useEffect, useState } from "react";
-import { Button } from "../../components/button";
 import { api } from "../../services/api";
 import { NavBar } from "../../components/navbar";
+
+import coin from "../../assets/assetsV2/coin.svg";
 
 export const SelectionLevelPage = () => {
     const navigate = useNavigate();
@@ -16,6 +17,8 @@ export const SelectionLevelPage = () => {
     const { getLevels, user } = useApp();
     
     const [answeredIds, setAnsweredIds] = useState<string[]>([]);
+
+    const [coins, setCoins] = useState(Number);
     
     useEffect(() => {
         const fetchData = async () => {
@@ -71,6 +74,21 @@ export const SelectionLevelPage = () => {
                 console.error("Erro ao buscar respostas do usuário:", error);
             }
         };
+        const userFromStorage = localStorage.getItem("user");
+        if (userFromStorage) {
+            const fetchUser = async () => {
+                const get = await api.get(`/users/${user?.id}`);
+                const userData = {
+                    ...get.data,
+                    id: get.data._id,
+                };
+                delete userData._id;
+                setCoins(userData.coins);
+
+                localStorage.setItem("user", JSON.stringify(userData));
+            };
+            fetchUser();
+        }
 
         fetchData();
         if (user?.id) fetchCompletedLevels();
@@ -90,6 +108,12 @@ export const SelectionLevelPage = () => {
             <NavBar/>
 
             <div className="container">
+                <div className="containerCoin">
+                    <div className="coins">
+                        {coins}
+                        <img src={coin} alt="" />
+                    </div>
+                </div>
                 <h1>Fases</h1>
 
                 <ul>
@@ -102,11 +126,12 @@ export const SelectionLevelPage = () => {
                             <li
                                 key={level._id || index}
                                 className={`level-square ${isAnswered ? "isAnswered" : ""} ${!isUnlocked ? "locked" : ""}`}
-                                onClick={() => {
-                                    if (isUnlocked) handlePlay(level._id);
-                                }}
                             >
-                                {index + 1}
+                                <button onClick={() => {
+                                    if (isUnlocked) handlePlay(level._id);
+                                }}>
+                                    {index + 1}
+                                </button>
                             </li>
                         );
                     })}
@@ -115,9 +140,9 @@ export const SelectionLevelPage = () => {
             </div>
 
             <div className="back">
-                <Button buttonVariation="buttonExit" type="button" onClick={exit}>
+                <button className="buttonExit" onClick={exit}>
                     Voltar
-                </Button>
+                </button>
             </div>
         </StyledSelectionLevelPage>
     );

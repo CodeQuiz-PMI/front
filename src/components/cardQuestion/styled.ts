@@ -32,7 +32,6 @@ export const StyledCardQuestion = styled.div<StyledProps>`
 
     border: 2px solid;
     border-radius: 10px;
-    cursor: pointer;
 
     color: var(--primary-color-light);
     font-family: var(--main-font);

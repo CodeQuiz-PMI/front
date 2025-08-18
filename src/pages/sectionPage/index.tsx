@@ -2,16 +2,18 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 import iconArrowLeft from "../../assets/ArrowLeft.svg";
-import iconGoldMedal from "../../assets/Gold Medal.svg";
-import iconTrophy from "../../assets/Trophy.svg";
+// import iconGoldMedal from "../../assets/Gold Medal.svg";
+// import iconTrophy from "../../assets/Trophy.svg";
 
-import home from "../../assets/assetsV2/ph_house.svg";
-import back from "../../assets/assetsV2/return.svg";
-import list from "../../assets/assetsV2/list.svg";
+// import home from "../../assets/assetsV2/ph_house.svg";
+// import back from "../../assets/assetsV2/return.svg";
+// import list from "../../assets/assetsV2/list.svg";
+
+import coin from "../../assets/assetsV2/coin.svg";
 
 import { StyledSectionPage } from "./styled";
 import { CardQuestion } from "../../components/cardQuestion";
-import { AnswerLog, Question, Section, useApp, User } from "../../context/AppContext";
+import { AnswerLog, Question, Section, useApp } from "../../context/AppContext";
 import { Button } from "../../components/button";
 import { api } from "../../services/api";
 
@@ -23,15 +25,19 @@ export const SectionPage = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
-    const { getQuestions, user, getRanking } = useApp();
+    const { getQuestions, user, 
+        // getRanking 
+    } = useApp();
         
     const { section } = location.state as { section: Section };
     
     const [questions, setQuestions] = useState<Question[]>([]);
     const [answeredIds, setAnsweredIds] = useState<string[]>([]);
 
-    const [showRanking, setShowRanking] = useState(false);
-    const [rankingData, setRankingData] = useState<User[]>([]);
+    // const [showRanking, setShowRanking] = useState(false);
+    // const [rankingData, setRankingData] = useState<User[]>([]);
+
+    const [coins, setCoins] = useState(Number);
 
     useEffect(() => {
         const fetchQuestions = async () => {
@@ -58,21 +64,36 @@ export const SectionPage = () => {
                 console.error("Erro ao buscar respostas do usuário:", error);
             }
         };
+        const userFromStorage = localStorage.getItem("user");
+        if (userFromStorage) {
+            const fetchUser = async () => {
+                const get = await api.get(`/users/${user?.id}`);
+                const userData = {
+                    ...get.data,
+                    id: get.data._id,
+                };
+                delete userData._id;
+                setCoins(userData.coins);
+
+                localStorage.setItem("user", JSON.stringify(userData));
+            };
+            fetchUser();
+        }
         
 
         fetchQuestions();
         if (user?.id) fetchAnswered();
     }, [section._id, getQuestions, user?.id, section.level._id]);
 
-    const fetchRanking = async () => {
-        try {
-            const data = await getRanking();
-            setRankingData(data);
-            setShowRanking(true);
-        } catch (error) {
-            console.error("Erro ao carregar ranking:", error);
-        }
-    };
+    // const fetchRanking = async () => {
+    //     try {
+    //         const data = await getRanking();
+    //         setRankingData(data);
+    //         setShowRanking(true);
+    //     } catch (error) {
+    //         console.error("Erro ao carregar ranking:", error);
+    //     }
+    // };
 
     const exit = () => {
         const level = localStorage.getItem("level");
@@ -96,7 +117,6 @@ export const SectionPage = () => {
                                 padding: "4px 8px",
                                 border: "none",
                                 borderRadius: "4px",
-                                cursor: "pointer",
                                 fontFamily: "Jersey 25, sans-serif",
                             }}
                             onClick={() => {
@@ -132,13 +152,11 @@ export const SectionPage = () => {
                     <img src={iconArrowLeft} alt="Anterior" />
                 </Button>
                 <h1><h1>{section.title}</h1></h1>
-                <div>
-                    <Button buttonVariation="buttonImg2" type="button" onClick={fetchRanking}>
-                        <img src={iconGoldMedal} alt="" />
-                    </Button>
-                    <Button buttonVariation="buttonImg2" type="button" >
-                        <img src={iconTrophy} alt="" />
-                    </Button>
+                <div className="containerCoin">
+                    <div className="coins">
+                        {coins}
+                        <img src={coin} alt="" />
+                    </div>
                 </div>
             </div>
 
@@ -173,47 +191,6 @@ export const SectionPage = () => {
                     );
                 })}
             </div>
-
-            {showRanking && (
-                <div className="modal">
-                    <div className="modal-content">
-                        <div className="ranking-title">
-                            <img src={iconTrophy} alt="Troféu" />
-                            <h2>Ranking dos Desafiados!</h2>
-                            <img src={iconTrophy} alt="Troféu" />
-                        </div>
-
-                        {rankingData.length > 0 ? (
-                            <ul className="ranking-list">
-                                {rankingData.map((player, index) => (
-                                    <li key={player.id}>
-                                        <div>
-                                            <span>{index + 1}. </span>
-                                            <span className="player-name">{player.name}</span>
-                                        </div>
-                                        <span className="player-points">{player.totalPoints} pontos</span>
-                                    </li>
-                                ))}
-                            </ul>
-                        ) : (
-                            <p className="no-ranking">Nenhum jogador com pontuação no ranking ainda.</p>
-                        )}
-
-                        <div className="ranking-buttons">
-                            <Button buttonVariation="buttonModalRanking" type="button">
-                                <img src={home} alt="Home" />
-                            </Button>
-                            <Button buttonVariation="buttonModalRanking" type="button">
-                                <img src={list} alt="List" />
-                            </Button>
-                            <Button buttonVariation="buttonModalRanking" type="button" onClick={() => setShowRanking(false)}>
-                                <img src={back} alt="Back" />
-                            </Button>
-                        </div>
-                    </div>
-                </div>
-            )}
-
         </StyledSectionPage>
     );
 };

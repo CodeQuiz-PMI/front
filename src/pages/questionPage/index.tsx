@@ -105,7 +105,6 @@ export const QuestionPage = () => {
                             padding: "4px 8px",
                             border: "none",
                             borderRadius: "4px",
-                            cursor: "pointer",
                             fontFamily: "Jersey 25, sans-serif",
                         }}
                         onClick={() => {
@@ -292,9 +291,13 @@ export const QuestionPage = () => {
             <NavBar/>
 
             <div className="header">
-                <img src={arrow} alt="" onClick={handleBackToSection}/>
+                <button>
+                    <img src={arrow} alt="" onClick={handleBackToSection}/>
+                </button>
                 <h1>{question.title}</h1>
-                <img src={lamp} alt="Configurações" onClick={handleHintClick}/>
+                <button>
+                    <img src={lamp} alt="Configurações" onClick={handleHintClick}/>
+                </button>
             </div>
 
             <div className="container">
@@ -327,16 +330,16 @@ export const QuestionPage = () => {
                         </div>
 
                         <div style={{ display: "flex", justifyContent: "center", marginTop: "20px", gap: "20px" }}>
-                            <Button
+                            <button
                                 type="button"
-                                buttonVariation="buttonExit2"
+                                className="buttonExit2"
                                 onClick={handleBackToSection}
                             >
                                 Desistir
-                            </Button>
-                            <Button type="submit" buttonVariation="buttonExit2">
+                            </button>
+                            <button type="submit" className="buttonExit2">
                                 Confirmar
-                            </Button>
+                            </button>
                         </div>
                     </form>
                                         
@@ -360,9 +363,9 @@ export const QuestionPage = () => {
                         />
                         <img className="imgBetinha" src={betinhaDica} alt="" />
                         <div className="ranking-buttons">
-                            <Button buttonVariation="buttonModalRanking" type="button" onClick={() => setShowHint(false)}>
+                            <button className="buttonModalRanking" type="button" onClick={() => setShowHint(false)}>
                                 <img src={back} alt="Back" />
-                            </Button>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -385,12 +388,12 @@ export const QuestionPage = () => {
                             </div>
                         </div>
                         <div className="butons">
-                            <Button buttonVariation="buttonModalHint" type="button" onClick={() => setShowHintStore(false)}>
+                            <button className="buttonModalHint" type="button" onClick={() => setShowHintStore(false)}>
                                 Dessa vez não
-                            </Button>
-                            <Button buttonVariation="buttonModalHint" type="button" onClick={handleBuyHint}>
+                            </button>
+                            <button className="buttonModalHint" type="button" onClick={handleBuyHint}>
                                 Quero!
-                            </Button>
+                            </button>
                         </div>
                     </div>
                 </div>
