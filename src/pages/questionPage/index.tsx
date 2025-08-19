@@ -2,7 +2,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 import { QuestionPageStyled } from "./styled";
 import { useEffect, useState } from "react";
-import { Button } from "../../components/button";
 import { api } from "../../services/api";
 import { AnswerLog, Question, useApp } from "../../context/AppContext";
 

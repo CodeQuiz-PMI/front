@@ -19,6 +19,7 @@ export interface User {
   createdAt: Date;
   activeCursor?: string;
   ownedCursors?: string[];
+  _id: string;
 }
 
 export interface Level {
@@ -75,6 +76,18 @@ export interface AnswerLog {
   createdAt: Date;
 }
 
+export interface Challenge {
+	_id: string;
+	answer: string;
+	response_1: string;
+	response_2: string;
+	response_3: string;
+	response_4: string;
+	correctResponse: string;
+	points: number;
+	createdAt: Date;
+}
+
 interface AppContextType {
   login: (email: string, password: string) => Promise<void>;
   register: (name: string, email: string, password: string) => Promise<void>;
@@ -92,6 +105,7 @@ interface AppContextType {
   getRanking: () => Promise<User[]>;
   applyCursor: (cursor: { arrow: string; pointer: string }) => void;
 }
+
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
