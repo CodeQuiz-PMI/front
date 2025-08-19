@@ -11,6 +11,8 @@ import { SectionPage } from "../pages/sectionPage";
 import { SelectionLevelPage } from "../pages/selectionLevelPage";
 import { ModeSelectionPage } from "../pages/modeSelectionPage";
 import { Store } from "../pages/store";
+import { ChallengePage } from "../pages/challengePage";
+import { ChallengeQuestionPage } from "../pages/challengeQuestionPage";
 
 
 
@@ -28,6 +30,8 @@ export const RoutesMain = () => {
             <Route path="/Section/:sectionId" element={<SectionPage />} />
             <Route path="/Question/:questionId" element={<QuestionPage/>}/>
             <Route path="/Store" element={<Store/>}/>
+            <Route path="/Challenge" element={<ChallengePage/>}/>
+            <Route path="/ChallengeQuestion" element={<ChallengeQuestionPage/>}/>
         </Routes>
     );
 };

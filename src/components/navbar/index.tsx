@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-import betinha from "../../assets/assetsV2/betinha.png";
 import { StyledNavBar } from "./styled";
 
+import betinha from "../../assets/assetsV2/betinha.png";
 import store from "../../assets/assetsV2/store.svg";
 import about from "../../assets/assetsV2/about.svg";
 import config from "../../assets/assetsV2/config.svg";
