@@ -23,7 +23,7 @@ export const ModeSelectionPage = () => {
                     Modo de Estudos
                 </button>
 
-                <button className="buttonHomePage" type="button" onClick={() => navigate("/Challenge")}>
+                <button className="buttonHomePage2" type="button" onClick={() => navigate("/Challenge")}>
                     Modo Desafio
                 </button>
 

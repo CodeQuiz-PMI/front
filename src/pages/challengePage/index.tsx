@@ -10,57 +10,110 @@ import fire from "../../assets/fire.svg";
 import fire2 from "../../assets/fire2.png";
 import play from "../../assets/play.svg";
 import info from "../../assets/Info.svg";
+import heart from "../../assets/assetsV2/heart.svg";
 
-import { useApp, User } from "../../context/AppContext";
+import { User } from "../../context/AppContext";
 import { api } from "../../services/api";
 import { StyledChallengePage } from "./style";
+import { toast } from "react-toastify";
 
 export const ChallengePage = () => {
     const navigate = useNavigate();
-
-    const { getRanking } = useApp();
-
+    
     const [showInfo, setShowInfo] = useState(false);
     const [showInfo2, setShowInfo2] = useState(false);
     const [rankingData, setRankingData] = useState<User[]>([]);
+    
+    const [userRecord, setUserRecord] = useState<number>(0);
+    const [userLifes, setUserLifes] = useState<number>(0);
 
     useEffect(() => {
         const userFromStorage = localStorage.getItem("user");
-        if (userFromStorage) {
-            const user = JSON.parse(userFromStorage);
-            const fetchUser = async () => {
-                const get = await api.get(`/users/${user.id}`);
-                const userData = {
-                    ...get.data,
-                    id: get.data._id,
-                };
-                delete userData._id;
+        
+        const fetchUserData = async () => {
+            if (userFromStorage) {
+                const loggedUser = JSON.parse(userFromStorage);
+                try {
+                    const response = await api.get(`/users/${loggedUser.id}`);
+                    const userData = {
+                        ...response.data,
+                        id: response.data._id,
+                    };
+                    delete userData._id;
+                    delete userData.password;
 
-                localStorage.setItem("user", JSON.stringify(userData));
-            };
-            fetchUser();
-        }
-        const fetchRanking = async () => {
+                    setUserRecord(userData.record || 0);
+                    setUserLifes(userData.lifes || 0);
+
+                    localStorage.setItem("user", JSON.stringify(userData));
+                } catch (error) {
+                    console.error("Erro ao buscar dados do usuário:", error);
+                }
+            }
+        };
+
+        const fetchTop5Ranking = async () => {
             try {
-                const data = await getRanking();
-                setRankingData(data);
+                const response = await api.get("/users");
+                const allUsers: User[] = response.data;
+
+                const sortedUsers = allUsers.sort((a, b) => (b.totalPoints || 0) - (a.totalPoints || 0));
+
+                const top5 = sortedUsers.slice(0, 5);
+
+                setRankingData(top5);
             } catch (error) {
                 console.error("Erro ao carregar ranking:", error);
             }
         };
+        
+        fetchUserData();
+        fetchTop5Ranking();
 
         const infoShown = localStorage.getItem("challengePageInfoShown");
-
         if (!infoShown) {
             setShowInfo(true);
             localStorage.setItem("challengePageInfoShown", "true");
         }
-
-        fetchRanking();
-    }, [getRanking]);
+    }, []);
 
     const exit = () => {
         navigate("/Mode");  
+    };
+    
+    const handlePlayClick = async () => {
+        const userFromStorage = localStorage.getItem("user");
+        if (!userFromStorage) {
+            toast.error("Erro: Usuário não encontrado. Por favor, faça login novamente.");
+            return;
+        }
+        
+        if (userLifes <= 0) {
+            toast.error("Você não tem mais vidas para jogar o desafio!");
+            return;
+        }
+
+        const loggedUser = JSON.parse(userFromStorage);
+        const newLifeCount = userLifes - 1;
+
+        try {
+            const res = await api.patch(`/users/${loggedUser.id}`, { lifes: newLifeCount });
+            const userData = {
+                ...res.data,
+                id: res.data._id,
+            };
+            delete userData._id;
+            delete userData.password;
+
+            setUserLifes(newLifeCount);
+
+            localStorage.setItem("user", JSON.stringify(userData));
+            
+            navigate("/ChallengeQuestion");
+        } catch (error) {
+            console.error("Erro ao atualizar vidas:", error);
+            toast.error("Não foi possível iniciar o desafio. Tente novamente.");
+        }
     };
 
     return (
@@ -79,14 +132,16 @@ export const ChallengePage = () => {
             </nav>
 
             <div className="Title">
-                <h1>
-                    Modo desafio 
-                </h1>
+                <h1>Modo desafio</h1>
                 <img src={fire} alt="" />
             </div>
 
             <div className="container">
                 <div className="containerBody">
+                    <div className="lifes-counter">
+                        <img src={heart} alt="Ícone de vidas" />
+                        <span>{userLifes}</span>
+                    </div>
                     <div className="info">
                         <img src={info} alt="" onClick={() => setShowInfo2(true)}/>
                     </div>
@@ -98,34 +153,30 @@ export const ChallengePage = () => {
                         width: "200px",
                         height: "200px"
                     }}>
-                        <h2>
-                            Recorde
-                        </h2>
-                        <p>50</p>
+                        <h2>Recorde</h2>
+                        <p>{userRecord}</p>
                     </div>
                     <div className="ranking">
-                        <h2>
-                            Ranking dos Desafiados!
-                        </h2>
+                        <h2>Ranking dos Desafiados!</h2>
                         <ul className="ranking-list">
                             {rankingData.map((player, index) => (
-                                <li key={player._id}>
+                                <li key={player.id || player._id}>
                                     <div>
                                         <span>{index + 1}. </span>
                                         <span className="player-name">{player.name}</span>
                                     </div>
-                                    <span className="player-points">{player.totalPoints} pontos</span>
+                                    <span className="player-points">{player.totalPoints || 0} pontos</span>
                                 </li>
                             ))}
                         </ul>
                     </div>
                 </div>
                 <div className="buttons">
-                    <button type="button">
-                        <img src={back2} alt="Back" onClick={exit}/>
+                    <button type="button" onClick={exit}>
+                        <img src={back2} alt="Back" />
                     </button>
-                    <button type="button">
-                        <img src={play} alt="Back" onClick={() => navigate("/ChallengeQuestion")}/>
+                    <button type="button" onClick={handlePlayClick}>
+                        <img src={play} alt="Play" />
                     </button>
                 </div>
             </div>

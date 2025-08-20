@@ -39,6 +39,7 @@ export const Configuration = () => {
                     id: get.data._id,
                 };
                 delete userData._id;
+                delete userData.password;
                 setUsername(userData.name);
 
                 localStorage.setItem("user", JSON.stringify(userData));

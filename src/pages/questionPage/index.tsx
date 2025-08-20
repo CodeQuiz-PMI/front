@@ -46,6 +46,7 @@ export const QuestionPage = () => {
                 id: get.data._id,
             };
             delete userData._id;
+            delete userData.password;
             setCoins(get.data.coins);
 
             localStorage.setItem("user", JSON.stringify(userData));
@@ -225,6 +226,7 @@ export const QuestionPage = () => {
                     id: res.data._id,
                 };
                 delete userData._id;
+                delete userData.password;
                 setCoins(res.data.coins);
 
                 localStorage.setItem("user", JSON.stringify(userData));
@@ -269,6 +271,7 @@ export const QuestionPage = () => {
                 id: get.data._id,
             };
             delete userData._id;
+            delete userData.password;
             setCoins(get.data.coins);
 
             localStorage.setItem("user", JSON.stringify(userData));
