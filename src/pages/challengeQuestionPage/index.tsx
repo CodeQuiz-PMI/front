@@ -17,7 +17,7 @@ import store from "../../assets/store2.svg";
 import about from "../../assets/about2.svg";
 import config from "../../assets/config2.svg";
 
-import { toast, ToastOptions } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import { NavBar } from "../../components/navbar";
@@ -111,7 +111,7 @@ export const ChallengeQuestionPage = () => {
         }
     };
 
-    const handleMultipleChoiceSubmit = async (e: React.FormEvent) => {
+    const handleMultipleChoiceSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         if (!selected) return;
 
@@ -122,38 +122,7 @@ export const ChallengeQuestionPage = () => {
             setTotalPoints(prev => prev + (currentQuestion.points || 0));
         }
 
-        const toastContent = (
-            <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-                <p style={{ color: isCorrect ? "#2FFF00" : "#FF4136" }}>
-                    {isCorrect ? "Resposta correta!" : "Resposta incorreta."}
-                </p>
-                <button
-                    style={{
-                        backgroundColor: "#2FFF00", color: "#2A2A2A", padding: "8px 12px",
-                        border: "none", borderRadius: "4px", fontFamily: "Jersey 25, sans-serif",
-                        cursor: "pointer"
-                    }}
-                    onClick={() => {
-                        toast.dismiss();
-                        goToNextQuestion();
-                    }}
-                >
-                    Continuar
-                </button>
-            </div>
-        );
-
-        const toastOptions: ToastOptions = {
-            style: { backgroundColor: "#2A2A2A", color: "#2FFF00", fontFamily: "Jersey 25, sans-serif" },
-            autoClose: false,
-            closeOnClick: false,
-        };
-
-        if (isCorrect) {
-            toast.success(toastContent, toastOptions);
-        } else {
-            toast.warn(toastContent, toastOptions);
-        }
+        goToNextQuestion();
     };
 
     const handleSkip = () => {
@@ -185,22 +154,39 @@ export const ChallengeQuestionPage = () => {
         return withInlineCode.replace(/\n/g, "<br/>").replace(/\t/g, "&nbsp;&nbsp;&nbsp;&nbsp;");
     };
     
-
     useEffect(() => {
         const submitChallengeResults = async () => {
-            const coinsEarned = totalPoints * 2;
+            if (user && user.id) {
+                let starsEarned = 0;
+                if (correctAnswersCount >= 15) starsEarned = 3;
+                else if (correctAnswersCount >= 10) starsEarned = 2;
+                else if (correctAnswersCount >= 5) starsEarned = 1;
 
-            if (user && user.id && (totalPoints > 0 || coinsEarned > 0)) {
-                try {
-                    const currentPoints = user.totalPoints || 0;
-                    const currentCoins = user.coins || 0;
-                    await api.patch(`/users/${user.id}`, {
-                        points: currentPoints + totalPoints,
-                        coins: currentCoins + coinsEarned,
-                    });
-                } catch (error) {
-                    console.error("Erro ao salvar os pontos e moedas:", error);
-                    toast.error("Não foi possível salvar sua pontuação.");
+                let coinsEarned = 0;
+                if (starsEarned === 3) coinsEarned = 15;
+                else if (starsEarned === 2) coinsEarned = 10;
+                else if (starsEarned === 1) coinsEarned = 5;
+
+                const newTotalPoints = totalPoints > (user.totalPoints || 0) 
+                    ? totalPoints 
+                    : (user.totalPoints || 0);
+
+                const newCoins = (user.coins || 0) + coinsEarned;
+
+                const payload: { totalPoints: number; coins: number; record: number } = {
+                    totalPoints: newTotalPoints,
+                    coins: newCoins,
+                    record: correctAnswersCount,
+                };
+
+                if (totalPoints > 0 || coinsEarned > 0) {
+                    try {
+                        await api.patch(`/users/${user.id}`, payload);
+
+                    } catch (error) {
+                        console.error("Erro ao salvar os pontos e moedas:", error);
+                        toast.error("Não foi possível salvar sua pontuação.");
+                    }
                 }
             }
         };
@@ -208,29 +194,32 @@ export const ChallengeQuestionPage = () => {
         if (isChallengeOver) {
             submitChallengeResults();
         }
-    }, [isChallengeOver, totalPoints, user, navigate]);
+    }, [isChallengeOver, totalPoints, correctAnswersCount, user, navigate]);
 
 
     const renderChallengeResult = () => {
-        const totalQuestionsSeen = currentQuestionIndex + 1;
-        const answeredQuestions = totalQuestionsSeen - skippedQuestionsCount;
-        const performancePercent = answeredQuestions > 0 ? (correctAnswersCount / answeredQuestions) * 100 : 0;
-
-        let star1 = starDark, star2 = starDark, star3 = starDark;
-        let mascotImage = mascotBad;
-
-        if (performancePercent >= 80) {
-            star1 = starYellow; star2 = starYellow; star3 = starYellow;
-            mascotImage = mascotGood;
-        } else if (performancePercent >= 50) {
-            star1 = starYellow; star3 = starYellow;
-            mascotImage = mascotMedium;
-        } else if (answeredQuestions > 0) {
-            star1 = starYellow;
-            mascotImage = mascotBad;
+        let starsEarned = 0;
+        if (correctAnswersCount >= 15) {
+            starsEarned = 3;
+        } else if (correctAnswersCount >= 10) {
+            starsEarned = 2;
+        } else if (correctAnswersCount >= 5) {
+            starsEarned = 1;
         }
+
+        const star1 = starsEarned >= 1 ? starYellow : starDark;
+        const star2 = starsEarned >= 3 ? starYellow : starDark;
+        const star3 = starsEarned >= 2 ? starYellow : starDark;
+
+        let mascotImage = mascotBad;
+        if (starsEarned === 3) mascotImage = mascotGood;
+        else if (starsEarned === 2) mascotImage = mascotMedium;
         
-        const coinsEarned = totalPoints * 2;
+        // NOVO: Lógica de moedas baseada nas estrelas
+        let coinsEarned = 0;
+        if (starsEarned === 3) coinsEarned = 15;
+        else if (starsEarned === 2) coinsEarned = 10;
+        else if (starsEarned === 1) coinsEarned = 5;
 
         return (
             <div className="modal">
@@ -241,17 +230,17 @@ export const ChallengeQuestionPage = () => {
                         <img src={star2} alt="Estrela 2" style={{width: "120px", marginBottom: "10px"}}/>
                         <img src={star3} alt="Estrela 3"/>
                     </div>
-                    <div style={{display: "flex", alignItems: "center" , justifyContent: "space-around", gap: "20px"}}>
-                        <div>
-                            <p style={{color: "white", fontSize: "25px", width: "100px"}}>Acertos</p>
-                            <p style={{color: "white", fontSize: "25px", width: "100px"}}>{correctAnswersCount}</p>
+                    <div style={{display: "flex", alignItems: "center" , justifyContent: "space-around", gap: "20px", width: "100%"}}>
+                        <div style={{textAlign: "center"}}>
+                            <p style={{color: "white", fontSize: "25px"}}>Acertos</p>
+                            <p style={{color: "white", fontSize: "25px"}}>{correctAnswersCount}</p>
                         </div>
                         <div>
                             <img src={mascotImage} alt="Mascote de desempenho" style={{width: "100px"}}/>
                         </div>
-                        <div>
-                            <p style={{color: "white", fontSize: "25px", width: "100px"}}>Pontuação</p>
-                            <p style={{color: "white", fontSize: "25px", width: "100px"}}>{totalPoints}</p>
+                        <div style={{textAlign: "center"}}>
+                            <p style={{color: "white", fontSize: "25px"}}>Pontuação</p>
+                            <p style={{color: "white", fontSize: "25px"}}>{totalPoints}</p>
                         </div>
                     </div>
                     <div style={{display: "flex", alignItems: "center", gap: "5px"}}>
@@ -260,9 +249,10 @@ export const ChallengeQuestionPage = () => {
                     </div>
                     <button onClick={() => navigate("/Challenge")} 
                         style={{width: "250px", height: "50px", 
-                            display: "flex", flexDirection: "column", justifyContent: "center",
+                            display: "flex", alignItems: "center", justifyContent: "center",
                             border: "1px solid white", borderRadius: "10px",
                             color: "white", textAlign: "center", fontSize: "25px", fontStyle:"normal",
+                            backgroundColor: "transparent", cursor: "pointer"
                         }}    
                     >
                         Jogar Novamente
@@ -322,9 +312,9 @@ export const ChallengeQuestionPage = () => {
                         </div>
 
                         <div style={{ display: "flex", justifyContent: "center", marginTop: "20px", gap: "20px" }}>
-                            <button type="button" className="buttonGiveUp" onClick={handleGiveUp}>Desistir</button>
-                            <button type="button" className="buttonSkip" onClick={handleSkip}>Pular</button>
-                            <button type="submit" className="buttonSubmit" disabled={!selected}>Responder</button>
+                            <button type="button" onClick={handleGiveUp}>Desistir</button>
+                            <button type="button" onClick={handleSkip}>Pular</button>
+                            <button type="submit" disabled={!selected}>Responder</button>
                         </div>
                     </form>
                 </div>

@@ -87,6 +87,23 @@ export const StyledChallengePage = styled.main`
                 top: 0px;
                 right: 0px;
             }
+            
+            .lifes-counter{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 5px;
+                
+                position: absolute;
+                top: 10px;
+                left: 10px;
+
+                font-size: 40px;
+
+                img{
+                    width: 45px;
+                }
+            }
         }
 
         .record{

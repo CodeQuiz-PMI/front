@@ -30,6 +30,24 @@ export const StyledModeSelectionPage = styled.main`
                 background-color: rgba(137, 255, 63, 0.5);
             }
         }
+            .buttonHomePage2{
+            width: 470px;
+            height: 75px;
+
+            filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25));
+
+            color: #EC5900;
+            font-size: 40px;
+            font-family: "Jersey 25";
+            
+            border-radius: 10px;
+            border: 1px solid transparent;
+
+            background-color: #393939;  
+            &:hover {
+                background-color: rgba(87, 87, 87, 1);
+            }
+        }
         
         .buttonExit{
             width: 250px;

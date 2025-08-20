@@ -88,6 +88,7 @@ export const Store = () => {
                     id: get.data._id,
                 };
                 delete userData._id;
+                delete userData.password;
                 setCoins(userData.coins);
                 setCurrentUser(userData);
 
