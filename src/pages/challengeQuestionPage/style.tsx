@@ -40,7 +40,7 @@ export const ChallengeQuestionPageStyled = styled.main`
     display: flex;
     flex-direction: column;
     margin-bottom: 20px;
-    margin-top: 50px;
+    margin-top: 10px;
     padding: 0px 80px;
 
     .text {
@@ -146,7 +146,7 @@ export const ChallengeQuestionPageStyled = styled.main`
         label {
           font-family: var(--main-font);
           display: block;
-          padding: 10px;
+          padding: 5px;
           margin-bottom: 10px;
           border: 2px solid white;
           border-radius: 8px;

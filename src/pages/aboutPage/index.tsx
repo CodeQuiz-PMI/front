@@ -8,7 +8,7 @@ import { NavBar } from "../../components/navbar";
 export const AboutPage: React.FC = () => {
     const navigate = useNavigate();
     const [hasToken, setHasToken] = useState(false);
-    
+
     useEffect(() => {
         const token = localStorage.getItem("token");
         setHasToken(!!token);
@@ -24,7 +24,7 @@ export const AboutPage: React.FC = () => {
 
     return (
         <StyleAboutPage>
-            <NavBar/>
+            <NavBar />
             <section className="title">
                 <h1>
                     O que é o CodeQuiz?

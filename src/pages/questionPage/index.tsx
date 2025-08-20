@@ -33,7 +33,7 @@ export const QuestionPage = () => {
 
     const [selected, setSelected] = useState("");
     const [showHint, setShowHint] = useState(false);
-    const [coins, setCoins ] = useState();
+    const [coins, setCoins] = useState();
     const [showHintStore, setShowHintStore] = useState(false);
 
     const [shuffledResponses, setShuffledResponses] = useState<ResponseOption[]>([]);
@@ -52,7 +52,7 @@ export const QuestionPage = () => {
             localStorage.setItem("user", JSON.stringify(userData));
         };
         fetchUser();
-        
+
         if (question.type === "múltipla-escolha") {
             const responses = [
                 question.response_1,
@@ -60,22 +60,22 @@ export const QuestionPage = () => {
                 question.response_3,
                 question.response_4,
             ].filter((resp) => resp.trim() !== ""); // Remove vazios
-            
+
             const shuffled = shuffleArray(responses);
-            
+
             const prefixLetters = ["A)", "B)", "C)", "D)"];
-            
+
             const responsesWithPrefix = shuffled.map((response, index) => ({
                 label: `${prefixLetters[index]} ${response}`,
                 value: response,
             }));
-            
+
             setShuffledResponses(responsesWithPrefix);
         }
-        
+
         fetchUser();
     }, [question, user?.id]);
-    
+
     const shuffleArray = (array: string[]) => {
         return array
             .filter((resp) => resp.trim() !== "")
@@ -112,7 +112,7 @@ export const QuestionPage = () => {
                             toast.dismiss();
                         }}
                     >
-                    Continuar
+                        Continuar
                     </button>
                 </div>
             </div>
@@ -138,11 +138,11 @@ export const QuestionPage = () => {
     };
 
 
-         
+
     const handleBackToSection = () => {
         navigate(`/section/${question.section._id}`, { state: { section: question.section } });
     };
-    
+
     const formatTextWithCode = (text: string) => {
         const withBlockCode = text.replace(/```([\s\S]*?)```/g, (_match, code) => {
             return `<pre><code>${code.trim()}</code></pre>`;
@@ -154,25 +154,25 @@ export const QuestionPage = () => {
 
         return withInlineCode;
     };
-    
+
     const formatTextWithCode2 = (text: string) => {
         if (!text) return "";
-      
+
         const unescaped = text
             .replace(/\\\\n/g, "\n")
             .replace(/\\n/g, "\n")
             .replace(/\\\\t/g, "\t")
             .replace(/\\t/g, "\t")
             .replace(/\\"/g, '"');
-      
+
         const withBlockCode = unescaped.replace(/```([\s\S]*?)```/g, (_match, code) => {
             return `<pre><code>${code.trim()}</code></pre>`;
         });
-      
+
         const withInlineCode = withBlockCode.replace(/`([^`]+)`/g, (_match, code) => {
             return `<code>${code}</code>`;
         });
-      
+
         return withInlineCode
             .replace(/\n/g, "<br/>")
             .replace(/\t/g, "&nbsp;&nbsp;&nbsp;&nbsp;");
@@ -181,7 +181,7 @@ export const QuestionPage = () => {
     const submitAnswerLog = async (userAnswer: string, isCorrect: boolean) => {
         try {
             const res = await api.get(`/answerlogs/user/${user?.id}`);
-    
+
             const existingLog = res.data.find(
                 (log: AnswerLog) => log.question === question._id
             );
@@ -212,7 +212,7 @@ export const QuestionPage = () => {
         const userDataString = localStorage.getItem("user");
         if (!userDataString) {
             console.error("Usuário não encontrado no localStorage.");
-            return; 
+            return;
         }
         const userFromStorage = JSON.parse(userDataString);
         if (userFromStorage.hints && userFromStorage.hints > 0) {
@@ -278,7 +278,7 @@ export const QuestionPage = () => {
 
             setShowHint(true);
             setShowHintStore(false);
-            
+
             return res;
         } catch (err) {
             console.error("Erro ao comprar dica:", err);
@@ -287,18 +287,18 @@ export const QuestionPage = () => {
     };
 
 
-          
+
     return (
         <QuestionPageStyled>
-            <NavBar/>
+            <NavBar />
 
             <div className="header">
                 <button>
-                    <img src={arrow} alt="" onClick={handleBackToSection}/>
+                    <img src={arrow} alt="" style={{ width: "78px" }} onClick={handleBackToSection} />
                 </button>
                 <h1>{question.title}</h1>
                 <button>
-                    <img src={lamp} alt="Configurações" onClick={handleHintClick}/>
+                    <img src={lamp} alt="Configurações" onClick={handleHintClick} />
                 </button>
             </div>
 
@@ -307,16 +307,16 @@ export const QuestionPage = () => {
                     <div className="text">
                         <p dangerouslySetInnerHTML={{ __html: formatTextWithCode(question.text) }} />
                     </div>
-                ) : 
+                ) :
                     <div className="text">
                         <p dangerouslySetInnerHTML={{ __html: formatTextWithCode(question.text) }} />
                     </div>
-                
-                }               
+
+                }
 
                 <div className="question">
                     <form onSubmit={handleMultipleChoiceSubmit}>
-                        <h2 dangerouslySetInnerHTML={{ __html: formatTextWithCode(question.answer) }} />
+                        <h2 style={{ marginBottom: "15px", fontSize: "22px" }} dangerouslySetInnerHTML={{ __html: formatTextWithCode(question.answer) }} />
                         <div className="options">
                             {shuffledResponses.map((responseObj, idx) => (
                                 <label key={idx} className={selected === responseObj.value ? "selected" : ""}>
@@ -344,14 +344,14 @@ export const QuestionPage = () => {
                             </button>
                         </div>
                     </form>
-                                        
-                    
+
+
                 </div>
             </div>
-                            
+
             {showHint && (
                 <div className="modal">
-                    <div className="modal-content" style={{padding: "30px 40px 55px"}}>
+                    <div className="modal-content" style={{ padding: "30px 40px 55px" }}>
                         <div className="ranking-title">
                             <img src={lamp} alt="Troféu" />
                             <h2>Dica</h2>
@@ -361,7 +361,7 @@ export const QuestionPage = () => {
                             dangerouslySetInnerHTML={{
                                 __html: formatTextWithCode(question.hint),
                             }}
-                            style={{fontFamily: "var(--second-font)", fontSize: "var(--font-size-base)", textAlign: "justify"}}
+                            style={{ fontFamily: "var(--second-font)", fontSize: "var(--font-size-base)", textAlign: "justify" }}
                         />
                         <img className="imgBetinha" src={betinhaDica} alt="" />
                         <div className="ranking-buttons">
@@ -375,7 +375,7 @@ export const QuestionPage = () => {
 
             {showHintStore && (
                 <div className="modal">
-                    <div className="modal-content" style={{padding: "30px 40px 55px"}}>
+                    <div className="modal-content" style={{ padding: "30px 40px 55px" }}>
                         <div className="ranking-title">
                             <h2>Vai uma dica?</h2>
                         </div>

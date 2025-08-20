@@ -11,6 +11,10 @@ export const StyledModeSelectionPage = styled.main`
         padding-top: 40px;
         
         height: 500px;
+        
+        h1{
+            font-family: "Jersey 25", cursive;
+        }
 
         .buttonHomePage{
             width: 470px;

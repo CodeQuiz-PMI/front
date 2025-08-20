@@ -27,8 +27,8 @@ export const StyleAboutPage = styled.main`
 
             li{
                 color: var(--primary-color-light);
-                font-family: var(--main-font);
-                font-size: var(--font-size-xl);
+                font-family: var(--second-font);
+                font-size: var(--font-size-base2);
                 font-style: normal;
                 font-weight: var(--font-weight-normal);
             }

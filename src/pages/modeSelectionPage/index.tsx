@@ -11,13 +11,13 @@ export const ModeSelectionPage = () => {
         localStorage.removeItem("user");
         navigate("/");
     };
-   
+
     return (
         <StyledModeSelectionPage>
-            <NavBar/>
+            <NavBar />
 
             <div className="container">
-                <h1>Escolha o modo de jogo:</h1>
+                <h1 style={{ fontWeight: "400" }}>Escolha o modo de jogo:</h1>
 
                 <button className="buttonHomePage" type="button" onClick={() => navigate("/Level")}>
                     Modo de Estudos

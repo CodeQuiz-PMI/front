@@ -15,7 +15,8 @@ export const StyledStorePage = styled.main`
             
             .text {
                 position: relative;
-                width: 720px;
+                width: 620px;
+
 
                 color: var(--primary-color-light);
                 text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
@@ -47,7 +48,7 @@ export const StyledStorePage = styled.main`
                     position: absolute;
                     width: 270px;
                     right: 30px;
-                    top: -70px;
+                    bottom: -140px;
                 }
             }
         }
@@ -78,7 +79,7 @@ export const StyledStorePage = styled.main`
 
     .Divlist{
         width: 100%;
-        padding-top: 80px;
+        padding-top: 40px;
         .list{
             display: flex;
             justify-content: space-evenly;
@@ -99,11 +100,15 @@ export const StyledStorePage = styled.main`
                     font-size: var(--font-size-xl);
                     font-style: normal;
                     font-weight: var(--font-weight-normal);
-                    line-height: normal;
+
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    gap: 10px;
                 }
                 
-                width: 240px;
-                height: 200px;
+                width: 210px;
+                height: 190px;
                 
                 border: 1px solid transparent;
                 border-radius: var(--border-radius-sm);
