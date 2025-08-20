@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const StyledNavBar = styled.nav`
     width: 100%;
-    height: 100px;
+    height: 85px;
     padding: 10px;
     background: var(--nav-background);
     border-bottom: #2FFF00 2px solid;

@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const ChallengeQuestionPageStyled = styled.main`
     nav {
         width: 100%;
-        height: 100px;
+        height: 85px;
         padding: 10px;
         background: #941515;
         border-bottom: #FFFFFF 2px solid;

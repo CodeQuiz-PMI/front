@@ -4,7 +4,7 @@ import styled from "styled-components";
 export const StyledChallengePage = styled.main`
     nav {
         width: 100%;
-        height: 100px;
+        height: 85px;
         padding: 10px;
         background: #ec5900d6;
         border-bottom: #FFFFFF 2px solid;
@@ -204,7 +204,7 @@ export const StyledChallengePage = styled.main`
             width: 100%;
             
             position: absolute;
-            bottom: 20px;
+            bottom: 30px;
             
             button {
                 width: 110px;
