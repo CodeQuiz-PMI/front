@@ -5,9 +5,9 @@ import { Question } from "../../context/AppContext";
 import lock from "../../assets/assetsV2/Lock.svg";
 
 interface CardQuestionProps {
-  question: Question;
-  isAnswered?: boolean;
-  isLocked?: boolean; 
+    question: Question;
+    isAnswered?: boolean;
+    isLocked?: boolean;
 }
 
 export const CardQuestion: React.FC<CardQuestionProps> = ({ question, isAnswered, isLocked }) => {
@@ -18,7 +18,7 @@ export const CardQuestion: React.FC<CardQuestionProps> = ({ question, isAnswered
                     {question.order}
                     {isLocked && <img id="lock" src={lock} alt="Bloqueado" />}
                 </button>
-                <p>{question.title}</p>
+                <p style={{ fontSize: "23px" }}>{question.title}</p>
             </div>
         </StyledCardQuestion>
     );

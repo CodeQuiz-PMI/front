@@ -19,17 +19,17 @@ import { toast } from "react-toastify";
 
 export const ChallengePage = () => {
     const navigate = useNavigate();
-    
+
     const [showInfo, setShowInfo] = useState(false);
     const [showInfo2, setShowInfo2] = useState(false);
     const [rankingData, setRankingData] = useState<User[]>([]);
-    
+
     const [userRecord, setUserRecord] = useState<number>(0);
     const [userLifes, setUserLifes] = useState<number>(0);
 
     useEffect(() => {
         const userFromStorage = localStorage.getItem("user");
-        
+
         const fetchUserData = async () => {
             if (userFromStorage) {
                 const loggedUser = JSON.parse(userFromStorage);
@@ -66,7 +66,7 @@ export const ChallengePage = () => {
                 console.error("Erro ao carregar ranking:", error);
             }
         };
-        
+
         fetchUserData();
         fetchTop5Ranking();
 
@@ -78,16 +78,16 @@ export const ChallengePage = () => {
     }, []);
 
     const exit = () => {
-        navigate("/Mode");  
+        navigate("/Mode");
     };
-    
+
     const handlePlayClick = async () => {
         const userFromStorage = localStorage.getItem("user");
         if (!userFromStorage) {
             toast.error("Erro: Usuário não encontrado. Por favor, faça login novamente.");
             return;
         }
-        
+
         if (userLifes <= 0) {
             toast.error("Você não tem mais vidas para jogar o desafio!");
             return;
@@ -108,7 +108,7 @@ export const ChallengePage = () => {
             setUserLifes(newLifeCount);
 
             localStorage.setItem("user", JSON.stringify(userData));
-            
+
             navigate("/ChallengeQuestion");
         } catch (error) {
             console.error("Erro ao atualizar vidas:", error);
@@ -143,7 +143,7 @@ export const ChallengePage = () => {
                         <span>{userLifes}</span>
                     </div>
                     <div className="info">
-                        <img src={info} alt="" onClick={() => setShowInfo2(true)}/>
+                        <img src={info} alt="" onClick={() => setShowInfo2(true)} />
                     </div>
                     <div className="record" style={{
                         backgroundImage: `url(${fire2})`,
@@ -183,92 +183,93 @@ export const ChallengePage = () => {
 
             {showInfo && (
                 <div className="modal">
-                    <div className="modal-content" style={{backgroundColor: "#393939", border: "2px solid white", color: "white"}}>
+                    <div className="modal-content" style={{ backgroundColor: "#393939", border: "2px solid white", color: "white" }}>
                         <div className="ranking-title">
-                            <img src={fire} alt="Troféu" style={{width: "55px", height: "80px"}}/>
-                            <h2 style={{color: "white"}}>Bem-vindo ao Modo Desafio do CodeQuiz!</h2>
-                            <img src={fire} alt="Troféu" style={{width: "55px", height: "80px"}}/>
+                            <img src={fire} alt="Troféu" style={{ width: "55px", height: "80px" }} />
+                            <h2 style={{ color: "white" }}>Bem-vindo ao Modo Desafio do CodeQuiz!</h2>
+                            <img src={fire} alt="Troféu" style={{ width: "55px", height: "80px" }} />
                         </div>
                         <div>
-                            <ul style={{display: "flex", flexDirection: "column", gap: "10px"}}>
+                            <ul style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
                                 <li>
-                                    <p style={{textAlign: "justify"}}>
-                                        É hora de colocar em prática tudo o que você aprendeu por aqui e mostrar do que é capaz! 
+                                    <p style={{ textAlign: "justify" }}>
+                                        É hora de colocar em prática tudo o que você aprendeu por aqui e mostrar do que é capaz!
                                     </p>
                                 </li>
                                 <li>
-                                    <p style={{textAlign: "justify"}}>
+                                    <p style={{ textAlign: "justify" }}>
                                         Teste suas habilidades e acumule pontos para desbloquear recompensas na loja!
                                     </p>
-                                    <p style={{textAlign: "justify"}}>
-                                        Preparado(a)? Então respira fundo e bora começar! 
+                                    <p style={{ textAlign: "justify" }}>
+                                        Preparado(a)? Então respira fundo e bora começar!
                                     </p>
                                 </li>
                                 <li>
-                                    <p style={{textAlign: "justify"}}>
+                                    <p style={{ textAlign: "justify" }}>
                                         Você vai ter 5 minutos para responder o máximo de perguntas possível, com níveis variados de dificuldade.
                                     </p>
                                 </li>
                             </ul>
                         </div>
-                        
-                        <div className="ranking-buttons">
-                            <button className="buttonModalRanking" type="button" onClick={exit} 
-                                style={{height: "75px", display: "flex", alignItems: "center", justifyContent: "center", backgroundColor: "#A13D00"}}
+
+                        <div className="ranking-buttons" style={{ gap: "125px" }}>
+                            <button className="buttonModalRanking" type="button" onClick={exit}
+                                style={{ height: "75px", display: "flex", alignItems: "center", justifyContent: "center", backgroundColor: "#A13D00", border: "5px solid rgba(236, 89, 0, 0.38)" }}
                             >
                                 <img src={back2} alt="Back" />
                             </button>
                             <button className="buttonModalRanking" type="button" onClick={() => setShowInfo(false)}
-                                style={{height: "75px", display: "flex", alignItems: "center", justifyContent: "center", backgroundColor: "#A13D00"}}
+                                style={{ height: "75px", display: "flex", alignItems: "center", justifyContent: "center", backgroundColor: "#A13D00", border: "5px solid rgba(236, 89, 0, 0.38)" }}
                             >
                                 <img src={play} alt="Back" />
                             </button>
                         </div>
                     </div>
                 </div>
-            )}           
+            )}
 
             {showInfo2 && (
                 <div className="modal">
-                    <div className="modal-content" style={{backgroundColor: "#393939", border: "2px solid white", color: "white"}}>
+                    <div className="modal-content" style={{ backgroundColor: "#393939", border: "2px solid white", color: "white" }}>
                         <div className="ranking-title">
-                            <img src={fire} alt="Troféu" style={{width: "55px", height: "80px"}}/>
-                            <h2 style={{color: "white"}}>Bem-vindo ao Modo Desafio do CodeQuiz!</h2>
-                            <img src={fire} alt="Troféu" style={{width: "55px", height: "80px"}}/>
+                            <img src={fire} alt="Troféu" style={{ width: "55px", height: "80px" }} />
+                            <h2 style={{ color: "white" }}>Bem-vindo ao Modo Desafio do CodeQuiz!</h2>
+                            <img src={fire} alt="Troféu" style={{ width: "55px", height: "80px" }} />
                         </div>
                         <div>
-                            <ul style={{display: "flex", flexDirection: "column", gap: "10px"}}>
+                            <ul style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
                                 <li>
-                                    <p style={{textAlign: "justify"}}>
-                                        É hora de colocar em prática tudo o que você aprendeu por aqui e mostrar do que é capaz! 
+                                    <p style={{ textAlign: "left", fontFamily: "var(--second-font)" }}>
+                                        É hora de colocar em prática tudo o que você aprendeu por aqui e mostrar do que é capaz!
                                     </p>
                                 </li>
                                 <li>
-                                    <p style={{textAlign: "justify"}}>
+                                    <p style={{ textAlign: "left", fontFamily: "var(--second-font)" }}>
                                         Teste suas habilidades e acumule pontos para desbloquear recompensas na loja!
                                     </p>
-                                    <p style={{textAlign: "justify"}}>
-                                        Preparado(a)? Então respira fundo e bora começar! 
+                                    <p style={{ textAlign: "left", fontFamily: "var(--second-font)" }}>
+                                        Preparado(a)? Então respira fundo e bora começar!
                                     </p>
                                 </li>
                                 <li>
-                                    <p style={{textAlign: "justify"}}>
+                                    <p style={{ textAlign: "left", fontFamily: "var(--second-font)" }}>
                                         Você vai ter 5 minutos para responder o máximo de perguntas possível, com níveis variados de dificuldade.
                                     </p>
                                 </li>
                             </ul>
                         </div>
-                        
-                        <div className="ranking-buttons">
-                            <button className="buttonModalRanking" type="button" onClick={() => setShowInfo2(false)} 
-                                style={{height: "75px", display: "flex", alignItems: "center", justifyContent: "center", backgroundColor: "#A13D00"}}
+
+                        <div className="ranking-buttons" style={{ bottom: "-40px" }}>
+                            <button className="buttonModalRanking" type="button" onClick={() => setShowInfo2(false)}
+                                style={{ height: "75px", display: "flex", alignItems: "center", justifyContent: "center", backgroundColor: "#A13D00", border: "5px solid rgba(236, 89, 0, 0.38)" }}
                             >
                                 <img src={back2} alt="Back" />
                             </button>
                         </div>
                     </div>
                 </div>
-            )}      
-        </StyledChallengePage>
+            )
+            }
+        </StyledChallengePage >
     );
 };

@@ -96,7 +96,7 @@ export const Store = () => {
             };
             fetchUser();
         }
-        
+
     }, [user?.id]);
 
     const handleGoBack = () => {
@@ -281,11 +281,11 @@ export const Store = () => {
 
     return (
         <StyledStorePage>
-            <NavBar/>
-            
+            <NavBar />
+
             <div className="Notification">
                 <button>
-                    <img src={iconArrowLeft} alt="" onClick={handleGoBack}/>
+                    <img style={{ width: "78px" }} src={iconArrowLeft} alt="" onClick={handleGoBack} />
                 </button>
 
                 <div className="balon">
@@ -300,50 +300,50 @@ export const Store = () => {
                 </div>
 
                 <div className="coins">
-                    {coins}
+                    <p>{coins}</p>
                     <img src={coin} alt="" />
                 </div>
             </div>
-            
+
             <div className="Divlist">
                 <ul className="list">
                     <li>
                         <button onClick={() => setIsHintsModalOpen(true)}>
-                            <h2>Dicas</h2>
+                            <h2 style={{ fontWeight: "400" }}>Dicas</h2>
                             <img src={lamp} alt="" />
                         </button>
                     </li>
                     <li>
-                        <button  onClick={() => setIsLifesModalOpen(true)}>
-                            <h2>Vidas</h2>
+                        <button onClick={() => setIsLifesModalOpen(true)}>
+                            <h2 style={{ fontWeight: "400" }}>Vidas</h2>
                             <img src={hearts} alt="" />
                         </button>
                     </li>
                     <li>
                         <button onClick={() => setIsCursorModalOpen(true)}>
-                            <h2>Cursores</h2>
+                            <h2 style={{ fontWeight: "400" }}>Cursores</h2>
                             <img src={cursor} alt="" />
                         </button>
                     </li>
                     <li>
                         <button onClick={() => setIsMusicsModalOpen(true)}>
-                            <h2>Músicas</h2>
+                            <h2 style={{ fontWeight: "400" }}>Músicas</h2>
                             <img src={musica} alt="" />
                         </button>
                     </li>
                 </ul>
             </div>
-            
+
             {isMusicsModalOpen && (
                 <div className="modal">
-                    <div className="modal-content" style={{padding: "30px 40px 55px", alignItems: "stretch"}}>
+                    <div className="modal-content" style={{ padding: "30px 40px 55px", alignItems: "stretch" }}>
                         <div className="modalMusics">
                             <div className="modalTitleMusics">
                                 <h2>Músicas</h2>
                                 <p>Personalize o seu jogo com novas músicas!</p>
                             </div>
                             <div className="coins">
-                                <p>{coins} Moedas</p> 
+                                <p>{coins} Moedas</p>
                             </div>
                         </div>
                         <div className="listMusics">
@@ -375,7 +375,7 @@ export const Store = () => {
                                 style={{ display: "none" }}
                             />
                         </div>
-                        <div className="Store-buttons">
+                        <div className="Store-buttons" style={{ bottom: "-30px" }}>
                             <button className="buttonModalStore" onClick={() => setIsMusicsModalOpen(false)}>
                                 <img src={back} alt="Back" />
                             </button>
@@ -386,14 +386,14 @@ export const Store = () => {
 
             {isLifesModalOpen && (
                 <div className="modal">
-                    <div className="modal-content" style={{padding: "30px 40px 55px", alignItems: "stretch"}}>
+                    <div className="modal-content" style={{ padding: "30px 40px 55px", alignItems: "stretch" }}>
                         <div className="modalMusics">
                             <div className="modalTitleMusics">
                                 <h2>Vidas</h2>
                                 <p>Obtenha mais vida para as suas partidas!</p>
                             </div>
                             <div className="coins">
-                                <p>{coins} Moedas</p> 
+                                <p>{coins} Moedas</p>
                             </div>
                         </div>
                         <div className="listLifes">
@@ -412,7 +412,7 @@ export const Store = () => {
                                 ))}
                             </ul>
                         </div>
-                        <div className="Store-buttons">
+                        <div className="Store-buttons" style={{ bottom: "-30px" }}>
                             <button className="buttonModalStore" type="button" onClick={() => setIsLifesModalOpen(false)}>
                                 <img src={back} alt="Back" />
                             </button>
@@ -423,14 +423,14 @@ export const Store = () => {
 
             {isHintsModalOpen && (
                 <div className="modal">
-                    <div className="modal-content" style={{padding: "30px 40px 55px", alignItems: "stretch"}}>
+                    <div className="modal-content" style={{ padding: "30px 40px 55px", alignItems: "stretch" }}>
                         <div className="modalMusics">
                             <div className="modalTitleMusics">
                                 <h2>Dicas</h2>
                                 <p>Obtenha mais dicas para suas partidas!</p>
                             </div>
                             <div className="coins">
-                                <p>{coins} Moedas</p> 
+                                <p>{coins} Moedas</p>
                             </div>
                         </div>
                         <div className="listLifes">
@@ -449,7 +449,7 @@ export const Store = () => {
                                 ))}
                             </ul>
                         </div>
-                        <div className="Store-buttons">
+                        <div className="Store-buttons" style={{ bottom: "-30px" }}>
                             <button className="buttonModalStore" onClick={() => setIsHintsModalOpen(false)}>
                                 <img src={back} alt="Back" />
                             </button>
@@ -460,14 +460,14 @@ export const Store = () => {
 
             {isCursorModalOpen && (
                 <div className="modal">
-                    <div className="modal-content" style={{padding: "30px 40px 55px", alignItems: "stretch", maxWidth: "770px"}}>
+                    <div className="modal-content" style={{ padding: "30px 40px 55px", alignItems: "stretch", maxWidth: "840px" }}>
                         <div className="modalMusics">
                             <div className="modalTitleMusics">
                                 <h2>Cursores</h2>
                                 <p>Obtenha cursores personalizados para suas partidas!</p>
                             </div>
                             <div className="coins">
-                                <p>{coins} Moedas</p> 
+                                <p>{coins} Moedas</p>
                             </div>
                         </div>
                         <div className="listLifes">
@@ -488,13 +488,13 @@ export const Store = () => {
                                                 <img src={coin} alt="coin" />
                                             </button>
                                         )}
-                                        
+
                                     </li>
 
                                 ))}
                             </ul>
                         </div>
-                        <div className="Store-buttons">
+                        <div className="Store-buttons" style={{ bottom: "-30px" }}>
                             <button className="buttonModalStore" onClick={() => setIsCursorModalOpen(false)}>
                                 <img src={back} alt="Back" />
                             </button>

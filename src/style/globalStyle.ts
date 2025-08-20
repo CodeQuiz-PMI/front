@@ -15,6 +15,7 @@ export const GlobalStyle = createGlobalStyle`
 		--main-font: 'Jersey 25', cursive;
 		--second-font: "Space Mono";
 		--font-size-base: 1rem; // 16px
+		--font-size-base2: 1.22rem; // 16px
 		--font-size-lg: 1.2rem; // 19.2px
 		--font-size-xl: 1.56rem; // 25px
 		--font-size-xxl: 1.875rem; // 30px
@@ -355,10 +356,6 @@ export const GlobalStyle = createGlobalStyle`
 						font-weight: 400;
 						line-height: normal;
 					}
-				}
-
-				.player-points {
-					font-weight: bold;
 				}
 
 				.no-ranking {

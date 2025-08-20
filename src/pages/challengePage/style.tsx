@@ -4,9 +4,9 @@ import styled from "styled-components";
 export const StyledChallengePage = styled.main`
     nav {
         width: 100%;
-        height: 100px;
+        height: 85px;
         padding: 10px;
-        background: #941515;
+        background: #ec5900d6;
         border-bottom: #FFFFFF 2px solid;
         display: flex;
         flex-direction: row;
@@ -44,7 +44,7 @@ export const StyledChallengePage = styled.main`
         gap: 10px;
     
         width: 100%;
-        height: 200px;
+        height: 130px;
 
         h1 {
             color: #EC5900;
@@ -72,8 +72,8 @@ export const StyledChallengePage = styled.main`
             align-items: center;
             justify-content: space-around;
 
-            width: 980px;
-            height: 421px;
+            width: 800px;
+            height: 350px;
             
             background-color: #393939;
 
@@ -86,6 +86,10 @@ export const StyledChallengePage = styled.main`
                 position: absolute;
                 top: 0px;
                 right: 0px;
+
+                img{
+                    width: 50px;
+                }
             }
             
             .lifes-counter{
@@ -101,7 +105,7 @@ export const StyledChallengePage = styled.main`
                 font-size: 40px;
 
                 img{
-                    width: 45px;
+                    width: 35px;
                 }
             }
         }
@@ -139,15 +143,17 @@ export const StyledChallengePage = styled.main`
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 20px;
+            gap: 5px;
 
-            width: 450px;
+            width: 330px;
             height: 287px;
 
             background-color: #473124;
 
             border: 1px solid transparent;
             border-radius: 25px;
+
+            padding-top: 25px;
             
             h2 {
                 color: #FFF;
@@ -159,9 +165,9 @@ export const StyledChallengePage = styled.main`
             }
             .ranking-list {
 				list-style: none;
-				padding: 0;
+				padding: 10px 20px;
 				margin-bottom: 20px;
-				width: 70%;
+				width: 100%;
 
 
 				li {
@@ -180,10 +186,6 @@ export const StyledChallengePage = styled.main`
 					}
 				}
 
-				.player-points {
-					font-weight: bold;
-				}
-
 				.no-ranking {
 					text-align: center;
 					font-style: italic;
@@ -196,11 +198,17 @@ export const StyledChallengePage = styled.main`
         .buttons{
             display: flex;
             align-items: center;
-            gap: 25px;
-
+            justify-content: center;
+            gap: 180px;
+            
+            width: 100%;
+            
+            position: absolute;
+            bottom: 30px;
+            
             button {
                 width: 110px;
-                height: 100px;
+                height: 75px;
                 
                 border-radius: 10px;
                 border: 5px solid rgba(236, 89, 0, 0.38);

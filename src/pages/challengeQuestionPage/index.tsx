@@ -29,7 +29,7 @@ type ResponseOption = {
 
 export const ChallengeQuestionPage = () => {
     const navigate = useNavigate();
-    const { user } = useApp(); 
+    const { user } = useApp();
 
     const [questions, setQuestions] = useState<Challenge[]>([]);
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -79,7 +79,7 @@ export const ChallengeQuestionPage = () => {
 
         return () => clearInterval(timerId);
     }, [timeLeft]);
-    
+
     const currentQuestion = questions[currentQuestionIndex];
 
     useEffect(() => {
@@ -145,7 +145,7 @@ export const ChallengeQuestionPage = () => {
         const withBlockCode = text.replace(/```([\s\S]*?)```/g, (_match, code) => `<pre><code>${code.trim()}</code></pre>`);
         return withBlockCode.replace(/`([^`]+)`/g, (_match, code) => `<code>${code}</code>`);
     };
-    
+
     const formatTextWithCode2 = (text: string) => {
         if (!text) return "";
         const unescaped = text.replace(/\\n/g, "\n").replace(/\\t/g, "\t").replace(/\\"/g, '"');
@@ -153,7 +153,7 @@ export const ChallengeQuestionPage = () => {
         const withInlineCode = withBlockCode.replace(/`([^`]+)`/g, (_match, code) => `<code>${code}</code>`);
         return withInlineCode.replace(/\n/g, "<br/>").replace(/\t/g, "&nbsp;&nbsp;&nbsp;&nbsp;");
     };
-    
+
     useEffect(() => {
         const submitChallengeResults = async () => {
             if (user && user.id) {
@@ -167,8 +167,8 @@ export const ChallengeQuestionPage = () => {
                 else if (starsEarned === 2) coinsEarned = 10;
                 else if (starsEarned === 1) coinsEarned = 5;
 
-                const newTotalPoints = totalPoints > (user.totalPoints || 0) 
-                    ? totalPoints 
+                const newTotalPoints = totalPoints > (user.totalPoints || 0)
+                    ? totalPoints
                     : (user.totalPoints || 0);
 
                 const newCoins = (user.coins || 0) + coinsEarned;
@@ -214,7 +214,7 @@ export const ChallengeQuestionPage = () => {
         let mascotImage = mascotBad;
         if (starsEarned === 3) mascotImage = mascotGood;
         else if (starsEarned === 2) mascotImage = mascotMedium;
-        
+
         // NOVO: Lógica de moedas baseada nas estrelas
         let coinsEarned = 0;
         if (starsEarned === 3) coinsEarned = 15;
@@ -223,37 +223,38 @@ export const ChallengeQuestionPage = () => {
 
         return (
             <div className="modal">
-                <div className="modal-content" style={{backgroundColor: "#393939", border: "2px solid white"}}>
-                    <h2 style={{color: "white"}}>{timeLeft <= 0 ? "Tempo Esgotado!" : "Desafio Concluído!"}</h2>
+                <div className="modal-content" style={{ backgroundColor: "#393939", border: "2px solid white" }}>
+                    <h2 style={{ color: "white" }}>{timeLeft <= 0 ? "Tempo Esgotado!" : "Desafio Concluído!"}</h2>
                     <div>
-                        <img src={star1} alt="Estrela 1"/>
-                        <img src={star2} alt="Estrela 2" style={{width: "120px", marginBottom: "10px"}}/>
-                        <img src={star3} alt="Estrela 3"/>
+                        <img src={star1} alt="Estrela 1" />
+                        <img src={star2} alt="Estrela 2" style={{ width: "120px", marginBottom: "10px" }} />
+                        <img src={star3} alt="Estrela 3" />
                     </div>
-                    <div style={{display: "flex", alignItems: "center" , justifyContent: "space-around", gap: "20px", width: "100%"}}>
-                        <div style={{textAlign: "center"}}>
-                            <p style={{color: "white", fontSize: "25px"}}>Acertos</p>
-                            <p style={{color: "white", fontSize: "25px"}}>{correctAnswersCount}</p>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-around", gap: "20px", width: "100%" }}>
+                        <div style={{ textAlign: "center" }}>
+                            <p style={{ color: "white", fontSize: "25px" }}>Acertos</p>
+                            <p style={{ color: "white", fontSize: "25px" }}>{correctAnswersCount}</p>
                         </div>
                         <div>
-                            <img src={mascotImage} alt="Mascote de desempenho" style={{width: "100px"}}/>
+                            <img src={mascotImage} alt="Mascote de desempenho" style={{ width: "100px" }} />
                         </div>
-                        <div style={{textAlign: "center"}}>
-                            <p style={{color: "white", fontSize: "25px"}}>Pontuação</p>
-                            <p style={{color: "white", fontSize: "25px"}}>{totalPoints}</p>
+                        <div style={{ textAlign: "center" }}>
+                            <p style={{ color: "white", fontSize: "25px" }}>Pontuação</p>
+                            <p style={{ color: "white", fontSize: "25px" }}>{totalPoints}</p>
                         </div>
                     </div>
-                    <div style={{display: "flex", alignItems: "center", gap: "5px"}}>
-                        <p style={{color: "white", fontSize: "25px"}}>Moedas ganhas: {coinsEarned}</p>
-                        <img src={coin} alt="Moeda" style={{width: "20px"}}/>
+                    <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
+                        <p style={{ color: "white", fontSize: "25px" }}>Moedas ganhas: {coinsEarned}</p>
+                        <img src={coin} alt="Moeda" style={{ width: "20px" }} />
                     </div>
-                    <button onClick={() => navigate("/Challenge")} 
-                        style={{width: "250px", height: "50px", 
+                    <button onClick={() => navigate("/Challenge")}
+                        style={{
+                            width: "250px", height: "50px",
                             display: "flex", alignItems: "center", justifyContent: "center",
                             border: "1px solid white", borderRadius: "10px",
-                            color: "white", textAlign: "center", fontSize: "25px", fontStyle:"normal",
+                            color: "white", textAlign: "center", fontSize: "25px", fontStyle: "normal",
                             backgroundColor: "transparent", cursor: "pointer"
-                        }}    
+                        }}
                     >
                         Jogar Novamente
                     </button>
@@ -265,7 +266,7 @@ export const ChallengeQuestionPage = () => {
     if (!currentQuestion) {
         return (
             <ChallengeQuestionPageStyled>
-                <NavBar/>
+                <NavBar />
                 <div className="container">
                     <h2>Carregando desafio...</h2>
                 </div>
@@ -290,12 +291,12 @@ export const ChallengeQuestionPage = () => {
 
             <div className="container">
                 <div className="timer">
-                    <h1 style={{color: "white"}}>{formatTime(timeLeft)}</h1>
+                    <h1 style={{ color: "white" }}>{formatTime(timeLeft)}</h1>
                 </div>
 
                 <div className="question">
                     <form onSubmit={handleMultipleChoiceSubmit}>
-                        <h2 dangerouslySetInnerHTML={{ __html: formatTextWithCode(currentQuestion.answer) }} />
+                        <h2 style={{ marginBottom: "15px", fontSize: "22px" }} dangerouslySetInnerHTML={{ __html: formatTextWithCode(currentQuestion.answer) }} />
                         <div className="options">
                             {shuffledResponses.map((responseObj, idx) => (
                                 <label key={idx} className={selected === responseObj.value ? "selected" : ""}>
