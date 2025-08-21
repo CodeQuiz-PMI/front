@@ -84,11 +84,11 @@ export const StyledChallengePage = styled.main`
 
             .info{
                 position: absolute;
-                top: 0px;
-                right: 0px;
+                bottom: 300px;
+                right: 10px;
 
                 img{
-                    width: 50px;
+                    width: 35px;
                 }
             }
             
@@ -96,13 +96,22 @@ export const StyledChallengePage = styled.main`
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                gap: 5px;
+                gap: 10px;
                 
                 position: absolute;
-                top: 10px;
-                left: 10px;
+                bottom: 420px;
+                left: 1100px;
 
-                font-size: 40px;
+                font-size: 35px;
+                color: white;
+                flex-direction: row-reverse;
+
+                background-color:  #393939;
+                padding: 10px 30px; 
+                border-radius: 10px;
+                bottom: 400px; 
+                left: 1060px; 
+
 
                 img{
                     width: 35px;
@@ -145,8 +154,8 @@ export const StyledChallengePage = styled.main`
             justify-content: center;
             gap: 5px;
 
-            width: 330px;
-            height: 287px;
+            width: 350px;
+            height: 300px;
 
             background-color: #473124;
 
@@ -207,8 +216,8 @@ export const StyledChallengePage = styled.main`
             bottom: 30px;
             
             button {
-                width: 110px;
-                height: 75px;
+                width: 130px;
+                height: 110px;
                 
                 border-radius: 10px;
                 border: 5px solid rgba(236, 89, 0, 0.38);

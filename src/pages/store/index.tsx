@@ -342,9 +342,10 @@ export const Store = () => {
                                 <h2>Músicas</h2>
                                 <p>Personalize o seu jogo com novas músicas!</p>
                             </div>
-                            <div className="coins">
-                                <p>{coins} Moedas</p>
-                            </div>
+                          <div className="coins" style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+                            <p style={{ fontSize: '20px' }}>{coins}</p>
+                            <img src={coin} alt="" style={{ width: '20px' }} />
+                        </div>
                         </div>
                         <div className="listMusics">
                             <ul>
@@ -392,9 +393,10 @@ export const Store = () => {
                                 <h2>Vidas</h2>
                                 <p>Obtenha mais vida para as suas partidas!</p>
                             </div>
-                            <div className="coins">
-                                <p>{coins} Moedas</p>
-                            </div>
+                           <div className="coins" style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+                            <p style={{ fontSize: '20px' }}>{coins}</p>
+                            <img src={coin} alt="" style={{ width: '20px' }} />
+                        </div>
                         </div>
                         <div className="listLifes">
                             <ul>
@@ -429,9 +431,10 @@ export const Store = () => {
                                 <h2>Dicas</h2>
                                 <p>Obtenha mais dicas para suas partidas!</p>
                             </div>
-                            <div className="coins">
-                                <p>{coins} Moedas</p>
-                            </div>
+                            <div className="coins" style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+                            <p style={{ fontSize: '20px' }}>{coins}</p>
+                            <img src={coin} alt="" style={{ width: '20px' }} />
+                        </div>
                         </div>
                         <div className="listLifes">
                             <ul className="hintsUl">
@@ -466,9 +469,10 @@ export const Store = () => {
                                 <h2>Cursores</h2>
                                 <p>Obtenha cursores personalizados para suas partidas!</p>
                             </div>
-                            <div className="coins">
-                                <p>{coins} Moedas</p>
-                            </div>
+                             <div className="coins" style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+                            <p style={{ fontSize: '20px' }}>{coins}</p>
+                            <img src={coin} alt="" style={{ width: '20px' }} />
+                        </div>
                         </div>
                         <div className="listLifes">
                             <ul className="hintsUl" id="cursor">
