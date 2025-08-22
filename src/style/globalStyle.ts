@@ -398,7 +398,7 @@ export const GlobalStyle = createGlobalStyle`
 
 				.buttonModalStore{
 					width: 100px;
-					height: 75px;
+					height: 80px;
 
 					padding: 10px;
 
