@@ -1,6 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-refresh/only-export-components */
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useRef, useState } from "react";
 import { api } from "../services/api";
 
 export interface User {
@@ -20,6 +21,7 @@ export interface User {
   activeCursor?: string;
   ownedCursors?: string[];
   _id: string;
+  ownedMusics: string[];
 }
 
 export interface Level {
@@ -89,28 +91,79 @@ export interface Challenge {
 }
 
 interface AppContextType {
-  login: (email: string, password: string) => Promise<void>;
-  register: (name: string, email: string, password: string) => Promise<void>;
-  getUsers: () => Promise<User[]>;
-  getLevels: () => Promise<Level[]>;
-  getSections: () => Promise<Section[]>;
-  getQuestions: () => Promise<Question[]>;
-  submitAnswerLog: (data: {
-    userId: string;
-    questionId: string;
-    userAnswer: string;
-  }) => Promise<{ correct: boolean; pointsEarned: number }>;
-  getAnswerLogs: () => Promise<AnswerLog[]>;
-  user: User | null;
-  getRanking: () => Promise<User[]>;
-  applyCursor: (cursor: { arrow: string; pointer: string }) => void;
+    login: (email: string, password: string) => Promise<void>;
+    register: (name: string, email: string, password: string) => Promise<void>;
+    getUsers: () => Promise<User[]>;
+    getLevels: () => Promise<Level[]>;
+    getSections: () => Promise<Section[]>;
+    getQuestions: () => Promise<Question[]>;
+    submitAnswerLog: (data: {
+        userId: string;
+        questionId: string;
+        userAnswer: string;
+    }) => Promise<{ correct: boolean; pointsEarned: number }>;
+    getAnswerLogs: () => Promise<AnswerLog[]>;
+    user: User | null;
+    getRanking: () => Promise<User[]>;
+    applyCursor: (cursor: { arrow: string; pointer: string }) => void;
+    playBackgroundMusic: () => void;
+    pauseBackgroundMusic: () => void;
+    isMusicPlaying: boolean;
+    volume: number;
+    setVolume: (newVolume: number) => void;
+    currentMusic: string;
+    setCurrentMusic: (music: string) => void;
 }
 
+import backgroundMusic from "../assets/musics/Musica1.mp3";
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [user, setUser] = useState<User | null>(null);
+
+    const audioRef = useRef<HTMLAudioElement | null>(null);
+    const [isMusicPlaying, setIsMusicPlaying] = useState(false);
+    const [volume, setVolume] = useState(15); // Estado para o volume (0-100)
+    const [currentMusic, setCurrentMusic] = useState<string>(backgroundMusic);
+
+    useEffect(() => {
+        const savedMusic = localStorage.getItem("currentMusic");
+        if (savedMusic) {
+            setCurrentMusic(savedMusic);
+        }
+    }, []);
+  
+    useEffect(() => {
+        if (!audioRef.current) {
+            audioRef.current = new Audio(currentMusic);
+            audioRef.current.loop = true;
+        } else {
+            audioRef.current.src = currentMusic;
+        }
+        audioRef.current.volume = volume / 100;
+        playBackgroundMusic();
+        localStorage.setItem("currentMusic", currentMusic);
+    }, [currentMusic]);
+
+    useEffect(() => {
+        if (audioRef.current) {
+            // A propriedade volume do HTMLAudioElement vai de 0.0 a 1.0
+            audioRef.current.volume = volume / 100;
+        }
+    }, [volume]);
+
+    const playBackgroundMusic = () => {
+        audioRef.current?.play().catch(error => {
+            console.error("Erro ao tentar tocar a música:", error);
+        });
+        setIsMusicPlaying(true);
+    };
+
+    const pauseBackgroundMusic = () => {
+        audioRef.current?.pause();
+        setIsMusicPlaying(false);
+    };
 
     const login = async (email: string, password: string) => {
         const res = await api.post("/auth/login", { email, password });
@@ -222,6 +275,13 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
                 user,
                 getRanking,
                 applyCursor,
+                playBackgroundMusic,
+                pauseBackgroundMusic,
+                isMusicPlaying,
+                volume,
+                setVolume,
+                currentMusic,
+                setCurrentMusic,
             }}
         >
             {children}

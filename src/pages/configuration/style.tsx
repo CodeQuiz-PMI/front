@@ -89,12 +89,190 @@ export const StyledConfigurationPage = styled.main`
             width: auto;
             
             display:flex;
-            flex-direction: column;
+            flex-direction: row;
             gap: 20px;
 
             padding: 20px;
 
-            .inputs{
+            .left{
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+
+                .inputs{
+                    width: 360px;
+                    height: 115px;
+                    border: 1px solid transparent;
+                    border-radius: 10px;
+                    background-color: var(--surface-color);
+                    padding: 10px;
+
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+
+                    p{
+                        color: var(--primary-color-light);
+                        font-family: var(--main-font);
+                        font-size: var(--font-size-xl);
+                        font-style: normal;
+                        font-weight: var(--font-weight-normal);
+
+                        padding-bottom: 10px;
+                    }
+
+                    .custom-select{
+                        position: relative;
+                    }
+                    .custom-select select {
+                        appearance: none;
+                        -webkit-appearance: none;
+                        width: 100%;
+                        font-size: 18px;
+                        padding: 5px 10px 5px 10px;
+                        background-color: #4A4A4A;
+                        border: 1px solid #2FFF00;
+                        border-radius: 5px;
+                        color: #2FFF00;
+                        cursor: pointer;
+                        outline: none;
+                    }
+
+                    .custom-select select:focus {
+                        background: #4A4A4A;
+                        border: 1px solid #1C9800;
+                        border-radius: 5px;
+                    }
+
+                    .custom-select::after {
+                        content: "";
+                        position: absolute;
+                        pointer-events: none;
+                        top: 50%;
+                        right: 10px;
+                        transform: translate(0, -50%);
+                        width: 12px;
+                        height: 12px;
+                        background-color: #2FFF00;
+                        clip-path: polygon(8% 17%, 0% 25%, 50% 84%, 100% 25%, 92% 17%, 50% 65%);
+                    }
+
+                    .volume-control{
+                        display: flex;
+                        align-items: center;
+
+                        gap: 10px;
+
+                        padding-top: 10px;
+
+                        .volume-icon{
+                            display: flex;
+                            align-items: center;
+
+                            background: none;
+                            border: none;
+                            color: var(--primary-color-light);
+                            font-size: var(--font-size-xl);
+                        }
+                        
+                        .volume-slider{
+                            -webkit-appearance: none;
+                            width: 100%;
+                            height: 10px;
+                            background: var(--primary-color-light);
+                            border-radius: 4px;
+                            outline: none;
+                        }
+
+                        .volume-slider::-webkit-slider-thumb {
+                            -webkit-appearance: none;
+                            width: 30px;
+                            height: 30px;
+                            background: var(--primary-color-light);
+                            border-radius: 50%;
+                            border: 1px solid transparente;
+                        }
+
+                        .volume-slider::-moz-range-thumb {
+                            width: 30px;
+                            height: 30px;
+                            background: var(--primary-color-light);
+                            border-radius: 50%;
+                            border: 2px solid transparente;
+                        }
+                    }
+
+                    .button{
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        .buttonConfigPage{
+                            width: 100%;
+                            height: 40px;
+
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: center;
+                            
+                            border-radius: 10px;
+                            border: 2px solid #2FFF00;
+                            
+                            color: #2FFF00;
+                            text-align: center;
+                            font-family: "Jersey 25";
+                            font-size: 36px;
+                            font-style: normal;
+                            font-weight: 400;
+
+                            background-color: #4A4A4A;  
+
+                            &:hover {
+                                background-color: rgba(137, 255, 63, 0.5);
+                            }
+                        }
+
+                        .buttonConfigPage2{
+                            width: 100%;
+                            height: 40px;
+
+                            display: flex;
+                            flex-direction: row;
+                            justify-content: flex-end;
+                            align-items: center;
+                            gap: 100px;
+
+                            border-radius: 10px;
+                            border: 2px solid #2FFF00;
+
+                            color: #2FFF00;
+
+                            text-align: center;
+                            font-family: "Jersey 25";
+                            font-size: 36px;
+                            font-style: normal;
+                            font-weight: 400;
+                            background-color: #4A4A4A;
+
+                            padding: 5px;
+
+                            img{
+                                width: 30px
+                            }
+
+                            &:hover {
+                                background-color: rgba(137, 255, 63, 0.5);
+                            }
+                        }
+                    }
+                }
+            }
+
+            .rigth{
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+
+                .inputs{
                 width: 360px;
                 height: 115px;
                 border: 1px solid transparent;
@@ -114,49 +292,6 @@ export const StyledConfigurationPage = styled.main`
                     font-weight: var(--font-weight-normal);
 
                     padding-bottom: 10px;
-                }
-
-                .volume-control{
-                    display: flex;
-                    align-items: center;
-
-                    gap: 10px;
-
-                    .volume-icon{
-                        display: flex;
-                        align-items: center;
-
-                        background: none;
-                        border: none;
-                        color: var(--primary-color-light);
-                        font-size: var(--font-size-xl);
-                    }
-                    
-                    .volume-slider{
-                        -webkit-appearance: none;
-                        width: 100%;
-                        height: 10px;
-                        background: var(--primary-color-light);
-                        border-radius: 4px;
-                        outline: none;
-                    }
-
-                    .volume-slider::-webkit-slider-thumb {
-                        -webkit-appearance: none;
-                        width: 30px;
-                        height: 30px;
-                        background: var(--primary-color-light);
-                        border-radius: 50%;
-                        border: 1px solid transparente;
-                    }
-
-                    .volume-slider::-moz-range-thumb {
-                        width: 30px;
-                        height: 30px;
-                        background: var(--primary-color-light);
-                        border-radius: 50%;
-                        border: 2px solid transparente;
-                    }
                 }
 
                 .button{
@@ -222,6 +357,9 @@ export const StyledConfigurationPage = styled.main`
                     }
                 }
             }
+            }
+
+            
         }
     }
 

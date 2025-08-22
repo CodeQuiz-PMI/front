@@ -66,6 +66,8 @@ export const StyledChallengePage = styled.main`
         justify-content: center;
         flex-direction: column;
         align-items: center;
+        position: relative;
+
 
         .containerBody {
             display: flex;
@@ -96,22 +98,13 @@ export const StyledChallengePage = styled.main`
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                gap: 10px;
+                gap: 5px;
                 
                 position: absolute;
-                bottom: 420px;
-                left: 1100px;
+                top: 10px;
+                left: 10px;
 
-                font-size: 35px;
-                color: white;
-                flex-direction: row-reverse;
-
-                background-color:  #393939;
-                padding: 10px 30px; 
-                border-radius: 10px;
-                bottom: 400px; 
-                left: 1060px; 
-
+                font-size: 40px;
 
                 img{
                     width: 35px;
@@ -213,11 +206,11 @@ export const StyledChallengePage = styled.main`
             width: 100%;
             
             position: absolute;
-            bottom: 30px;
+            bottom: -70px;
             
             button {
-                width: 130px;
-                height: 110px;
+                width: 110px;
+                height: 90px;
                 
                 border-radius: 10px;
                 border: 5px solid rgba(236, 89, 0, 0.38);
