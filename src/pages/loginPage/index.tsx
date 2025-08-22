@@ -1,16 +1,13 @@
-import { useState } from "react";
-import { Button } from "../../components/button";
 import { StyledLoginPage } from "./styled";
 import { useNavigate, Link } from "react-router-dom";
 import { useApp } from "../../context/AppContext";
 
-import googleImg from "../../assets/googleImg.svg";
-import gitImg from "../../assets/gitImg.svg";
 import arrowLeft from "../../assets/ArrowLeft.svg";
 
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { NavBar } from "../../components/navbar";
+import { useState } from "react";
 
 export const LoginPage = () => {
     const { login } = useApp();

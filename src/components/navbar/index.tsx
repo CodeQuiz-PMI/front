@@ -7,6 +7,8 @@ import about from "../../assets/assetsV2/about.svg";
 import config from "../../assets/assetsV2/config.svg";
 
 export const NavBar = () => {
+    const token = localStorage.getItem('token');
+
     return (
         <StyledNavBar>
             <div className="img">
@@ -16,8 +18,16 @@ export const NavBar = () => {
             </div>
             <div className="nav">
                 <Link to="/About"><img src={about} alt="" /></Link>
-                <Link to="/Store"><img src={store} alt="" /></Link>
-                <Link to="/Configurations"><img src={config} alt="" /></Link>
+                
+                {token ? (
+                    <>
+                        <Link to="/Store"><img src={store} alt="" /></Link>
+                        <Link to="/Configurations"><img src={config} alt="" /></Link>
+                    </>
+                ) : <>
+                    <Link to="/Login"><img src={store} alt="" /></Link>
+                    <Link to="/Login"><img src={config} alt="" /></Link>
+                </>}
             </div>
         </StyledNavBar>
     );

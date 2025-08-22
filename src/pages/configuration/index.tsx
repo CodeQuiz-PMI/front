@@ -7,22 +7,35 @@ import edit from "../../assets/assetsV2/edit.svg";
 import iconArrowLeft from "../../assets/ArrowLeft.svg";
 
 import { JSX } from "react/jsx-dev-runtime";
-import { FaVolumeMute, FaVolumeUp } from "react-icons/fa";
+import { FaPause, FaPlay, FaVolumeMute, FaVolumeUp } from "react-icons/fa";
 import { useApp } from "../../context/AppContext";
 import { NavBar } from "../../components/navbar";
+
+import music1 from "../../assets/musics/Musica1.mp3";
+import music2 from "../../assets/musics/Musica2.mp3";
+import music3 from "../../assets/musics/Musica3.mp3";
+import music4 from "../../assets/musics/Musica4.mp3";
 
 export const Configuration = () => {
     const navigate = useNavigate();
 
-    const { user } = useApp();
+    const { 
+        user, 
+        volume, 
+        setVolume, 
+        currentMusic, 
+        setCurrentMusic, 
+        isMusicPlaying, 
+        playBackgroundMusic, 
+        pauseBackgroundMusic  
+    } = useApp();
 
     const [username, setUsername] = useState("");
+    const [musicsUser, setMusicsUser] = useState<string[]>();
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [isResetModalOpen, setIsResetModalOpen] = useState(false);
-
-    const [volume, setVolume] = useState(50);
 
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
@@ -41,6 +54,7 @@ export const Configuration = () => {
                 delete userData._id;
                 delete userData.password;
                 setUsername(userData.name);
+                setMusicsUser(userData.ownedMusics);
 
                 localStorage.setItem("user", JSON.stringify(userData));
             };
@@ -136,7 +150,7 @@ export const Configuration = () => {
     }) => (
         <div className="modal">
             <div className="modal-content" style={{background: "var(--modal-background)", color: "var(--primary-color-light)"}}>
-                <h2>{title}</h2>
+                <h2 style={{fontWeight: "400"}}>{title}</h2>
                 <p>{message}</p>
                 <div className="button-group">
                     <button className="buttonExit2" type="button" onClick={onConfirm}>
@@ -153,7 +167,7 @@ export const Configuration = () => {
     const EditModal = () => (
         <div className="modal">
             <div className="modal-content" style={{background: "var(--modal-background)"}}>
-                <h2 style={{color: "var(--primary-color-light"}}>Editar Perfil</h2>
+                <h2 style={{color: "var(--primary-color-light", fontWeight: "400"}}>Editar Perfil</h2>
                 <input id="inp" type="text" placeholder="Nome" value={name} onChange={(e) => setName(e.target.value)} />
                 <input id="inp" type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
                 <input id="inp" type="password" placeholder="Nova senha" value={password} onChange={(e) => setPassword(e.target.value)} />
@@ -171,6 +185,13 @@ export const Configuration = () => {
         #2C9415 ${volume}%
         )`
     };
+
+    const musics = [
+        { title: "Echoes of Dawn", price: 50, src: music1 },
+        { title: "Mystic Winds", price: 50, src: music2 },
+        { title: "Celestial Journey", price: 50, src: music3 },
+        { title: "Forest Dreams", price: 50, src: music4 },
+    ];
 
     return (
         <StyledConfigurationPage>
@@ -190,42 +211,71 @@ export const Configuration = () => {
 
             <div className="container">
                 <div className="containerLeft">
-                    <div className="inputs">
-                        <p>Perfil</p>
-                        <div className="button">
-                            <button className="buttonConfigPage2" type="button" onClick={handleEditClick}>
-                                {username}
-                                <img src={edit} alt="" />
-                            </button>
-                        </div>
-                    </div>
-                    <div className="inputs">
-                        <p>Configuração de Som</p>
-                        <div className="volume-control">
-                            <div className="volume-icon" onClick={() => setVolume(volume === 0 ? 50 : 0)}>
-                                {volume === 0 ? <FaVolumeMute /> : <FaVolumeUp />}
+                    <div className="left">
+                        <div className="inputs">
+                            <p>Perfil</p>
+                            <div className="button">
+                                <button className="buttonConfigPage2" type="button" onClick={handleEditClick}>
+                                    {username}
+                                    <img src={edit} alt="" />
+                                </button>
                             </div>
-                            <input
-                                type="range"
-                                min="0"
-                                max="100"
-                                value={volume}
-                                onChange={(e) => setVolume(Number(e.target.value))}
-                                className="volume-slider"
-                                style={sliderBackground}
-                            />
+                        </div>
+                        <div className="inputs" style={{height: "130px"}}>
+                            <p>Configuração de Som</p>
+                            <div className="custom-select">
+                                <select
+                                    value={currentMusic}
+                                    onChange={(e) => setCurrentMusic(e.target.value)}
+                                >
+                                    <option value={music1}>Echoes of Dawn</option>
+                                    {musics
+                                        .filter((music) => musicsUser?.includes(music.title))
+                                        .map((music) => (
+                                            <option key={music.title} value={music.src}>
+                                                {music.title}
+                                            </option>
+                                        ))}
+                                </select>
+                                <div className="select-arrow"></div>
+                            </div>
+                            <div className="volume-control">
+                                <div className="play-pause-button" onClick={() => {
+                                    if (isMusicPlaying) {
+                                        pauseBackgroundMusic();
+                                    } else {
+                                        playBackgroundMusic();
+                                    }
+                                }}>
+                                    {isMusicPlaying ? <FaPause /> : <FaPlay />}
+                                </div>
+                                <div className="volume-icon" onClick={() => setVolume(volume === 0 ? 50 : 0)}>
+                                    {volume === 0 ? <FaVolumeMute /> : <FaVolumeUp />}
+                                </div>
+                                <input
+                                    type="range"
+                                    min="0"
+                                    max="100"
+                                    value={volume}
+                                    onChange={(e) => setVolume(Number(e.target.value))}
+                                    className="volume-slider"
+                                    style={sliderBackground}
+                                />
+                            </div>
                         </div>
                     </div>
-                    <div className="inputs">
-                        <p>Reiniciar progresso?</p>
-                        <div className="button">
-                            <button className="buttonConfigPage" type="button" onClick={() => setIsResetModalOpen(true)}>Reiniciar</button>
+                    <div className="rigth">
+                        <div className="inputs">
+                            <p>Reiniciar progresso?</p>
+                            <div className="button">
+                                <button className="buttonConfigPage" type="button" onClick={() => setIsResetModalOpen(true)}>Reiniciar</button>
+                            </div>
                         </div>
-                    </div>
-                    <div className="inputs">
-                        <p>Deletar conta?</p>
-                        <div className="button">
-                            <button className="buttonConfigPage" type="button" onClick={() => setIsDeleteModalOpen(true)}>Deletar</button>
+                        <div className="inputs" style={{height: "130px"}}>
+                            <p>Deletar conta?</p>
+                            <div className="button">
+                                <button className="buttonConfigPage" type="button" onClick={() => setIsDeleteModalOpen(true)}>Deletar</button>
+                            </div>
                         </div>
                     </div>
                 </div>

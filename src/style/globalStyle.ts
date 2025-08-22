@@ -136,6 +136,25 @@ export const GlobalStyle = createGlobalStyle`
 					border-radius: 10px;
 				}
 
+				.coins2{
+					position: absolute;
+					top: 0px;
+					left: 0px;
+					background: var(--surface-color);
+					padding: 10px;
+					border: 1px solid transparent;
+					border-radius: 10px;
+					
+					p{
+						color: var(--primary-color-light);
+						text-align: center;
+						font-family: var(--main-font);
+						font-size: 15px;
+						font-style: normal;
+						font-weight: 400;
+					}
+				}
+
 				.modalTitleMusics{
 					display: flex;
 					flex-direction: column;

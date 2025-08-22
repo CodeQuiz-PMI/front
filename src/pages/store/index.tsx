@@ -48,7 +48,6 @@ import planeta from "../../assets/cursor/cursorPlaneta1.png";
 
 import { useApp, User } from "../../context/AppContext";
 
-import music1 from "../../assets/musics/Musica1.mp3";
 import music2 from "../../assets/musics/Musica2.mp3";
 import music3 from "../../assets/musics/Musica3.mp3";
 import music4 from "../../assets/musics/Musica4.mp3";
@@ -59,16 +58,14 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { NavBar } from "../../components/navbar";
 
-
 export const Store = () => {
     const navigate = useNavigate();
 
-    const { user, applyCursor } = useApp();
+    const { user, applyCursor, volume, setVolume } = useApp();
 
     const [coins, setCoins] = useState(Number);
 
     const [currentUser, setCurrentUser] = useState<User>();
-
 
     const [currentMusic, setCurrentMusic] = useState<string | null>(null);
     const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -104,19 +101,18 @@ export const Store = () => {
         navigate(userFromStorage ? "/Mode" : "/");
     };
 
-    const musics = [
-        { title: "Echoes of Dawn", price: 50, src: music1 },
-        { title: "Mystic Winds", price: 50, src: music2 },
-        { title: "Celestial Journey", price: 50, src: music3 },
-        { title: "Forest Dreams", price: 50, src: music4 },
-    ];
 
     const handlePlay = (src: string) => {
         if (currentMusic === src) {
             audioRef.current?.pause();
             setCurrentMusic(null);
+            const vol = localStorage.getItem("volume");
+            const volume = Number(JSON.parse(vol!));
+            setVolume(volume);
         } else {
             if (audioRef.current) {
+                localStorage.setItem("volume", JSON.stringify(volume));
+                setVolume(0);
                 audioRef.current.src = src;
                 audioRef.current.play();
                 setCurrentMusic(src);
@@ -225,6 +221,12 @@ export const Store = () => {
         },
     ];
 
+    const musics = [
+        { title: "Mystic Winds", price: 50, src: music2 },
+        { title: "Celestial Journey", price: 50, src: music3 },
+        { title: "Forest Dreams", price: 50, src: music4 },
+    ];
+
     const handlePurchase = async (type: "life" | "hint" | "music" | "cur", item: any) => {
         const userFromStorage = localStorage.getItem("user");
         if (!userFromStorage) return;
@@ -237,8 +239,6 @@ export const Store = () => {
             });
             return;
         }
-
-        console.log(currentUser);
 
         const updatedCoins = coins - item.price;
 
@@ -256,18 +256,22 @@ export const Store = () => {
                 item.id
             ];
         }
-        // if (type === "music") {
-        //     updateData.musics = [...(currentUser.musics || []), item.src];
-        // }
+        if (type === "music") {
+            updateData.ownedMusics = [...(currentUser.ownedMusics || []), item.title];
+        }
 
         try {
-            await api.patch(`/users/${currentUser.id}`, updateData);
-
+            console.log(currentUser.id);
+            const res =  await api.patch(`/users/${currentUser.id}`, updateData);
+            console.log(res);
             const newUserData = { ...currentUser, ...updateData };
             localStorage.setItem("user", JSON.stringify(newUserData));
             setCoins(updatedCoins);
 
             if (type === "cur") {
+                setCurrentUser(newUserData as User);
+            }
+            if (type === "music") {
                 setCurrentUser(newUserData as User);
             }
 
@@ -277,6 +281,10 @@ export const Store = () => {
         } catch (error) {
             console.error("Erro ao atualizar usuário:", error);
         }
+    };
+
+    const handleResetCursor = () => {
+        applyCursor({ arrow: 'auto', pointer: 'auto' });
     };
 
     return (
@@ -342,19 +350,29 @@ export const Store = () => {
                                 <h2>Músicas</h2>
                                 <p>Personalize o seu jogo com novas músicas!</p>
                             </div>
-                          <div className="coins" style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-                            <p style={{ fontSize: '20px' }}>{coins}</p>
-                            <img src={coin} alt="" style={{ width: '20px' }} />
-                        </div>
+                            <div className="coins" style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+                                <p style={{ fontSize: '20px' }}>{coins}</p>
+                                <img src={coin} alt="" style={{ width: '20px' }} />
+                            </div>
                         </div>
                         <div className="listMusics">
                             <ul>
                                 {musics.map((music) => (
                                     <li key={music.src} className="liMusics">
-                                        <div className="price">
+                                        {currentUser?.ownedMusics?.includes(music.title) ? (
+                                            <button className="price">
+                                                <p>Ativar</p>
+                                            </button>
+                                        ) : (
+                                            <button className="price" onClick={() => handlePurchase("music", music)}>
+                                                <p>{music.price}</p>
+                                                <img src={coin} alt="coin" />
+                                            </button>
+                                        )}
+                                        {/* <div className="price">
                                             <p>{music.price}</p>
                                             <img src={coin} alt="coin" />
-                                        </div>
+                                        </div> */}
                                         <div className="musicTitle">
                                             <p>{music.title}</p>
                                         </div>
@@ -393,10 +411,10 @@ export const Store = () => {
                                 <h2>Vidas</h2>
                                 <p>Obtenha mais vida para as suas partidas!</p>
                             </div>
-                           <div className="coins" style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-                            <p style={{ fontSize: '20px' }}>{coins}</p>
-                            <img src={coin} alt="" style={{ width: '20px' }} />
-                        </div>
+                            <div className="coins" style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+                                <p style={{ fontSize: '20px' }}>{coins}</p>
+                                <img src={coin} alt="" style={{ width: '20px' }} />
+                            </div>
                         </div>
                         <div className="listLifes">
                             <ul>
@@ -432,9 +450,9 @@ export const Store = () => {
                                 <p>Obtenha mais dicas para suas partidas!</p>
                             </div>
                             <div className="coins" style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-                            <p style={{ fontSize: '20px' }}>{coins}</p>
-                            <img src={coin} alt="" style={{ width: '20px' }} />
-                        </div>
+                                <p style={{ fontSize: '20px' }}>{coins}</p>
+                                <img src={coin} alt="" style={{ width: '20px' }} />
+                            </div>
                         </div>
                         <div className="listLifes">
                             <ul className="hintsUl">
@@ -465,14 +483,17 @@ export const Store = () => {
                 <div className="modal">
                     <div className="modal-content" style={{ padding: "30px 40px 55px", alignItems: "stretch", maxWidth: "840px" }}>
                         <div className="modalMusics">
+                            <button className="coins2" onClick={handleResetCursor}>
+                                <p style={{ padding: "0 15px" }}>Padrão</p>
+                            </button>
                             <div className="modalTitleMusics">
                                 <h2>Cursores</h2>
                                 <p>Obtenha cursores personalizados para suas partidas!</p>
                             </div>
-                             <div className="coins" style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-                            <p style={{ fontSize: '20px' }}>{coins}</p>
-                            <img src={coin} alt="" style={{ width: '20px' }} />
-                        </div>
+                            <div className="coins" style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+                                <p style={{ fontSize: '20px' }}>{coins}</p>
+                                <img src={coin} alt="" style={{ width: '20px' }} />
+                            </div>
                         </div>
                         <div className="listLifes">
                             <ul className="hintsUl" id="cursor">
