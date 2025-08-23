@@ -1,0 +1,11 @@
+.custom-toast {
+  background-color: var(--background-color) !important;
+  color: var(--primary-color-light) !important;
+  font-family: var(--main-font) !important;
+  border-radius: var(--border-radius-sm);
+  padding: 15px;
+
+  .custom-toast-body {
+    font-size: var(--font-size-lg);
+  }
+}
