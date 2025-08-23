@@ -39,7 +39,7 @@ export const ChallengeQuestionPage = () => {
     const [shuffledResponses, setShuffledResponses] = useState<ResponseOption[]>([]);
     const [correctAnswersCount, setCorrectAnswersCount] = useState(0);
     const [totalPoints, setTotalPoints] = useState(0);
-    const [skippedQuestionsCount, setSkippedQuestionsCount] = useState(0);
+    const [, setSkippedQuestionsCount] = useState(0);
 
     const shuffleArray = <T,>(array: T[]): T[] => {
         return [...array].sort(() => Math.random() - 0.5);
