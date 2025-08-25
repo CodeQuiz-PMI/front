@@ -31,7 +31,7 @@ export const Configuration = () => {
     } = useApp();
 
     const [username, setUsername] = useState("");
-    const [musicsUser, setMusicsUser] = useState<string[]>();
+    const [musicsUser, setMusicsUser] = useState<string[]>([]);
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -54,15 +54,16 @@ export const Configuration = () => {
                 delete userData._id;
                 delete userData.password;
                 setUsername(userData.name);
-                setMusicsUser(userData.ownedMusics);
+                setMusicsUser(userData.ownedMusics || []);
+
+                setName(userData.name || "");
+                setEmail(userData.email || "");
 
                 localStorage.setItem("user", JSON.stringify(userData));
             };
             fetchUser();
         }
-        
     }, [user?.id]);
-
 
     const handleEditClick = () => {
         const userFromStorage = localStorage.getItem("user");
@@ -103,6 +104,16 @@ export const Configuration = () => {
         }
     };
 
+    const handleDiscard = () => {
+        const userFromStorage = localStorage.getItem("user");
+        if (!userFromStorage) return;
+        const u = JSON.parse(userFromStorage);
+        setName(u.name || "");
+        setEmail(u.email || "");
+        setPassword("");
+        setConfirmPassword("");
+    };
+
     const handleResetProgress = async () => {
         const userFromStorage = localStorage.getItem("user");
         if (!userFromStorage) return;
@@ -137,6 +148,10 @@ export const Configuration = () => {
         navigate(userFromStorage ? "/Mode" : "/");
     };
 
+    const handleAddMusic = () => {
+        navigate("/store");
+    };
+
     const ConfirmationModal = ({
         title,
         message,
@@ -150,7 +165,7 @@ export const Configuration = () => {
     }) => (
         <div className="modal">
             <div className="modal-content" style={{background: "var(--modal-background)", color: "var(--primary-color-light)"}}>
-                <h2 style={{fontWeight: "400"}}>{title}</h2>
+                <h2>{title}</h2>
                 <p>{message}</p>
                 <div className="button-group">
                     <button className="buttonExit2" type="button" onClick={onConfirm}>
@@ -167,7 +182,7 @@ export const Configuration = () => {
     const EditModal = () => (
         <div className="modal">
             <div className="modal-content" style={{background: "var(--modal-background)"}}>
-                <h2 style={{color: "var(--primary-color-light", fontWeight: "400"}}>Editar Perfil</h2>
+                <h2 style={{color: "var(--primary-color-light"}}>Editar Perfil</h2>
                 <input id="inp" type="text" placeholder="Nome" value={name} onChange={(e) => setName(e.target.value)} />
                 <input id="inp" type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
                 <input id="inp" type="password" placeholder="Nova senha" value={password} onChange={(e) => setPassword(e.target.value)} />
@@ -205,77 +220,104 @@ export const Configuration = () => {
                     <h1>Configurações</h1>
                     <p>Personalize sua experiência no CodeQuiz da maneira que preferir!</p>
                 </div>
-                <div style={{width: "78px"}}>
-                </div>
+                <div style={{width: "78px"}} />
             </div>
 
-            <div className="container">
+            <div className="profile-container">
+                <div className="edit-profile">
+                    <input
+                        type="text"
+                        placeholder="Nome"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                    />
+                    <input
+                        type="email"
+                        placeholder="E-mail"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
+                    <input
+                        type="password"
+                        placeholder="Nova senha"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                    <input
+                        type="password"
+                        placeholder="Confirme a nova senha"
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                    />
+                    <div className="button-row">
+                        <button type="button" className="btn-discard" onClick={handleDiscard}>
+                            Descartar alterações
+                        </button>
+                        <button type="button" className="btn-save" onClick={handleSaveChanges}>
+                            Salvar alterações
+                        </button>
+                    </div>
+                </div>
+
                 <div className="containerLeft">
-                    <div className="left">
-                        <div className="inputs">
-                            <p>Perfil</p>
-                            <div className="button">
-                                <button className="buttonConfigPage2" type="button" onClick={handleEditClick}>
-                                    {username}
-                                    <img src={edit} alt="" />
-                                </button>
-                            </div>
+                    <div className="inputs" style={{height: "130px"}}>
+                        <p>Configuração de Som</p>
+                        <div className="custom-select">
+                            <select
+                                value={currentMusic}
+                                onChange={(e) => setCurrentMusic(e.target.value)}
+                            >
+                                <option value={music1}>Echoes of Dawn</option>
+                                {musics
+                                    .filter((music) => musicsUser.includes(music.title))
+                                    .map((music) => (
+                                        <option key={music.title} value={music.src}>
+                                            {music.title}
+                                        </option>
+                                    ))}
+                            </select>
+                            <div className="select-arrow"></div>
                         </div>
-                        <div className="inputs" style={{height: "130px"}}>
-                            <p>Configuração de Som</p>
-                            <div className="custom-select">
-                                <select
-                                    value={currentMusic}
-                                    onChange={(e) => setCurrentMusic(e.target.value)}
-                                >
-                                    <option value={music1}>Echoes of Dawn</option>
-                                    {musics
-                                        .filter((music) => musicsUser?.includes(music.title))
-                                        .map((music) => (
-                                            <option key={music.title} value={music.src}>
-                                                {music.title}
-                                            </option>
-                                        ))}
-                                </select>
-                                <div className="select-arrow"></div>
+                        <div className="volume-control">
+                            <div className="play-pause-button" onClick={() => {
+                                if (isMusicPlaying) {
+                                    pauseBackgroundMusic();
+                                } else {
+                                    playBackgroundMusic();
+                                }
+                            }}>
+                                {isMusicPlaying ? <FaPause /> : <FaPlay />}
                             </div>
-                            <div className="volume-control">
-                                <div className="play-pause-button" onClick={() => {
-                                    if (isMusicPlaying) {
-                                        pauseBackgroundMusic();
-                                    } else {
-                                        playBackgroundMusic();
-                                    }
-                                }}>
-                                    {isMusicPlaying ? <FaPause /> : <FaPlay />}
-                                </div>
-                                <div className="volume-icon" onClick={() => setVolume(volume === 0 ? 50 : 0)}>
-                                    {volume === 0 ? <FaVolumeMute /> : <FaVolumeUp />}
-                                </div>
-                                <input
-                                    type="range"
-                                    min="0"
-                                    max="100"
-                                    value={volume}
-                                    onChange={(e) => setVolume(Number(e.target.value))}
-                                    className="volume-slider"
-                                    style={sliderBackground}
-                                />
+                            <div className="volume-icon" onClick={() => setVolume(volume === 0 ? 50 : 0)}>
+                                {volume === 0 ? <FaVolumeMute /> : <FaVolumeUp />}
                             </div>
+                            <input
+                                type="range"
+                                min="0"
+                                max="100"
+                                value={volume}
+                                onChange={(e) => setVolume(Number(e.target.value))}
+                                className="volume-slider"
+                                style={sliderBackground}
+                            />
                         </div>
                     </div>
-                    <div className="rigth">
-                        <div className="inputs">
-                            <p>Reiniciar progresso?</p>
-                            <div className="button">
-                                <button className="buttonConfigPage" type="button" onClick={() => setIsResetModalOpen(true)}>Reiniciar</button>
-                            </div>
+
+                    {/* Botão para adicionar músicas - redireciona para a loja */}
+                    <div className="inputs">
+                        <button className="buttonConfigPage" onClick={handleAddMusic}>+ Adicionar músicas</button>
+                    </div>
+
+                    <div className="inputs">
+                        <p>Reiniciar progresso?</p>
+                        <div className="button">
+                            <button className="buttonConfigPage" type="button" onClick={() => setIsResetModalOpen(true)}>Reiniciar</button>
                         </div>
-                        <div className="inputs" style={{height: "130px"}}>
-                            <p>Deletar conta?</p>
-                            <div className="button">
-                                <button className="buttonConfigPage" type="button" onClick={() => setIsDeleteModalOpen(true)}>Deletar</button>
-                            </div>
+                    </div>
+                    <div className="inputs">
+                        <p>Deletar conta?</p>
+                        <div className="button">
+                            <button className="buttonConfigPage" type="button" onClick={() => setIsDeleteModalOpen(true)}>Deletar</button>
                         </div>
                     </div>
                 </div>

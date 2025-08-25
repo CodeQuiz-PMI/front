@@ -1,40 +1,10 @@
 import styled from "styled-components";
 
-export const StyledConfigurationPage = styled.main` 
-    nav {
-        width: 100%;
-        height: 100px;
-        padding: 10px;
-        background: var(--nav-background);
-        border-bottom: var(--primary-color-light) 2px solid;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
+export const StyledConfigurationPage = styled.main`
 
-        .img{
-            width: 96px;
-            height: auto;
-            padding-left: 20px;
-        }
-
-        .nav{
-            display: flex;
-            flex-direction: row;
-            justify-content: flex-end;
-            gap: 20px;
-            padding-right: 20px;
-            a {
-                width: auto;
-                text-decoration: none;
-                color: var(--primary-color-light);
-                font-family: var(--main-font);
-                font-size: var(--font-size-xxl);
-                font-style: normal;
-                font-weight: var(--font-weight-normal);
-            }
-        }
-    }
+   overflow-x: hidden; 
+   height: 100vh;
+        
 
     .config-container{
         display: flex;
@@ -80,372 +50,272 @@ export const StyledConfigurationPage = styled.main`
         }
     }
 
-    .container{
+    .config-container{
         display: flex;
-        flex-direction: row;
-        justify-content: center;
+        justify-content: space-between;
+        align-items: center;
+         
+        padding-top: 20px;
 
-        .containerLeft{
-            width: auto;
+        button{
+            width: 80px;
+            height: 50px;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
             
-            display:flex;
-            flex-direction: row;
-            gap: 20px;
 
-            padding: 20px;
+            border: 1px solid transparent;
+        
+            background-color: #2A2A2A;
+        }
 
-            .left{
-                display: flex;
-                flex-direction: column;
-                gap: 20px;
+        .title{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
 
-                .inputs{
-                    width: 360px;
-                    height: 115px;
-                    border: 1px solid transparent;
-                    border-radius: 10px;
-                    background-color: var(--surface-color);
-                    padding: 10px;
-
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: center;
-
-                    p{
-                        color: var(--primary-color-light);
-                        font-family: var(--main-font);
-                        font-size: var(--font-size-xl);
-                        font-style: normal;
-                        font-weight: var(--font-weight-normal);
-
-                        padding-bottom: 10px;
-                    }
-
-                    .custom-select{
-                        position: relative;
-                    }
-                    .custom-select select {
-                        appearance: none;
-                        -webkit-appearance: none;
-                        width: 100%;
-                        font-size: 18px;
-                        padding: 5px 10px 5px 10px;
-                        background-color: #4A4A4A;
-                        border: 1px solid #2FFF00;
-                        border-radius: 5px;
-                        color: #2FFF00;
-                        cursor: pointer;
-                        outline: none;
-                    }
-
-                    .custom-select select:focus {
-                        background: #4A4A4A;
-                        border: 1px solid #1C9800;
-                        border-radius: 5px;
-                    }
-
-                    .custom-select::after {
-                        content: "";
-                        position: absolute;
-                        pointer-events: none;
-                        top: 50%;
-                        right: 10px;
-                        transform: translate(0, -50%);
-                        width: 12px;
-                        height: 12px;
-                        background-color: #2FFF00;
-                        clip-path: polygon(8% 17%, 0% 25%, 50% 84%, 100% 25%, 92% 17%, 50% 65%);
-                    }
-
-                    .volume-control{
-                        display: flex;
-                        align-items: center;
-
-                        gap: 10px;
-
-                        padding-top: 10px;
-
-                        .volume-icon{
-                            display: flex;
-                            align-items: center;
-
-                            background: none;
-                            border: none;
-                            color: var(--primary-color-light);
-                            font-size: var(--font-size-xl);
-                        }
-                        
-                        .volume-slider{
-                            -webkit-appearance: none;
-                            width: 100%;
-                            height: 10px;
-                            background: var(--primary-color-light);
-                            border-radius: 4px;
-                            outline: none;
-                        }
-
-                        .volume-slider::-webkit-slider-thumb {
-                            -webkit-appearance: none;
-                            width: 30px;
-                            height: 30px;
-                            background: var(--primary-color-light);
-                            border-radius: 50%;
-                            border: 1px solid transparente;
-                        }
-
-                        .volume-slider::-moz-range-thumb {
-                            width: 30px;
-                            height: 30px;
-                            background: var(--primary-color-light);
-                            border-radius: 50%;
-                            border: 2px solid transparente;
-                        }
-                    }
-
-                    .button{
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                        .buttonConfigPage{
-                            width: 100%;
-                            height: 40px;
-
-                            display: flex;
-                            flex-direction: column;
-                            justify-content: center;
-                            
-                            border-radius: 10px;
-                            border: 2px solid #2FFF00;
-                            
-                            color: #2FFF00;
-                            text-align: center;
-                            font-family: "Jersey 25";
-                            font-size: 36px;
-                            font-style: normal;
-                            font-weight: 400;
-
-                            background-color: #4A4A4A;  
-
-                            &:hover {
-                                background-color: rgba(137, 255, 63, 0.5);
-                            }
-                        }
-
-                        .buttonConfigPage2{
-                            width: 100%;
-                            height: 40px;
-
-                            display: flex;
-                            flex-direction: row;
-                            justify-content: flex-end;
-                            align-items: center;
-                            gap: 100px;
-
-                            border-radius: 10px;
-                            border: 2px solid #2FFF00;
-
-                            color: #2FFF00;
-
-                            text-align: center;
-                            font-family: "Jersey 25";
-                            font-size: 36px;
-                            font-style: normal;
-                            font-weight: 400;
-                            background-color: #4A4A4A;
-
-                            padding: 5px;
-
-                            img{
-                                width: 30px
-                            }
-
-                            &:hover {
-                                background-color: rgba(137, 255, 63, 0.5);
-                            }
-                        }
-                    }
-                }
+            h1{
+                color: var(--primary-color-light);
+                font-family: var(--main-font);
+                font-size: var(--font-size-xxxxlll);
+                font-style: normal;
+                font-weight: var(--font-weight-normal);
             }
-
-            .rigth{
-                display: flex;
-                flex-direction: column;
-                gap: 20px;
-
-                .inputs{
-                width: 360px;
-                height: 115px;
-                border: 1px solid transparent;
-                border-radius: 10px;
-                background-color: var(--surface-color);
-                padding: 10px;
-
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-
-                p{
-                    color: var(--primary-color-light);
-                    font-family: var(--main-font);
-                    font-size: var(--font-size-xl);
-                    font-style: normal;
-                    font-weight: var(--font-weight-normal);
-
-                    padding-bottom: 10px;
-                }
-
-                .button{
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    .buttonConfigPage{
-                        width: 100%;
-                        height: 40px;
-
-                        display: flex;
-                        flex-direction: column;
-                        justify-content: center;
-                        
-                        border-radius: 10px;
-                        border: 2px solid #2FFF00;
-                        
-                        color: #2FFF00;
-                        text-align: center;
-                        font-family: "Jersey 25";
-                        font-size: 36px;
-                        font-style: normal;
-                        font-weight: 400;
-
-                        background-color: #4A4A4A;  
-
-                        &:hover {
-                            background-color: rgba(137, 255, 63, 0.5);
-                        }
-                    }
-
-                    .buttonConfigPage2{
-                        width: 100%;
-                        height: 40px;
-
-                        display: flex;
-                        flex-direction: row;
-                        justify-content: flex-end;
-                        align-items: center;
-                        gap: 100px;
-
-                        border-radius: 10px;
-                        border: 2px solid #2FFF00;
-
-                        color: #2FFF00;
-
-                        text-align: center;
-                        font-family: "Jersey 25";
-                        font-size: 36px;
-                        font-style: normal;
-                        font-weight: 400;
-                        background-color: #4A4A4A;
-
-                        padding: 5px;
-
-                        img{
-                            width: 30px
-                        }
-
-                        &:hover {
-                            background-color: rgba(137, 255, 63, 0.5);
-                        }
-                    }
-                }
+            p{
+                color: var(--primary-color-light);
+                text-align: center;
+                font-family: var(--main-font);
+                font-size: var(--font-size-xxl);
+                font-style: normal;
+                font-weight: var(--font-weight-normal);
             }
-            }
-
-            
         }
     }
+    .profile-container {
+        background: rgba(255, 255, 255, 0.07);
+        border-radius: 30px;
+        margin-top: 40px; 
+        padding: 30px;  
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
 
+        max-width: 900px; 
+        width: 80%;       
+        margin: 40px auto; 
+    }
+     
+
+        .edit-profile {
+            background: rgba(255, 255, 255, 0.07);
+            border-radius: 30px;
+            padding: 30px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px 30px;
+
+            input {
+                height: 56px;
+                border: 1px solid #2FFF00;
+                border-radius: 10px;
+                padding: 0 16px;
+                font-size: 20px;
+                font-family: "Jersey 25";
+                color: #2FFF00;
+                background: transparent;
+                outline: none;
+            }
+
+            .button-row {
+                grid-column: 1 / -1;
+                display: flex;
+                justify-content: center;
+                gap: 24px;
+                margin-top: 10px;
+
+                .btn-discard,
+                .btn-save {
+                    height: 58px;
+                    min-width: 280px;
+                    padding: 0 24px;
+                    border-radius: 10px;
+                    font-family: "Jersey 25";
+                    font-size: 28px;
+                    border: 1px solid #2FFF00;
+                    color: #2FFF00;
+                    cursor: pointer;
+                    transition: 0.25s ease;
+                }
+
+                .btn-discard {
+                    background: rgba(236, 89, 0, 0.15);
+                    &:hover { background: rgba(236, 89, 0, 0.25); }
+                }
+
+                .btn-save {
+                    background: rgba(47, 255, 0, 0.15);
+                    &:hover { background: rgba(47, 255, 0, 0.3); }
+                }
+            }
+        }
+
+        .containerLeft {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+
+            .inputs {
+                background: rgba(255, 255, 255, 0.07);
+                border-radius: 30px;
+                padding: 30px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                min-height: 150px;
+                gap: 16px;
+
+                p {
+                    font-family: "Jersey 25";
+                    font-size: 32px;
+                    color: #2FFF00;
+                    margin: 0 0 6px 0;
+                    text-align: center;
+                }
+
+                .button,
+                button {
+                    display: flex;
+                    justify-content: center;
+                    width: 100%;
+                }
+
+                .buttonConfigPage,
+                .buttonConfigPage2,
+                button {
+                    font-family: "Jersey 25";
+                    font-size: 28px;
+                    color: #2FFF00;
+                    background: rgba(47, 255, 0, 0.15);
+                    border: 1px solid #2FFF00;
+                    border-radius: 10px;
+                    padding: 14px 20px;
+                    cursor: pointer;
+                    transition: 0.3s;
+                    width: 80%;
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 8px;
+
+                    &:hover { background: rgba(47, 255, 0, 0.3); }
+                }
+
+                .volume-control {
+                    display: flex;
+                    align-items: center;
+                    gap: 15px;
+                    width: 100%;
+
+                    .volume-icon {
+                        font-size: 24px;
+                        color: #2FFF00;
+                        cursor: pointer;
+                    }
+
+                    .volume-slider {
+                        flex: 1;
+                        height: 12px;
+                        border-radius: 19px;
+                        appearance: none;
+                        background: rgba(47, 255, 0, 0.5);
+                        cursor: pointer;
+
+                        &::-webkit-slider-thumb {
+                            appearance: none;
+                            width: 20px;
+                            height: 20px;
+                            border-radius: 50%;
+                            background: #2FFF00;
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     .modal {
         position: fixed;
         top: 0;
         left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.5);
+        right: 0;
+        bottom: 0;
         display: flex;
-        align-items: center;
         justify-content: center;
-        z-index: 1000;
+        align-items: center;
+        background: rgba(0, 0, 0, 0.6);
 
         .modal-content {
-            background-color: #121212;
-            padding: 30px;
-            border-radius: 8px;
-            text-align: center;
+            background: #2A2A2A;
+            border: 1px solid #2FFF00;
+            border-radius: 20px;
+            padding: 40px;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            gap: 15px;
+            gap: 30px;
+            width: 600px;
 
             h2 {
-                font-family: var(--main-font);
-            }
-
-            .buttonExit2{
-                width: 200px;
-                height: 50px;
-
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                
-                border-radius: 10px;
-                border: 1px solid #2FFF00;
-                
+                font-family: "Jersey 25";
+                font-size: 40px;
                 color: #2FFF00;
                 text-align: center;
+                margin: 0; 
+                padding: 0; 
+                border: none;
+                outline: none; 
+            }
+                p {
+                font-family: "Space Mono", monospace;
+                font-size: 18px;
+                color: #FFFFFF;
+                text-align: center;
+                margin: 0;
+                line-height: 1.5;
+    }
+            .button-group {
+                display: flex;
+                justify-content: center;
+                gap: 30px; 
+                margin-top: 10px;
+                
+            input {
+                border: 1px solid #2FFF00;
+                border-radius: 10px;
+                padding: 12px;
+                font-size: 20px;
                 font-family: "Jersey 25";
-                font-size: 36px;
-                font-style: normal;
-                font-weight: 400;
-
-                background-color: rgba(47, 255, 0, 0.1);  
-
-                &:hover {
-                    background-color: rgba(137, 255, 63, 0.5);
-                }
+                color: #2FFF00;
+                background: transparent;
+                outline: none;
+                width: 100%;
+                box-sizing: border-box;
             }
 
-            .button-group{
-                display: flex;
-                align-items: center;
-                gap: 10px;
+     .buttonExit2 {
+        font-family: "Jersey 25";
+        font-size: 28px;
+        color: #2FFF00;
+        border: 1px solid #2FFF00;
+        border-radius: 10px;
+        padding: 12px 30px; 
+        min-width: 140px; 
 
-                button{
-                    width: 200px;
-                    height: 50px;
-
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: center;
-                    
-                    border-radius: 10px;
-                    border: 1px solid #2FFF00;
-                    
-                    color: #2FFF00;
-                    text-align: center;
-                    font-family: "Jersey 25";
-                    font-size: 36px;
-                    font-style: normal;
-                    font-weight: 400;
-
-                    background-color: rgba(47, 255, 0, 0.1);  
-
-                    &:hover {
-                        background-color: rgba(137, 255, 63, 0.5);
-                    }
-                }
+        &:hover {
+            box-shadow: 0 4px 8px rgba(47, 255, 0, 0.2);
             }
         }
     }
-
 `;
