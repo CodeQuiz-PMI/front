@@ -15,11 +15,10 @@ export const StyledStorePage = styled.main`
             
             .text {
                 position: relative;
-                width: 620px;
+                width: 690px;
 
 
                 color: var(--primary-color-light);
-                text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
                 font-family: var(--main-font);
                 font-size: var(--font-size-xxl);
                 font-style: normal;
@@ -104,7 +103,7 @@ export const StyledStorePage = styled.main`
                     display: flex;
                     flex-direction: column;
                     align-items: center;
-                    gap: 10px;
+                    gap: 20px;
                 }
                 
                 width: 210px;
@@ -116,7 +115,7 @@ export const StyledStorePage = styled.main`
                 background-color: var(--surface-color);
                 
                 img{
-                    width: 100px;
+                    width: 90px;
                 }
             }
         }

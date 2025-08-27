@@ -26,20 +26,20 @@ export const StyledButton = styled.button<iStyledButtonProps>`
         `;
             case "buttonLoginPage":
                 return css`
-                width: 371px;
-                height: 76px;
+                width: 250px;
+                height: 60px;
 
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
                 
-                border-radius: 10px;
+                border-radius: 8px;
                 border: 1px solid #2FFF00;
                 
                 color: #2FFF00;
                 text-align: center;
                 font-family: "Jersey 25";
-                font-size: 36px;
+                font-size: 30px;
                 font-style: normal;
                 font-weight: 400;
 
@@ -149,7 +149,7 @@ export const StyledButton = styled.button<iStyledButtonProps>`
             case "buttonModalStore":
                 return css`
                     width: 100px;
-                    height: 75px;
+                    height: 90px;
 
                     padding: 10px;
 
@@ -277,26 +277,27 @@ export const StyledButton = styled.button<iStyledButtonProps>`
         `;
             case "buttonModalHint":
                 return css`
-                width: auto;
+                width: 200px;
                 height: 50px;
-
-                padding: 10px;
+                padding: 20px;
 
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
-                
-                border-radius: 10px;
+                align-items: center;       
+                gap: 20px;                
+
+                border-radius: 8px;
                 border: 1px solid #2FFF00;
-                
+
                 color: #2FFF00;
                 text-align: center;
                 font-family: "Jersey 25";
-                font-size: 36px;
+                font-size: 30px;
                 font-style: normal;
                 font-weight: 400;
-                
-                background: #214419;  
+
+                background: #214419;
 
                 &:hover {
                     cursor: pointer;

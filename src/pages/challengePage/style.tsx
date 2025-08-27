@@ -98,13 +98,19 @@ export const StyledChallengePage = styled.main`
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                gap: 5px;
+                gap: 10px;
                 
                 position: absolute;
-                top: 10px;
-                left: 10px;
+                bottom: 410px;
+                left: 1060px;
 
                 font-size: 40px;
+                color: white;
+                flex-direction: row-reverse;
+
+                background-color: #393939;
+                padding: 10px 25px;
+                border-radius: 10px;
 
                 img{
                     width: 35px;
