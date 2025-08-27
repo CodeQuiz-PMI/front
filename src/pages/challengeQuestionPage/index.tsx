@@ -223,45 +223,45 @@ export const ChallengeQuestionPage = () => {
 
         return (
             <div className="modal">
-            <div className="modal-content" style={{ backgroundColor: "#393939", border: "2px solid white" }}>
-                <h2 style={{ color: "white",  fontSize: "40px"}}>{timeLeft <= 0 ? "Tempo Esgotado!" : "Desafio Concluído!"}</h2>
-                <div>
-                    <img src={star1} alt="Estrela 1" />
-                    <img src={star2} alt="Estrela 2" style={{ width: "130px", marginBottom: "10px" }} />
-                    <img src={star3} alt="Estrela 3" />
-                </div>
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-around", gap: "20px", width: "100%" }}>
-                    <div style={{ textAlign: "center" }}>
-                        <p style={{ color: "white", textAlign: "center", fontSize: "30px", fontStyle: "normal" }}>Acertos</p>
-                        <p style={{ color: "white", textAlign: "center", fontSize: "30px", fontStyle: "normal" }}>{correctAnswersCount}</p>
-                    </div>
+                <div className="modal-content" style={{ backgroundColor: "#393939", border: "2px solid white" }}>
+                    <h2 style={{ color: "white",  fontSize: "40px"}}>{timeLeft <= 0 ? "Tempo Esgotado!" : "Desafio Concluído!"}</h2>
                     <div>
-                        <img src={mascotImage} alt="Mascote de desempenho" style={{ width: "200px" }} />
+                        <img src={star1} alt="Estrela 1" />
+                        <img src={star2} alt="Estrela 2" style={{ width: "130px", marginBottom: "10px" }} />
+                        <img src={star3} alt="Estrela 3" />
                     </div>
-                    <div style={{ textAlign: "center" }}>
-                        <p style={{ color: "white", textAlign: "center", fontSize: "30px", fontStyle: "normal" }}>Pontuação</p>
-                        <p style={{ color: "white", textAlign: "center", fontSize: "30px", fontStyle: "normal" }}>{totalPoints}</p>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-around", gap: "20px", width: "100%" }}>
+                        <div style={{ textAlign: "center" }}>
+                            <p style={{ color: "white", textAlign: "center", fontSize: "30px", fontStyle: "normal" }}>Acertos</p>
+                            <p style={{ color: "white", textAlign: "center", fontSize: "30px", fontStyle: "normal" }}>{correctAnswersCount}</p>
+                        </div>
+                        <div>
+                            <img src={mascotImage} alt="Mascote de desempenho" style={{ width: "200px" }} />
+                        </div>
+                        <div style={{ textAlign: "center" }}>
+                            <p style={{ color: "white", textAlign: "center", fontSize: "30px", fontStyle: "normal" }}>Pontuação</p>
+                            <p style={{ color: "white", textAlign: "center", fontSize: "30px", fontStyle: "normal" }}>{totalPoints}</p>
+                        </div>
                     </div>
-                </div>
-                <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
-                    <p style={{ color: "white", textAlign: "center", fontSize: "40px", fontStyle: "normal" }}>
-                       {coinsEarned}
-                    </p>
-                    <img src={coin} alt="Moeda" style={{ width: "25px" }} />
-                </div>
-                <button onClick={() => navigate("/Challenge")}
-                    style={{
-                        width: "250px", height: "50px",
-                        display: "flex", alignItems: "center", justifyContent: "center",
-                        border: "1px solid white", borderRadius: "10px",
-                        color: "white", textAlign: "center", fontSize: "25px", fontStyle: "normal",
-                        backgroundColor: "transparent", cursor: "pointer"
-                    }}
-                >
+                    <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
+                        <p style={{ color: "white", textAlign: "center", fontSize: "40px", fontStyle: "normal" }}>
+                            {coinsEarned}
+                        </p>
+                        <img src={coin} alt="Moeda" style={{ width: "25px" }} />
+                    </div>
+                    <button onClick={() => navigate("/Challenge")}
+                        style={{
+                            width: "250px", height: "50px",
+                            display: "flex", alignItems: "center", justifyContent: "center",
+                            border: "1px solid white", borderRadius: "10px",
+                            color: "white", textAlign: "center", fontSize: "25px", fontStyle: "normal",
+                            backgroundColor: "transparent", cursor: "pointer"
+                        }}
+                    >
                     Jogar Novamente
-                </button>
+                    </button>
+                </div>
             </div>
-        </div>
 
         );
     };

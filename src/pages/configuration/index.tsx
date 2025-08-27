@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { StyledConfigurationPage } from "./style";
 import { api } from "../../services/api";
 
-import edit from "../../assets/assetsV2/edit.svg";
 import iconArrowLeft from "../../assets/ArrowLeft.svg";
 
 import { JSX } from "react/jsx-dev-runtime";
@@ -30,7 +29,6 @@ export const Configuration = () => {
         pauseBackgroundMusic  
     } = useApp();
 
-    const [username, setUsername] = useState("");
     const [musicsUser, setMusicsUser] = useState<string[]>([]);
 
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -53,7 +51,6 @@ export const Configuration = () => {
                 };
                 delete userData._id;
                 delete userData.password;
-                setUsername(userData.name);
                 setMusicsUser(userData.ownedMusics || []);
 
                 setName(userData.name || "");
@@ -65,15 +62,15 @@ export const Configuration = () => {
         }
     }, [user?.id]);
 
-    const handleEditClick = () => {
-        const userFromStorage = localStorage.getItem("user");
-        if (userFromStorage) {
-            const userData = JSON.parse(userFromStorage);
-            setName(userData.name);
-            setEmail(userData.email);
-        }
-        setIsModalOpen(true);
-    };
+    // const handleEditClick = () => {
+    //     const userFromStorage = localStorage.getItem("user");
+    //     if (userFromStorage) {
+    //         const userData = JSON.parse(userFromStorage);
+    //         setName(userData.name);
+    //         setEmail(userData.email);
+    //     }
+    //     setIsModalOpen(true);
+    // };
 
     const handleSaveChanges = async () => {
         if (password !== confirmPassword) {
@@ -96,7 +93,6 @@ export const Configuration = () => {
             await api.patch(`/users/${userData.id}`, updatedUser);
             const newUserData = { ...userData, ...updatedUser };
             localStorage.setItem("user", JSON.stringify(newUserData));
-            setUsername(name);
             setIsModalOpen(false);
             console.log("Dados atualizados com sucesso.");
         } catch (error) {
