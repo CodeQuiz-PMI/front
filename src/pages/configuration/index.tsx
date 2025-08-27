@@ -334,74 +334,74 @@ import music4 from "../../assets/musics/Musica4.mp3";
 // 1. MOVA OS COMPONENTES DO MODAL PARA FORA
 // ===================================================================
 
-// Interface para tipar as props do EditModal (Boa prática com TypeScript)
-interface EditModalProps {
-    name: string;
-    email: string;
-    password: string;
-    confirmPassword: string;
-    setName: (name: string) => void;
-    setEmail: (email: string) => void;
-    setPassword: (password: string) => void;
-    setConfirmPassword: (confirmPassword: string) => void;
-    handleSaveChanges: () => void;
-    setIsModalOpen: (isOpen: boolean) => void;
-}
+// // Interface para tipar as props do EditModal (Boa prática com TypeScript)
+// interface EditModalProps {
+//     name: string;
+//     email: string;
+//     password: string;
+//     confirmPassword: string;
+//     setName: (name: string) => void;
+//     setEmail: (email: string) => void;
+//     setPassword: (password: string) => void;
+//     setConfirmPassword: (confirmPassword: string) => void;
+//     handleSaveChanges: () => void;
+//     setIsModalOpen: (isOpen: boolean) => void;
+// }
 
-const EditModal = ({
-    name,
-    email,
-    password,
-    confirmPassword,
-    setName,
-    setEmail,
-    setPassword,
-    setConfirmPassword,
-    handleSaveChanges,
-    setIsModalOpen,
-}: EditModalProps) => (
-    <div className="modal">
-        <div className="modal-content" style={{ background: "var(--modal-background)" }}>
-            <h2 style={{ color: "var(--primary-color-light", fontWeight: "400" }}>Editar Perfil</h2>
-            <input id="inp" type="text" placeholder="Nome" value={name} onChange={(e) => setName(e.target.value)} />
-            <input id="inp" type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-            <input id="inp" type="password" placeholder="Nova senha" value={password} onChange={(e) => setPassword(e.target.value)} />
-            <input id="inp" type="password" placeholder="Confirmar senha" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
-            <button className="buttonExit2" type="submit" onClick={handleSaveChanges}>Salvar</button>
-            <button className="buttonExit2" type="button" onClick={() => setIsModalOpen(false)}>Cancelar</button>
-        </div>
-    </div>
-);
+// const EditModal = ({
+//     name,
+//     email,
+//     password,
+//     confirmPassword,
+//     setName,
+//     setEmail,
+//     setPassword,
+//     setConfirmPassword,
+//     handleSaveChanges,
+//     setIsModalOpen,
+// }: EditModalProps) => (
+//     <div className="modal">
+//         <div className="modal-content" style={{ background: "var(--modal-background)" }}>
+//             <h2 style={{ color: "var(--primary-color-light", fontWeight: "400" }}>Editar Perfil</h2>
+//             <input id="inp" type="text" placeholder="Nome" value={name} onChange={(e) => setName(e.target.value)} />
+//             <input id="inp" type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+//             <input id="inp" type="password" placeholder="Nova senha" value={password} onChange={(e) => setPassword(e.target.value)} />
+//             <input id="inp" type="password" placeholder="Confirmar senha" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
+//             <button className="buttonExit2" type="submit" onClick={handleSaveChanges}>Salvar</button>
+//             <button className="buttonExit2" type="button" onClick={() => setIsModalOpen(false)}>Cancelar</button>
+//         </div>
+//     </div>
+// );
 
 
-interface ConfirmationModalProps {
-    title: string;
-    message: string | JSX.Element;
-    onConfirm: () => void;
-    onCancel: () => void;
-}
+// interface ConfirmationModalProps {
+//     title: string;
+//     message: string | JSX.Element;
+//     onConfirm: () => void;
+//     onCancel: () => void;
+// }
 
-const ConfirmationModal = ({
-    title,
-    message,
-    onConfirm,
-    onCancel
-}: ConfirmationModalProps) => (
-    <div className="modal">
-        <div className="modal-content" style={{ background: "var(--modal-background)", color: "var(--primary-color-light)" }}>
-            <h2 style={{ fontWeight: "400" }}>{title}</h2>
-            <p>{message}</p>
-            <div className="button-group">
-                <button className="buttonExit2" type="button" onClick={onConfirm}>
-                    Confirmar
-                </button>
-                <button className="buttonExit2" type="button" onClick={onCancel}>
-                    Cancelar
-                </button>
-            </div>
-        </div>
-    </div>
-);
+// const ConfirmationModal = ({
+//     title,
+//     message,
+//     onConfirm,
+//     onCancel
+// }: ConfirmationModalProps) => (
+//     <div className="modal">
+//         <div className="modal-content" style={{ background: "var(--modal-background)", color: "var(--primary-color-light)" }}>
+//             <h2 style={{ fontWeight: "400" }}>{title}</h2>
+//             <p>{message}</p>
+//             <div className="button-group">
+//                 <button className="buttonExit2" type="button" onClick={onConfirm}>
+//                     Confirmar
+//                 </button>
+//                 <button className="buttonExit2" type="button" onClick={onCancel}>
+//                     Cancelar
+//                 </button>
+//             </div>
+//         </div>
+//     </div>
+// );
 
 
 // ===================================================================
@@ -424,7 +424,7 @@ export const Configuration = () => {
 
     const [musicsUser, setMusicsUser] = useState<string[]>([]);
 
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    // const [isModalOpen, setIsModalOpen] = useState(false);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [isResetModalOpen, setIsResetModalOpen] = useState(false);
 
@@ -486,7 +486,7 @@ export const Configuration = () => {
             await api.patch(`/users/${userData.id}`, updatedUser);
             const newUserData = { ...userData, ...updatedUser };
             localStorage.setItem("user", JSON.stringify(newUserData));
-            setIsModalOpen(false);
+            // setIsModalOpen(false);
             console.log("Dados atualizados com sucesso.");
         } catch (error) {
             console.error("Erro ao atualizar usuário:", error);
@@ -568,19 +568,19 @@ export const Configuration = () => {
         </div>
     );
 
-    const EditModal = () => (
-        <div className="modal">
-            <div className="modal-content" style={{background: "var(--modal-background)"}}>
-                <h2 style={{color: "var(--primary-color-light"}}>Editar Perfil</h2>
-                <input id="inp" type="text" placeholder="Nome" value={name} onChange={(e) => setName(e.target.value)} />
-                <input id="inp" type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-                <input id="inp" type="password" placeholder="Nova senha" value={password} onChange={(e) => setPassword(e.target.value)} />
-                <input id="inp" type="password" placeholder="Confirmar senha" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
-                <button className="buttonExit2" type="submit" onClick={handleSaveChanges}>Salvar</button>
-                <button className="buttonExit2" type="button" onClick={() => setIsModalOpen(false)}>Cancelar</button>
-            </div>
-        </div>
-    );
+    // const EditModal = () => (
+    //     <div className="modal">
+    //         <div className="modal-content" style={{background: "var(--modal-background)"}}>
+    //             <h2 style={{color: "var(--primary-color-light"}}>Editar Perfil</h2>
+    //             <input id="inp" type="text" placeholder="Nome" value={name} onChange={(e) => setName(e.target.value)} />
+    //             <input id="inp" type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+    //             <input id="inp" type="password" placeholder="Nova senha" value={password} onChange={(e) => setPassword(e.target.value)} />
+    //             <input id="inp" type="password" placeholder="Confirmar senha" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
+    //             <button className="buttonExit2" type="submit" onClick={handleSaveChanges}>Salvar</button>
+    //             <button className="buttonExit2" type="button" onClick={() => setIsModalOpen(false)}>Cancelar</button>
+    //         </div>
+    //     </div>
+    // );
 
     const sliderBackground = {
         background: `linear-gradient(
@@ -712,11 +712,11 @@ export const Configuration = () => {
                 </div>
             </div>
 
-            {/* =================================================================== */}
+            {/* ===================================================================
             {/* 2. RENDERIZE O MODAL PASSANDO AS PROPS NECESSÁRIAS               */}
             {/* =================================================================== */}
 
-            {isModalOpen && (
+            {/* {isModalOpen && (
                 <EditModal
                     name={name}
                     email={email}
@@ -729,7 +729,7 @@ export const Configuration = () => {
                     handleSaveChanges={handleSaveChanges}
                     setIsModalOpen={setIsModalOpen}
                 />
-            )}
+            )} */}
 
             {isDeleteModalOpen && (
                 <ConfirmationModal
