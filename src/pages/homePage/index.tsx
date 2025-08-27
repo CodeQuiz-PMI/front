@@ -86,17 +86,17 @@ export const HomePage = () => {
                                 Responda desafios, conquiste pontos e evolua suas habilidades enquanto joga!
                             </p>
                             <p style={{ fontSize: "15px", fontFamily: "Space Mono", paddingTop: "20px"}}>
-                                *O jogo possui música de fundo. Para ajustar o volume ou desligar, basta acessar as configurações após o login.
+                                * O jogo possui música de fundo. Para ajustar o volume ou desligar, basta acessar as configurações após o login.
                             </p>
                         </div>
                         <button 
                             style={{
-                                width: "100px", height: "80px",
+                                width: "150px", height: "80px",
                                 padding: "10px", 
                                 borderRadius: "10px", border: "5px solid #2FFF00", 
                                 backgroundColor: "#2B4E23", 
                                 display: "flex", alignItems: "center", justifyContent: "center", 
-                                fontSize: "20px", color: "#2FFF00", 
+                                fontSize: "25px", color: "#2FFF00", 
                                 position: "absolute", bottom: "-40px" 
                             }}
                             onClick={handleCloseModal}

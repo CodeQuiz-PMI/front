@@ -259,9 +259,9 @@ export const ChallengePage = () => {
                             </ul>
                         </div>
 
-                        <div className="ranking-buttons" style={{ bottom: "-40px" }}>
+                        <div className="ranking-buttons" style={{ bottom: "-70px" }}>
                             <button className="buttonModalRanking" type="button" onClick={() => setShowInfo2(false)}
-                                style={{ height: "75px", display: "flex", alignItems: "center", justifyContent: "center", backgroundColor: "#A13D00", border: "5px solid rgba(236, 89, 0, 0.38)" }}
+                                style={{ height: "90px", display: "flex", alignItems: "center", justifyContent: "center", backgroundColor: "#A13D00", border: "5px solid rgba(236, 89, 0, 0.38)" }}
                             >
                                 <img src={back2} alt="Back" />
                             </button>
