@@ -13,7 +13,7 @@ export const ChallengeQuestionPageStyled = styled.main`
         justify-content: space-between;
 
         .img{
-            width: 96px;
+            width: 110px;
             height: auto;
             padding-left: 20px;
         }

@@ -23,7 +23,7 @@ export const StyledLoginPage = styled.main`
             font-weight: var(--font-weight-normal);
         }
             
-        margin-bottom: 20px;
+        margin-bottom: 60px;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -45,6 +45,7 @@ export const StyledLoginPage = styled.main`
         justify-content: center;
         flex-direction: column;
         align-items: center;
+        
 
         .loginForm {
             display: flex;
@@ -100,8 +101,8 @@ export const StyledLoginPage = styled.main`
             justify-content: center;
 
             button{
-                width: 371px;
-                height: 76px;
+                width: 200px;
+                height: 60px;
 
                 display: flex;
                 flex-direction: column;
@@ -113,7 +114,7 @@ export const StyledLoginPage = styled.main`
                 color: #2FFF00;
                 text-align: center;
                 font-family: "Jersey 25";
-                font-size: 36px;
+                font-size: 30px;
                 font-style: normal;
                 font-weight: 400;
 

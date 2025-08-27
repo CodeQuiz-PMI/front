@@ -75,7 +75,7 @@ export const LoginPage = () => {
                     </div>
 
                     <div className="links">
-                        <Link to="/register" className="link">Criar conta</Link>
+                        <Link to="/register" className="link"><u>Criar conta</u></Link>
                         {/* <Link to="#" className="link">Esqueceu sua senha?</Link> */}
                     </div>
 

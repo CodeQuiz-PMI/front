@@ -104,7 +104,7 @@ export const GlobalStyle = createGlobalStyle`
 
 			padding: 30px 40px;
 			width: 90%;
-			max-width: 600px;
+			max-width: 700px;
 
 			position: relative;
 
@@ -164,7 +164,6 @@ export const GlobalStyle = createGlobalStyle`
 					h2{
 						color: var(--primary-color-light);
 						text-align: center;
-						font-family: var(--main-font);
 						font-size:50px;
 						font-style: normal;
 						font-weight: 400;
@@ -390,7 +389,7 @@ export const GlobalStyle = createGlobalStyle`
 				justify-content: space-around;
 				margin-top: 20px;
 				position: absolute;
-				bottom: -60px;
+				bottom: -70px;
 				gap: 25px;
 
 				button{
@@ -435,7 +434,7 @@ export const GlobalStyle = createGlobalStyle`
 			.hintModel{
 				display: flex;
 				flex-direction: column;
-				gap: 20px;
+				gap: 10px;
 			}
 
 			.imgmodel{
@@ -444,14 +443,12 @@ export const GlobalStyle = createGlobalStyle`
 				gap: 10px;
 
 				color: var(--primary-color-light);
-				text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
 				font-family: var(--main-font);
-				font-size: 30px;
+				font-size: 35px;
 				font-style: normal;
 				font-weight: 400;
-				line-height: normal;
 				img{
-					width: 50px;
+					width: 40px;
 				}
 			}
 
@@ -469,7 +466,7 @@ export const GlobalStyle = createGlobalStyle`
 				gap: 20px;
 
 				button{
-					width: auto;
+					width: 200px;
 					height: 50px;
 
 					padding: 10px;
@@ -478,15 +475,16 @@ export const GlobalStyle = createGlobalStyle`
 					flex-direction: column;
 					justify-content: center;
 					
-					border-radius: 10px;
+					border-radius: 8px;
 					border: 1px solid #2FFF00;
 					
 					color: #2FFF00;
 					text-align: center;
 					font-family: "Jersey 25";
-					font-size: 36px;
+					font-size: 30px;
 					font-style: normal;
 					font-weight: 400;
+					margin-top: 20px;
 					
 					background: #214419;  
 
