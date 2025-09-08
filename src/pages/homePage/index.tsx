@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import {  useNavigate } from "react-router-dom";
+import {  Link, useNavigate } from "react-router-dom";
 
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -67,6 +67,8 @@ export const HomePage = () => {
                     <button className="buttonHomePage" type="button" onClick={handleContinue}>
                         Continuar
                     </button>
+
+                    <Link style={{color: "var(--primary-color-light)"}} to="https://forms.gle/jg6pwQcmje4V6gKJ9" target="_blank">Formulario de feedBack</Link>
                 </div>
             </div>
             {showWelcome && (
