@@ -2,12 +2,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 import iconArrowLeft from "../../assets/ArrowLeft.svg";
-// import iconGoldMedal from "../../assets/Gold Medal.svg";
-// import iconTrophy from "../../assets/Trophy.svg";
-
-// import home from "../../assets/assetsV2/ph_house.svg";
-// import back from "../../assets/assetsV2/return.svg";
-// import list from "../../assets/assetsV2/list.svg";
 
 import coin from "../../assets/assetsV2/coin.svg";
 
@@ -26,16 +20,12 @@ export const SectionPage = () => {
     const location = useLocation();
 
     const { getQuestions, user, 
-        // getRanking 
     } = useApp();
         
     const { section } = location.state as { section: Section };
     
     const [questions, setQuestions] = useState<Question[]>([]);
     const [answeredIds, setAnsweredIds] = useState<string[]>([]);
-
-    // const [showRanking, setShowRanking] = useState(false);
-    // const [rankingData, setRankingData] = useState<User[]>([]);
 
     const [coins, setCoins] = useState(Number);
 
@@ -85,16 +75,6 @@ export const SectionPage = () => {
         fetchQuestions();
         if (user?.id) fetchAnswered();
     }, [section._id, getQuestions, user?.id, section.level._id]);
-
-    // const fetchRanking = async () => {
-    //     try {
-    //         const data = await getRanking();
-    //         setRankingData(data);
-    //         setShowRanking(true);
-    //     } catch (error) {
-    //         console.error("Erro ao carregar ranking:", error);
-    //     }
-    // };
 
     const exit = () => {
         const level = localStorage.getItem("level");

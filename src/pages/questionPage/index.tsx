@@ -1,10 +1,10 @@
 import { useLocation, useNavigate } from "react-router-dom";
-
 import { QuestionPageStyled } from "./styled";
 import { useEffect, useState } from "react";
 import { api } from "../../services/api";
 import { AnswerLog, Question, useApp } from "../../context/AppContext";
 
+// Importação de assets
 import lamp from "../../assets/assetsV2/lamp.svg";
 import arrow from "../../assets/ArrowLeft.svg";
 import back from "../../assets/assetsV2/return.svg";
@@ -12,10 +12,6 @@ import bolsa from "../../assets/assetsV2/bolsamoedas.svg";
 import coin from "../../assets/assetsV2/coin.svg";
 import betinhaDica from "../../assets/assetsV2/Dica 1.svg";
 
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-
-import { ToastOptions } from "react-toastify";
 import { NavBar } from "../../components/navbar";
 
 type ResponseOption = {
@@ -26,31 +22,34 @@ type ResponseOption = {
 export const QuestionPage = () => {
     const location = useLocation();
     const navigate = useNavigate();
-
     const { question } = location.state as { question: Question };
-
     const { user } = useApp();
 
     const [selected, setSelected] = useState("");
     const [showHint, setShowHint] = useState(false);
-    const [coins, setCoins] = useState();
+    const [coins, setCoins] = useState<number>();
     const [showHintStore, setShowHintStore] = useState(false);
-
     const [shuffledResponses, setShuffledResponses] = useState<ResponseOption[]>([]);
+
+    // --- Novos estados para o modal de resposta ---
+    const [showAnswerModal, setShowAnswerModal] = useState(false);
+    const [isCorrectAnswer, setIsCorrectAnswer] = useState(false);
+
 
     useEffect(() => {
         const fetchUser = async () => {
-            const get = await api.get(`/users/${user?.id}`);
-            const userData = {
-                ...get.data,
-                id: get.data._id,
-            };
-            delete userData._id;
-            delete userData.password;
-            setCoins(get.data.coins);
-
-            localStorage.setItem("user", JSON.stringify(userData));
+            try {
+                const get = await api.get(`/users/${user?.id}`);
+                const userData = { ...get.data, id: get.data._id };
+                delete userData._id;
+                delete userData.password;
+                setCoins(get.data.coins);
+                localStorage.setItem("user", JSON.stringify(userData));
+            } catch (error) {
+                console.error("Erro ao buscar dados do usuário:", error);
+            }
         };
+
         fetchUser();
 
         if (question.type === "múltipla-escolha") {
@@ -59,27 +58,20 @@ export const QuestionPage = () => {
                 question.response_2,
                 question.response_3,
                 question.response_4,
-            ].filter((resp) => resp.trim() !== ""); // Remove vazios
+            ].filter((resp) => resp && resp.trim() !== "");
 
             const shuffled = shuffleArray(responses);
-
             const prefixLetters = ["A)", "B)", "C)", "D)"];
-
             const responsesWithPrefix = shuffled.map((response, index) => ({
                 label: `${prefixLetters[index]} ${response}`,
                 value: response,
             }));
-
             setShuffledResponses(responsesWithPrefix);
         }
-
-        fetchUser();
     }, [question, user?.id]);
 
     const shuffleArray = (array: string[]) => {
-        return array
-            .filter((resp) => resp.trim() !== "")
-            .sort(() => Math.random() - 0.5);
+        return array.sort(() => Math.random() - 0.5);
     };
 
     const handleContinue = () => {
@@ -88,112 +80,60 @@ export const QuestionPage = () => {
 
     const handleMultipleChoiceSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        const isCorrect = selected === question.correctResponse;
-
-        const toastContent = (
-            <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-                <p style={{ color: "#2FFF00" }}>
-                    {isCorrect
-                        ? "Resposta correta!"
-                        : "Resposta incorreta."}
-                </p>
-                <div style={{ display: "flex", justifyContent: "center", gap: "8px" }}>
-                    <button
-                        style={{
-                            backgroundColor: "#2FFF00",
-                            color: "#2A2A2A",
-                            padding: "4px 8px",
-                            border: "none",
-                            borderRadius: "4px",
-                            fontFamily: "Jersey 25, sans-serif",
-                        }}
-                        onClick={() => {
-                            handleContinue();
-                            toast.dismiss();
-                        }}
-                    >
-                        Continuar
-                    </button>
-                </div>
-            </div>
-        );
-
-        const toastOptions: ToastOptions = {
-            style: {
-                backgroundColor: "#2A2A2A",
-                color: "#2FFF00",
-                fontFamily: "Jersey 25, sans-serif",
-            },
-            autoClose: false,
-            closeOnClick: false,
-        };
-
-        if (isCorrect) {
-            toast.success(toastContent, toastOptions);
-        } else {
-            toast.warn(toastContent, toastOptions);
+        if (!selected) {
+            // Opcional: Adicionar um alerta para o usuário selecionar uma opção
+            alert("Por favor, selecione uma resposta.");
+            return;
         }
+
+        const isCorrect = selected === question.correctResponse;
+        setIsCorrectAnswer(isCorrect);
+        setShowAnswerModal(true); // Abre o modal de resposta
 
         await submitAnswerLog(selected, isCorrect);
     };
-
 
 
     const handleBackToSection = () => {
         navigate(`/section/${question.section._id}`, { state: { section: question.section } });
     };
 
+    // --- Funções de formatação de texto (sem alterações) ---
     const formatTextWithCode = (text: string) => {
         const withBlockCode = text.replace(/```([\s\S]*?)```/g, (_match, code) => {
             return `<pre><code>${code.trim()}</code></pre>`;
         });
-
         const withInlineCode = withBlockCode.replace(/`([^`]+)`/g, (_match, code) => {
             return `<code>${code}</code>`;
         });
-
         return withInlineCode;
     };
 
     const formatTextWithCode2 = (text: string) => {
         if (!text) return "";
-
         const unescaped = text
-            .replace(/\\\\n/g, "\n")
-            .replace(/\\n/g, "\n")
-            .replace(/\\\\t/g, "\t")
-            .replace(/\\t/g, "\t")
+            .replace(/\\\\n/g, "\n").replace(/\\n/g, "\n")
+            .replace(/\\\\t/g, "\t").replace(/\\t/g, "\t")
             .replace(/\\"/g, '"');
-
         const withBlockCode = unescaped.replace(/```([\s\S]*?)```/g, (_match, code) => {
             return `<pre><code>${code.trim()}</code></pre>`;
         });
-
         const withInlineCode = withBlockCode.replace(/`([^`]+)`/g, (_match, code) => {
             return `<code>${code}</code>`;
         });
-
-        return withInlineCode
-            .replace(/\n/g, "<br/>")
-            .replace(/\t/g, "&nbsp;&nbsp;&nbsp;&nbsp;");
+        return withInlineCode.replace(/\n/g, "<br/>").replace(/\t/g, "&nbsp;&nbsp;&nbsp;&nbsp;");
     };
 
+    // --- Funções de lógica de API (sem alterações) ---
     const submitAnswerLog = async (userAnswer: string, isCorrect: boolean) => {
         try {
             const res = await api.get(`/answerlogs/user/${user?.id}`);
+            const existingLog = res.data.find((log: AnswerLog) => log.question === question._id);
 
-            const existingLog = res.data.find(
-                (log: AnswerLog) => log.question === question._id
-            );
-
-            if (existingLog?.isCorrect) {
-                return;
-            }
+            if (existingLog?.isCorrect) return;
 
             if (existingLog && !existingLog.isCorrect) {
-                await api.put(`/answerlogs/${existingLog._id}`, {
-                    userAnswer,
-                });
+                await api.put(`/answerlogs/${existingLog._id}`, { userAnswer });
             } else {
                 await api.post("/answerlogs", {
                     userId: user?.id,
@@ -202,7 +142,6 @@ export const QuestionPage = () => {
                     isCorrect,
                 });
             }
-
         } catch (error) {
             console.error("Erro ao salvar log da resposta:", error);
         }
@@ -220,17 +159,11 @@ export const QuestionPage = () => {
             try {
                 const updates = { hints: userFromStorage.hints - 1 };
                 const res = await api.patch(`/users/${user?.id}`, updates);
-
-                const userData = {
-                    ...res.data,
-                    id: res.data._id,
-                };
+                const userData = { ...res.data, id: res.data._id };
                 delete userData._id;
                 delete userData.password;
                 setCoins(res.data.coins);
-
                 localStorage.setItem("user", JSON.stringify(userData));
-
             } catch (err) {
                 console.error("Erro ao debitar dica:", err);
                 setShowHint(false);
@@ -241,78 +174,51 @@ export const QuestionPage = () => {
     };
 
     const handleBuyHint = async () => {
-        if (!user) return;
+        if (!user || coins === undefined) return;
 
-        const currentCoins = coins ?? 0;
-
-        const toastOptions: ToastOptions = {
-            style: {
-                backgroundColor: "#2A2A2A",
-                color: "#2FFF00",
-                fontFamily: "Jersey 25, sans-serif",
-            },
-            autoClose: 2000,
-        };
-
-        if (currentCoins < 10) {
-            toast.warn("Você não tem moedas suficientes para comprar uma dica!", toastOptions);
+        if (coins < 10) {
+            alert("Você não tem moedas suficientes para comprar uma dica!");
             return;
         }
 
         try {
-            const updatedCoins = currentCoins - 10;
-            const res = await api.patch(`/users/${user.id}`, { coins: updatedCoins });
-
-            toast.success("Dica comprada com sucesso!", toastOptions);
+            const updatedCoins = coins - 10;
+            await api.patch(`/users/${user.id}`, { coins: updatedCoins });
+            alert("Dica comprada com sucesso!");
 
             const get = await api.get(`/users/${user?.id}`);
-            const userData = {
-                ...get.data,
-                id: get.data._id,
-            };
+            const userData = { ...get.data, id: get.data._id };
             delete userData._id;
             delete userData.password;
             setCoins(get.data.coins);
-
             localStorage.setItem("user", JSON.stringify(userData));
 
             setShowHint(true);
             setShowHintStore(false);
-
-            return res;
         } catch (err) {
             console.error("Erro ao comprar dica:", err);
-            toast.error("Erro ao processar compra da dica!", toastOptions);
+            alert("Erro ao processar compra da dica!");
         }
     };
-
-
 
     return (
         <QuestionPageStyled>
             <NavBar />
 
             <div className="header">
-                <button>
-                    <img src={arrow} alt="" style={{ width: "78px" }} onClick={handleBackToSection} />
+                <button onClick={handleBackToSection}>
+                    <img src={arrow} alt="Voltar" style={{ width: "78px" }} />
                 </button>
                 <h1>{question.title}</h1>
-                <button>
-                    <img src={lamp} alt="Configurações" onClick={handleHintClick} />
+                <button onClick={handleHintClick}>
+                    <img src={lamp} alt="Dica" />
                 </button>
             </div>
 
             <div className="container">
-                {question.type === "dissertativa" ? (
-                    <div className="text">
-                        <p dangerouslySetInnerHTML={{ __html: formatTextWithCode(question.text) }} />
-                    </div>
-                ) :
-                    <div className="text">
-                        <p dangerouslySetInnerHTML={{ __html: formatTextWithCode(question.text) }} />
-                    </div>
-
-                }
+                <div className="text">
+                    <p dangerouslySetInnerHTML={{ __html: formatTextWithCode(question.text) }} />
+                </div>
 
                 <div className="question">
                     <form onSubmit={handleMultipleChoiceSubmit}>
@@ -325,6 +231,7 @@ export const QuestionPage = () => {
                                         name="answer"
                                         value={responseObj.value}
                                         onChange={(e) => setSelected(e.target.value)}
+                                        checked={selected === responseObj.value}
                                     />
                                     <span dangerouslySetInnerHTML={{ __html: formatTextWithCode2(responseObj.label) }} />
                                 </label>
@@ -332,11 +239,7 @@ export const QuestionPage = () => {
                         </div>
 
                         <div style={{ display: "flex", justifyContent: "center", marginTop: "20px", gap: "20px" }}>
-                            <button
-                                type="button"
-                                className="buttonExit2"
-                                onClick={handleBackToSection}
-                            >
+                            <button type="button" className="buttonExit2" onClick={handleBackToSection}>
                                 Desistir
                             </button>
                             <button type="submit" className="buttonExit2">
@@ -344,35 +247,30 @@ export const QuestionPage = () => {
                             </button>
                         </div>
                     </form>
-
-
                 </div>
             </div>
 
+            {/* --- Modal de Dica (sem alterações) --- */}
             {showHint && (
                 <div className="modal">
                     <div className="modal-content" style={{ padding: "30px 40px 55px" }}>
                         <div className="ranking-title">
-                            <img src={lamp} alt="Troféu" />
+                            <img src={lamp} alt="Dica" />
                             <h2>Dica</h2>
-                            <img src={lamp} alt="Troféu" />
+                            <img src={lamp} alt="Dica" />
                         </div>
-                        <p
-                            dangerouslySetInnerHTML={{
-                                __html: formatTextWithCode(question.hint),
-                            }}
-                            style={{ fontFamily: "var(--second-font)", fontSize: "var(--font-size-base)", textAlign: "justify" }}
-                        />
+                        <p dangerouslySetInnerHTML={{ __html: formatTextWithCode(question.hint) }} style={{ fontFamily: "var(--second-font)", fontSize: "var(--font-size-base)", textAlign: "justify" }} />
                         <img className="imgBetinha" src={betinhaDica} alt="" />
                         <div className="ranking-buttons">
                             <button className="buttonModalRanking" type="button" onClick={() => setShowHint(false)}>
-                                <img src={back} alt="Back" />
+                                <img src={back} alt="Voltar" />
                             </button>
                         </div>
                     </div>
                 </div>
             )}
 
+            {/* --- Modal da Loja de Dicas (sem alterações) --- */}
             {showHintStore && (
                 <div className="modal">
                     <div className="modal-content" style={{ padding: "30px 40px 55px" }}>
@@ -381,11 +279,11 @@ export const QuestionPage = () => {
                         </div>
                         <div className="hintModel">
                             <div className="imgmodel">
-                                <img src={bolsa} alt="" />
+                                <img src={bolsa} alt="Moedas" />
                                 <p>Suas moedas: {coins}</p>
                             </div>
                             <div className="imgmodel">
-                                <img src={coin} alt="" />
+                                <img src={coin} alt="Custo" />
                                 <p>Custo da dica: {10}</p>
                             </div>
                         </div>
@@ -400,6 +298,34 @@ export const QuestionPage = () => {
                     </div>
                 </div>
             )}
+
+            {showAnswerModal && (
+                <div className="modal">
+                    <div className="modal-content" style={{ padding: "30px 40px 55px", alignItems: "center" }}>
+                        <div className="ranking-title">
+                            <h2 style={{ color: isCorrectAnswer ? "#2FFF00" : "#FF4136" }}>
+                                {isCorrectAnswer ? "Resposta Correta!" : "Resposta Incorreta"}
+                            </h2>
+                        </div>
+                        <p style={{fontFamily: "var(--second-font)", fontSize: "var(--font-size-base)", textAlign: "center", margin: "20px 0"}}>
+                            {isCorrectAnswer ? "Parabéns, você acertou!" : "Não desanime, continue tentando!"}
+                        </p>
+                        <div className="ranking-buttons">
+                            <button
+                                className="buttonExit2"
+                                type="button"
+                                onClick={() => {
+                                    setShowAnswerModal(false);
+                                    handleContinue();
+                                }}
+                            >
+                                Continuar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
         </QuestionPageStyled>
     );
 };
