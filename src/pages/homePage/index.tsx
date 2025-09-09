@@ -68,7 +68,7 @@ export const HomePage = () => {
                         Continuar
                     </button>
 
-                    <Link style={{color: "var(--primary-color-light)"}} to="https://forms.gle/jg6pwQcmje4V6gKJ9" target="_blank">Formulario de feedBack</Link>
+                    <Link style={{color: "var(--primary-color-light)"}} to="https://docs.google.com/forms/d/e/1FAIpQLSffeYQg2bh7EI9X3g9Tq_Oe71zD0Vp03nvOnuGRBD5QCYlLJQ/viewform?usp=sharing&ouid=102555258552875788690" target="_blank">Formulario de feedBack</Link>
                 </div>
             </div>
             {showWelcome && (
